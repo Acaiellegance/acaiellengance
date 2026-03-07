@@ -1,0 +1,2890 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <meta property="og:title" content="Açaí Ellegance | Pedido Premium" />
+  <meta property="og:description" content="Sabor inigualável. Peça agora." />
+  <meta property="og:image" content="logoacai.jpeg" />
+
+  <link rel="apple-touch-icon" href="logoacai.jpeg" />
+
+  <title>Açaí Ellegance</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;700&display=swap"
+    rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            display: ['"Outfit"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#f5f3ff',
+              100: '#ede9fe',
+              500: '#8b5cf6',
+              600: '#7c3aed',
+              900: '#4c1d95',
+            },
+            whatsapp: {
+              500: '#25D366',
+              600: '#128C7E',
+            }
+          },
+          boxShadow: {
+            'soft': '0 10px 40px -10px rgba(0,0,0,0.08)',
+            'glow': '0 0 20px rgba(124, 58, 237, 0.3)',
+            'whatsapp': '0 10px 25px -5px rgba(37, 211, 102, 0.4)',
+          },
+          animation: {
+            'slide-up': 'slideUp 0.4s ease-out forwards',
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'float': 'float 4s ease-in-out infinite',
+            'pulse-green': 'pulse-green 2s infinite',
+            'shimmer': 'shimmer 3s linear infinite',
+            'bounce-short': 'bounceShort 1s infinite',
+          },
+          keyframes: {
+            slideUp: {
+              '0%': { transform: 'translateY(20px)', opacity: '0' },
+              '100%': { transform: 'translateY(0)', opacity: '1' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0)' },
+              '50%': { transform: 'translateY(-5px)' },
+            },
+            'pulse-green': {
+              '0%': { boxShadow: '0 0 0 0 rgba(37, 211, 102, 0.7)' },
+              '70%': { boxShadow: '0 0 0 15px rgba(37, 211, 102, 0)' },
+              '100%': { boxShadow: '0 0 0 0 rgba(37, 211, 102, 0)' },
+            },
+            shimmer: {
+              '0%': { transform: 'translateX(-150%)' },
+              '100%': { transform: 'translateX(150%)' }
+            },
+            bounceShort: {
+              '0%, 100%': { transform: 'translateY(-5%)', animationTimingFunction: 'cubic-bezier(0.8, 0, 1, 1)' },
+              '50%': { transform: 'translateY(0)', animationTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)' }
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #fafafa;
+      -webkit-tap-highlight-color: transparent;
+      overscroll-behavior-y: contain;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    input,
+    textarea {
+      -webkit-user-select: text;
+      user-select: text;
+    }
+
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .glass {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .product-card {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      opacity: 0;
+      animation: slideUp 0.5s ease-out forwards;
+    }
+
+    .product-card:active {
+      transform: scale(0.97);
+    }
+
+    .product-card.selected {
+      border-color: #7c3aed;
+      background: linear-gradient(to bottom right, #fcfaff, #f3e8ff);
+      box-shadow: 0 8px 30px -5px rgba(124, 58, 237, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* Estilo do Post */
+    .news-card {
+      background: linear-gradient(135deg, #fff, #f8fafc);
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s;
+    }
+
+    .news-card.highlight {
+      background: linear-gradient(135deg, #f5f3ff, #ede9fe);
+      border-color: #d8b4fe;
+    }
+
+    .check-circle {
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .selected .check-circle {
+      background-color: #7c3aed;
+      border-color: #7c3aed;
+      transform: scale(1.1) rotate(360deg);
+    }
+
+    .selected .check-icon {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .spinner {
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-left-color: #fff;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .safe-pb {
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    .safe-pt {
+      padding-top: env(safe-area-inset-top);
+    }
+
+    /* MARCA D'ÁGUA */
+    .watermark-footer {
+      position: fixed;
+      left: 24px;
+      bottom: 128px;
+      z-index: 40;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      animation: fadeIn 1s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .watermark-footer .wm-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.05),
+        0 10px 15px -3px rgba(0, 0, 0, 0.05),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .watermark-footer .wm-icon-box {
+      width: 16px;
+      height: 16px;
+      background: linear-gradient(135deg, #7c3aed, #a78bfa);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 4px rgba(124, 58, 237, 0.25);
+    }
+
+    .watermark-footer .wm-icon-box svg {
+      width: 10px;
+      height: 10px;
+      color: white;
+      stroke-width: 3px;
+    }
+
+    .watermark-footer .wm-text {
+      font-family: "Outfit", sans-serif;
+      font-weight: 700;
+      font-size: 10px;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Estilos para o Modal de Copos */
+    .option-checkbox:checked+div {
+      background-color: #f3e8ff;
+      border-color: #7c3aed;
+      color: #4c1d95;
+    }
+
+    .option-checkbox:checked+div .check-icon-sm {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .option-checkbox:disabled+div {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background-color: #f8fafc;
+    }
+  </style>
+</head>
+
+<body class="antialiased text-slate-800 bg-slate-50 overflow-x-hidden">
+
+  <!-- MARCA D'ÁGUA -->
+  <div class="watermark-footer" aria-hidden="true">
+    <div class="wm-pill">
+      <div class="wm-icon-box">
+        <i data-lucide="code-2"></i>
+      </div>
+      <span class="wm-text">Ferreira Web Design</span>
+    </div>
+  </div>
+
+  <!-- SPLASH SCREEN -->
+  <div id="splash"
+    class="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-white transition-opacity duration-500">
+    <div class="relative mb-6">
+      <div class="absolute inset-0 bg-brand-500/20 blur-xl rounded-full animate-pulse"></div>
+      <div
+        class="w-32 h-32 rounded-full bg-brand-100 flex items-center justify-center border-4 border-white shadow-2xl relative z-10 animate-bounce-short overflow-hidden">
+        <img src="logoacai.jpeg"
+          onerror="this.style.opacity='0'; this.parentElement.innerHTML='<i data-lucide=\'ice-cream-2\' class=\'w-16 h-16 text-brand-500\'></i>'"
+          class="w-full h-full object-cover">
+      </div>
+    </div>
+    <h1 class="font-display font-bold text-3xl text-slate-900 tracking-tight">Açaí Ellegance</h1>
+    <p class="text-slate-400 text-xs font-bold mt-3 tracking-widest uppercase bg-slate-100 px-3 py-1 rounded-full">
+      Carregando Sabores</p>
+  </div>
+
+  <div class="app-container relative min-h-screen pb-32 z-10 flex flex-col items-center">
+
+    <!-- HEADER -->
+    <header class="sticky top-0 z-40 glass shadow-sm w-full safe-pt">
+      <div class="px-5 h-[72px] flex items-center justify-between max-w-lg mx-auto">
+        <div class="flex items-center gap-3 cursor-pointer group" onclick="window.handleAdminClick()">
+          <div class="relative transition-transform group-active:scale-95">
+            <div
+              class="w-11 h-11 rounded-full bg-brand-100 border-2 border-white shadow-md flex items-center justify-center overflow-hidden">
+              <img src="logoacai.jpeg"
+                onerror="this.style.display='none'; this.parentElement.innerHTML='<i data-lucide=\'ice-cream-2\' class=\'w-6 h-6 text-brand-600\'></i>'"
+                class="w-full h-full object-cover">
+            </div>
+            <div id="status-indicator"
+              class="absolute bottom-0 right-0 w-3.5 h-3.5 bg-slate-300 border-2 border-white rounded-full transition-colors duration-500">
+            </div>
+          </div>
+          <div>
+            <h1 class="font-display font-extrabold text-lg leading-tight text-slate-900 tracking-tight">Açaí Ellegance
+            </h1>
+            <div class="flex items-center gap-1">
+              <span id="status-dot" class="w-1.5 h-1.5 rounded-full bg-slate-300"></span>
+              <p id="status-text" class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Conectando...
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <button onclick="window.toggleCart(true)"
+          class="relative p-3 rounded-2xl bg-white border border-slate-100 shadow-sm active:scale-90 text-brand-600 transition-all">
+          <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+          <span id="cart-count"
+            class="absolute -top-1 -right-1 bg-brand-600 text-white text-[9px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-white transform scale-0 transition-transform shadow-sm">0</span>
+        </button>
+      </div>
+
+      <div class="px-5 pb-3 pt-1 overflow-x-auto no-scrollbar w-full max-w-lg mx-auto">
+        <div class="flex gap-2 w-max">
+          <button onclick="window.filterCategory('Todos')"
+            class="cat-btn active px-6 py-2.5 rounded-full text-xs font-black bg-brand-900 text-white shadow-lg whitespace-nowrap active:scale-95 transition-all"
+            data-cat="Todos">Todos</button>
+          <button onclick="window.filterCategory('Garrafas Tradicionais')"
+            class="cat-btn px-6 py-2.5 rounded-full text-xs font-black bg-white text-slate-500 border border-slate-200 whitespace-nowrap active:scale-95 transition-all"
+            data-cat="Garrafas Tradicionais">Garrafas Tradicionais</button>
+          <button onclick="window.filterCategory('Garrafas Gourmet')"
+            class="cat-btn px-6 py-2.5 rounded-full text-xs font-black bg-white text-slate-500 border border-slate-200 whitespace-nowrap active:scale-95 transition-all"
+            data-cat="Garrafas Gourmet">Garrafas Gourmet</button>
+          <button onclick="window.filterCategory('Copos')"
+            class="cat-btn px-6 py-2.5 rounded-full text-xs font-black bg-white text-slate-500 border border-slate-200 whitespace-nowrap active:scale-95 transition-all"
+            data-cat="Copos">Copos</button>
+          <button onclick="window.filterCategory('Tigelas 1KG')"
+            class="cat-btn px-6 py-2.5 rounded-full text-xs font-black bg-white text-slate-500 border border-slate-200 whitespace-nowrap active:scale-95 transition-all"
+            data-cat="Tigelas 1KG">1KG</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTEÚDO -->
+    <main class="px-5 pt-6 w-full max-w-lg space-y-8 flex-1">
+
+      <!-- SEÇÃO DE DESTAQUES (BANNERS DINÂMICOS DO PAINEL) -->
+      <div class="w-[calc(100%+2.5rem)] -mx-5">
+        <div id="highlights-container"
+          class="flex gap-4 overflow-x-auto snap-x snap-mandatory no-scrollbar px-5 pb-4 pt-1">
+          <!-- Os banners editáveis aparecerão aqui via JS -->
+        </div>
+      </div>
+
+      <!-- MURAL DE AVISOS (FEED) -->
+      <div id="news-feed" class="space-y-4 empty:hidden"></div>
+
+      <div class="relative group">
+        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+          <i data-lucide="search"
+            class="w-5 h-5 text-slate-400 group-focus-within:text-brand-600 transition-colors"></i>
+        </div>
+        <input type="text" id="search-input" onkeyup="window.renderMenu()" placeholder="O que você deseja hoje?"
+          class="w-full pl-12 pr-4 py-4 bg-white rounded-2xl border border-slate-100 shadow-soft text-sm font-semibold placeholder:text-slate-400 focus:ring-4 focus:ring-brand-500/10 focus:border-brand-500/50 outline-none transition-all">
+      </div>
+
+      <div id="products-grid" class="grid grid-cols-1 gap-4 pb-10"></div>
+
+      <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-100">
+        <label class="flex items-center gap-2 text-xs font-black text-slate-400 uppercase mb-3 tracking-wide">
+          <i data-lucide="message-square" class="w-3.5 h-3.5 text-brand-500"></i> Alguma observação?
+        </label>
+        <textarea id="obs-input" rows="2"
+          class="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm focus:bg-white focus:ring-4 focus:ring-brand-500/10 outline-none resize-none placeholder:text-slate-400 text-slate-700 transition-all"
+          placeholder="Ex: Caprichar no leite condensado..." oninput="window.saveFormData()"></textarea>
+      </div>
+
+    </main>
+
+    <!-- WHATSAPP FLUTUANTE -->
+    <button onclick="window.openChat()"
+      class="fixed bottom-32 right-6 z-40 w-14 h-14 bg-whatsapp-500 text-white rounded-full shadow-whatsapp flex items-center justify-center animate-pulse-green active:scale-90 transition-all">
+      <i data-lucide="message-circle" class="w-8 h-8 fill-white/10"></i>
+    </button>
+
+    <!-- BARRA INFERIOR -->
+    <div
+      class="fixed bottom-0 left-0 right-0 z-50 p-4 bg-gradient-to-t from-white via-white to-transparent pt-10 pointer-events-none safe-pb">
+      <div class="max-w-lg mx-auto flex items-center gap-3 pointer-events-auto">
+
+        <div class="bg-white h-16 px-2 rounded-2xl shadow-xl border border-slate-100 flex items-center min-w-[120px]">
+          <button onclick="window.updateQty(-1)"
+            class="w-12 h-full flex items-center justify-center text-slate-400 active:text-brand-600 active:scale-75 transition-all text-2xl font-bold rounded-xl">-</button>
+          <span id="qty-display" class="flex-1 text-center font-display font-black text-xl text-slate-800">1</span>
+          <button onclick="window.updateQty(1)"
+            class="w-12 h-full flex items-center justify-center text-slate-400 active:text-brand-600 active:scale-75 transition-all text-2xl font-bold rounded-xl">+</button>
+        </div>
+        <button onclick="window.addToCart()" id="btn-add"
+          class="flex-1 h-16 bg-slate-900 text-white rounded-2xl shadow-xl flex items-center justify-between px-6 active:scale-95 transition-all disabled:opacity-50 disabled:grayscale group"
+          disabled>
+          <span class="text-xs font-black uppercase tracking-widest transition-all">Adicionar</span>
+          <span id="price-display" class="font-display font-bold text-lg bg-white/10 px-2 py-1 rounded-lg">R$
+            0,00</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARRINHO -->
+  <div id="cart-backdrop"
+    class="fixed inset-0 z-[60] bg-slate-900/40 backdrop-blur-sm invisible opacity-0 transition-all duration-300"
+    onclick="window.toggleCart(false)"></div>
+  <div id="cart-drawer"
+    class="fixed top-0 right-0 bottom-0 z-[70] w-full max-w-md bg-white shadow-2xl translate-x-full transition-transform duration-300 flex flex-col">
+    <div
+      class="px-6 py-6 border-b border-slate-50 flex items-center justify-between bg-white/90 backdrop-blur-md sticky top-0 z-10 safe-pt">
+      <div>
+        <h2 class="font-display font-black text-2xl text-slate-900 tracking-tight">Seu Carrinho</h2>
+        <p class="text-xs text-slate-400 font-medium">Confira os sabores escolhidos</p>
+      </div>
+      <button onclick="window.toggleCart(false)"
+        class="p-3 bg-slate-50 active:bg-slate-100 rounded-full transition-colors"><i data-lucide="x"
+          class="w-6 h-6 text-slate-500"></i></button>
+    </div>
+
+    <div class="flex-1 overflow-y-auto p-6 space-y-6 bg-slate-50/50 no-scrollbar">
+      <div id="cart-items" class="space-y-4"></div>
+
+      <div id="checkout-form" class="hidden space-y-6 bg-white p-6 rounded-[2.5rem] border border-slate-100 shadow-sm">
+        <div class="space-y-4">
+          <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest flex items-center gap-2"><i
+              data-lucide="user" class="w-4 h-4 text-brand-500"></i> Seus Dados</h3>
+          <div class="space-y-3">
+            <input id="client-name"
+              class="w-full p-4 bg-slate-50 rounded-2xl text-sm font-bold border-2 border-transparent focus:border-brand-500/20 focus:bg-white outline-none transition-all"
+              placeholder="Nome Completo" oninput="window.saveFormData(); window.validateCheckout()">
+            <input id="client-phone"
+              class="w-full p-4 bg-slate-50 rounded-2xl text-sm font-bold border-2 border-transparent focus:border-brand-500/20 focus:bg-white outline-none transition-all"
+              placeholder="Telefone (WhatsApp)" maxlength="15">
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest flex items-center gap-2"><i
+              data-lucide="map-pin" class="w-4 h-4 text-brand-500"></i> Entrega</h3>
+          <div class="grid grid-cols-2 gap-3">
+            <button onclick="window.setDelivery('Retirada')" id="btn-retirada"
+              class="p-4 border-2 border-slate-100 rounded-2xl text-xs font-black text-slate-400 active:bg-slate-50 transition-all uppercase tracking-wide">Retirada</button>
+            <button onclick="window.setDelivery('Entrega')" id="btn-entrega"
+              class="p-4 border-2 border-slate-100 rounded-2xl text-xs font-black text-slate-400 active:bg-slate-50 transition-all uppercase tracking-wide">Entrega</button>
+          </div>
+          <div id="delivery-details" class="hidden space-y-3 animate-slide-up">
+            <select id="delivery-zone"
+              class="w-full p-4 bg-white border-2 border-slate-200 rounded-2xl text-sm font-bold outline-none focus:border-brand-500 transition-colors"
+              onchange="window.renderCart(); window.saveFormData()"></select>
+            <textarea id="client-address" rows="2"
+              class="w-full p-4 bg-white border-2 border-slate-200 rounded-2xl text-sm font-medium outline-none resize-none focus:border-brand-500 transition-colors"
+              placeholder="Endereço completo (Rua, Nº, Bairro, Ref)"
+              oninput="window.saveFormData(); window.validateCheckout()"></textarea>
+          </div>
+        </div>
+
+        <div class="space-y-4">
+          <h3 class="text-xs font-black text-slate-400 uppercase tracking-widest flex items-center gap-2"><i
+              data-lucide="credit-card" class="w-4 h-4 text-brand-500"></i> Pagamento</h3>
+          <select id="payment-method"
+            class="w-full p-4 bg-slate-50 rounded-2xl text-sm font-bold border-2 border-transparent focus:bg-white focus:border-brand-500/20 outline-none transition-all"
+            onchange="window.handlePaymentChange(); window.saveFormData()">
+            <option value="" disabled selected>Forma de pagamento...</option>
+            <option value="Pix">Pix (Copia e Cola)</option>
+            <option value="Dinheiro">Dinheiro</option>
+            <option value="Cartão">Cartão na Entrega</option>
+          </select>
+
+          <div id="pix-area"
+            class="hidden bg-brand-50 p-5 rounded-3xl border border-brand-100 text-center animate-slide-up">
+            <p class="text-[10px] font-black text-brand-900 uppercase mb-1 tracking-widest">Titular: Gabriel Santana
+              Morais</p>
+            <p class="text-[10px] font-black text-brand-900 uppercase mb-3 tracking-widest">Chave Pix</p>
+            <div class="flex gap-2 mb-4">
+              <input id="pix-key" readonly
+                class="flex-1 text-[10px] text-center p-3 rounded-xl bg-white border border-brand-100 text-slate-500 outline-none font-mono">
+              <button onclick="window.copyPix()"
+                class="p-3 bg-brand-600 text-white rounded-xl active:bg-brand-700 transition-colors shadow-lg"><i
+                  data-lucide="copy" class="w-4 h-4"></i></button>
+            </div>
+            <p class="text-[10px] text-slate-500 font-medium">Copie a chave e envie o comprovante no WhatsApp ao
+              finalizar.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-6 border-t border-slate-100 bg-white z-20 shadow-[0_-10px_60px_-15px_rgba(0,0,0,0.1)] safe-pb">
+      <div class="flex justify-between items-end mb-5">
+        <span class="text-xs font-black text-slate-400 uppercase tracking-widest">Total Geral</span>
+        <span id="cart-total" class="text-3xl font-display font-black text-slate-900 tracking-tight">R$ 0,00</span>
+      </div>
+      <button onclick="window.sendOrder()" id="btn-checkout"
+        class="w-full py-5 rounded-2xl bg-gradient-to-r from-whatsapp-500 to-whatsapp-600 text-white font-black text-sm shadow-xl flex items-center justify-center gap-3 transition-all active:scale-95 disabled:opacity-50 disabled:grayscale"
+        disabled>
+        <div class="relative z-10 flex items-center gap-2">
+          <i data-lucide="message-circle" class="w-6 h-6 fill-white/20"></i>
+          <span>Finalizar no WhatsApp</span>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- MODAL DE COPOS (PERSONALIZAÇÃO) -->
+  <div id="copo-modal"
+    class="fixed inset-0 z-[80] bg-slate-900/60 backdrop-blur-md hidden flex flex-col justify-end sm:justify-center transition-all">
+    <div
+      class="bg-white w-full max-w-lg mx-auto h-[85vh] sm:h-auto sm:max-h-[90vh] sm:rounded-[2rem] rounded-t-[2.5rem] shadow-2xl flex flex-col relative animate-slide-up">
+
+      <!-- Header Modal -->
+      <div
+        class="px-6 py-5 border-b border-slate-50 flex items-center justify-between bg-white rounded-t-[2.5rem] sticky top-0 z-10">
+        <div>
+          <h3 class="font-display font-bold text-xl text-slate-900" id="copo-modal-title">Montar Copo</h3>
+          <p class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Escolha até 3 itens</p>
+        </div>
+        <button onclick="window.closeCopoModal()"
+          class="p-2 bg-slate-50 rounded-full hover:bg-slate-100 text-slate-400 transition-colors">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Scroll Content -->
+      <div class="flex-1 overflow-y-auto p-6 space-y-6 no-scrollbar" id="copo-options-container">
+        <!-- As opções serão injetadas aqui via JS -->
+      </div>
+
+      <!-- Footer Modal -->
+      <div class="p-6 border-t border-slate-100 bg-white sm:rounded-b-[2rem] safe-pb">
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center bg-slate-100 rounded-xl h-12 px-1">
+            <button onclick="window.updateCopoQty(-1)"
+              class="w-10 h-full flex items-center justify-center text-slate-500 font-bold text-lg active:scale-90 transition-transform">-</button>
+            <span id="copo-qty-display" class="w-8 text-center font-display font-bold text-lg text-slate-800">1</span>
+            <button onclick="window.updateCopoQty(1)"
+              class="w-10 h-full flex items-center justify-center text-slate-500 font-bold text-lg active:scale-90 transition-transform">+</button>
+          </div>
+          <div class="text-right">
+            <span class="block text-[10px] font-bold text-slate-400 uppercase">Valor Total</span>
+            <span id="copo-total-price" class="font-display font-black text-2xl text-brand-600">R$ 0,00</span>
+          </div>
+        </div>
+        <button onclick="window.addCopoToCart()"
+          class="w-full py-4 bg-brand-600 text-white rounded-xl font-bold text-sm shadow-lg active:scale-95 transition-transform flex items-center justify-center gap-2">
+          <span>Adicionar ao Pedido</span>
+          <i data-lucide="check" class="w-4 h-4"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL EDITAR PRODUTO -->
+  <div id="edit-product-modal"
+    class="fixed inset-0 z-[100] bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center p-6 transition-all">
+    <div
+      class="bg-white w-full max-w-sm p-6 rounded-[2rem] shadow-2xl animate-slide-up relative mt-20 sm:mt-0 max-h-[90vh] overflow-y-auto no-scrollbar">
+      <button onclick="window.closeEditModal()" class="absolute top-5 right-5 text-slate-300 hover:text-slate-600"><i
+          data-lucide="x" class="w-6 h-6"></i></button>
+
+      <div class="mb-6 flex items-center gap-3">
+        <div class="w-10 h-10 bg-brand-50 rounded-xl flex items-center justify-center text-brand-600">
+          <i data-lucide="edit-3" class="w-5 h-5"></i>
+        </div>
+        <h3 class="font-display font-bold text-xl text-slate-900">Editar Produto</h3>
+      </div>
+
+      <div class="space-y-3">
+        <input type="hidden" id="edit-prod-index">
+        <input id="edit-prod-name" placeholder="Nome do Produto"
+          class="w-full p-3 bg-slate-50 rounded-xl text-xs font-bold outline-none border border-transparent focus:border-brand-200 transition-all">
+        <input id="edit-prod-desc" placeholder="Descrição (ingredientes...)"
+          class="w-full p-3 bg-slate-50 rounded-xl text-xs font-medium outline-none border border-transparent focus:border-brand-200 transition-all">
+        <div class="flex gap-2">
+          <input id="edit-prod-price" type="number" step="0.01" placeholder="Preço (R$)"
+            class="flex-1 p-3 bg-slate-50 rounded-xl text-xs font-bold outline-none border border-transparent focus:border-brand-200 transition-all">
+          <select id="edit-prod-cat"
+            class="flex-1 p-3 bg-slate-50 rounded-xl text-xs font-bold outline-none border border-transparent focus:border-brand-200 transition-all"
+            onchange="window.toggleEditCopoOpts()">
+            <option value="Garrafas Tradicionais">Garrafas Tradicionais</option>
+            <option value="Garrafas Gourmet">Garrafas Gourmet</option>
+            <option value="Copos">Copos</option>
+            <option value="Tigelas 1KG">Tigelas 1KG</option>
+          </select>
+        </div>
+
+        <!-- Opções extras p/ Copos/Tigelas -->
+        <div id="edit-prod-copo-opts" class="hidden mt-2 p-3 bg-blue-50/50 border border-blue-100 rounded-xl space-y-3">
+          <label class="flex items-center gap-2 text-xs font-bold text-slate-700 cursor-pointer">
+            <input type="checkbox" id="edit-prod-has-complements"
+              class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500" onchange="
+                document.getElementById('edit-prod-max-comp-container').classList.toggle('opacity-50', !this.checked); 
+                document.getElementById('edit-prod-max-comp').disabled = !this.checked;
+                document.getElementById('edit-prod-condensed-milk-container').classList.toggle('opacity-50', !this.checked);
+                document.getElementById('edit-prod-has-condensed-milk').disabled = !this.checked;
+                document.getElementById('edit-prod-milk-mode-container').classList.toggle('opacity-50', !this.checked);
+                document.getElementById('edit-prod-milk-mode').disabled = !this.checked;
+              ">
+            Permitir Complementos
+          </label>
+          <div id="edit-prod-max-comp-container" class="flex items-center justify-between transition-opacity">
+            <span class="text-xs font-medium text-slate-600">Límite Cmp. (0 = Ilim.)</span>
+            <div class="flex items-center bg-white border border-slate-200 rounded-lg overflow-hidden shrink-0">
+              <button type="button" onclick="document.getElementById('edit-prod-max-comp').stepDown()"
+                class="px-2 py-1 text-slate-500 hover:bg-slate-50 font-bold" style="width:25px;">-</button>
+              <input type="number" id="edit-prod-max-comp" value="0" min="0"
+                class="w-10 text-center text-xs font-bold py-1 outline-none border-x border-slate-200">
+              <button type="button" onclick="document.getElementById('edit-prod-max-comp').stepUp()"
+                class="px-2 py-1 text-slate-500 hover:bg-slate-50 font-bold" style="width:25px;">+</button>
+            </div>
+          </div>
+
+          <label id="edit-prod-condensed-milk-container"
+            class="flex items-center gap-2 text-xs font-bold text-slate-700 cursor-pointer transition-opacity">
+            <input type="checkbox" id="edit-prod-has-condensed-milk"
+              class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500">
+            Tem Leite Condensado?
+          </label>
+
+          <div id="edit-prod-milk-mode-container" class="transition-opacity pt-1">
+            <select id="edit-prod-milk-mode"
+              class="w-full text-xs p-2 bg-white rounded-lg border border-blue-200 outline-none">
+              <option value="included">Sempre Incluso (Grátis)</option>
+              <option value="optional">Opcional Pago (Config Global)</option>
+            </select>
+          </div>
+        </div>
+
+        <button onclick="window.saveEditedProduct()"
+          class="w-full py-4 mt-2 bg-brand-600 text-white rounded-2xl font-black text-sm shadow-lg active:scale-95 transition-transform">
+          Salvar Alterações
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAINEL ADMIN E LOGIN -->
+  <div id="admin-modal"
+    class="fixed inset-0 z-[80] bg-slate-900/60 backdrop-blur-md hidden flex items-center justify-center p-6 transition-all">
+    <div class="bg-white w-full max-w-sm p-8 rounded-[2rem] shadow-2xl animate-slide-up relative">
+      <button onclick="document.getElementById('admin-modal').classList.add('hidden')"
+        class="absolute top-5 right-5 text-slate-300 hover:text-slate-600"><i data-lucide="x"
+          class="w-6 h-6"></i></button>
+      <div class="text-center mb-8">
+        <div
+          class="w-16 h-16 bg-brand-50 rounded-2xl flex items-center justify-center mx-auto mb-4 text-brand-600 shadow-inner">
+          <i data-lucide="lock" class="w-8 h-8"></i>
+        </div>
+        <h3 class="font-display font-bold text-2xl text-slate-900">Admin Access</h3>
+      </div>
+      <div class="space-y-4">
+        <input type="email" id="adm-email" placeholder="E-mail (opcional para local)"
+          class="w-full p-4 bg-slate-50 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-brand-500 outline-none">
+        <input type="password" id="adm-pass" placeholder="Senha"
+          class="w-full p-4 bg-slate-50 rounded-2xl text-sm font-semibold focus:ring-2 focus:ring-brand-500 outline-none">
+        <button onclick="window.adminLogin()"
+          class="w-full py-4 bg-brand-900 text-white rounded-2xl font-bold text-sm shadow-lg">Entrar</button>
+        <p class="text-[10px] text-center text-slate-400 mt-2">Modo Local: Use a senha mestra</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="admin-panel" class="fixed inset-0 z-[90] bg-slate-50 hidden overflow-y-auto">
+    <div
+      class="bg-white px-6 py-5 sticky top-0 z-10 flex justify-between items-center shadow-sm border-b border-slate-100 safe-pt">
+      <div>
+        <h2 class="font-display font-bold text-xl text-slate-900">Dashboard</h2>
+        <p class="text-[10px] text-green-600 font-bold bg-green-50 px-2 py-0.5 rounded-md inline-block">● Online</p>
+      </div>
+      <button onclick="window.adminLogout()"
+        class="text-xs font-bold text-red-600 bg-red-50 px-4 py-2 rounded-xl border border-red-100">Sair</button>
+    </div>
+
+    <div class="p-6 space-y-6 max-w-lg mx-auto pb-24">
+      <div class="flex p-1 bg-slate-100 rounded-xl mb-4 overflow-x-auto no-scrollbar">
+        <button onclick="window.switchAdminTab('estoque')" id="tab-estoque"
+          class="px-4 py-2 text-xs font-bold rounded-lg bg-white shadow-sm text-slate-800 transition-all shrink-0">Estoque</button>
+        <button onclick="window.switchAdminTab('avisos')" id="tab-avisos"
+          class="px-4 py-2 text-xs font-bold rounded-lg text-slate-500 transition-all shrink-0">Avisos</button>
+        <button onclick="window.switchAdminTab('destaques')" id="tab-destaques"
+          class="px-4 py-2 text-xs font-bold rounded-lg text-slate-500 transition-all shrink-0">Destaques</button>
+        <button onclick="window.switchAdminTab('config')" id="tab-config"
+          class="px-4 py-2 text-xs font-bold rounded-lg text-slate-500 transition-all shrink-0">Config</button>
+      </div>
+
+      <!-- PAINEL ESTOQUE -->
+      <div id="view-estoque" class="space-y-4">
+        <!-- Produtos -->
+        <div class="bg-white p-6 rounded-[2.5rem] shadow-sm border border-slate-100 mb-4">
+          <h3 class="text-sm font-black text-slate-800 uppercase tracking-wide mb-4 flex items-center gap-2">
+            <i data-lucide="plus-circle" class="w-4 h-4 text-brand-500"></i> Novo Produto
+          </h3>
+          <div class="space-y-3">
+            <input id="new-prod-name" placeholder="Nome do Produto"
+              class="w-full p-3 bg-slate-50 rounded-xl text-xs font-bold outline-none border border-transparent focus:border-brand-200 transition-all">
+            <input id="new-prod-desc" placeholder="Descrição (ingredientes...)"
+              class="w-full p-3 bg-slate-50 rounded-xl text-xs font-medium outline-none border border-transparent focus:border-brand-200 transition-all">
+            <div class="flex gap-2">
+              <input id="new-prod-price" type="number" step="0.01" placeholder="Preço (R$)"
+                class="flex-1 p-3 bg-slate-50 rounded-xl text-xs font-bold outline-none border border-transparent focus:border-brand-200 transition-all">
+              <select id="new-prod-cat"
+                class="flex-1 p-3 bg-slate-50 rounded-xl text-xs font-bold outline-none border border-transparent focus:border-brand-200 transition-all">
+                <option value="Garrafas Tradicionais">Garrafas Tradicionais</option>
+                <option value="Garrafas Gourmet">Garrafas Gourmet</option>
+                <option value="Copos">Copos</option>
+                <option value="Tigelas 1KG">Tigelas 1KG</option>
+              </select>
+            </div>
+
+            <div id="new-prod-copo-opts" class="mt-2 p-3 bg-blue-50/50 border border-blue-100 rounded-xl space-y-3">
+              <label class="flex items-center gap-2 text-xs font-bold text-slate-700 cursor-pointer">
+                <input type="checkbox" id="new-prod-has-complements"
+                  class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500" onchange="
+                    document.getElementById('new-prod-max-comp-container').classList.toggle('opacity-50', !this.checked); 
+                    document.getElementById('new-prod-max-comp').disabled = !this.checked;
+                    document.getElementById('new-prod-condensed-milk-container').classList.toggle('opacity-50', !this.checked);
+                    document.getElementById('new-prod-has-condensed-milk').disabled = !this.checked;
+                  ">
+                Permitir Complementos
+              </label>
+              <div id="new-prod-max-comp-container"
+                class="flex items-center justify-between opacity-50 transition-opacity">
+                <span class="text-xs font-medium text-slate-600">Límite Cmp. (0 = Ilim.)</span>
+                <div class="flex items-center bg-white border border-slate-200 rounded-lg overflow-hidden shrink-0">
+                  <button type="button" onclick="document.getElementById('new-prod-max-comp').stepDown()"
+                    class="px-2 py-1 text-slate-500 hover:bg-slate-50 font-bold" style="width:25px;">-</button>
+                  <input type="number" id="new-prod-max-comp" value="0" min="0" disabled
+                    class="w-10 text-center text-xs font-bold py-1 outline-none border-x border-slate-200">
+                  <button type="button" onclick="document.getElementById('new-prod-max-comp').stepUp()"
+                    class="px-2 py-1 text-slate-500 hover:bg-slate-50 font-bold" style="width:25px;">+</button>
+                </div>
+              </div>
+
+              <label id="new-prod-condensed-milk-container"
+                class="flex items-center gap-2 text-xs font-bold text-slate-700 cursor-pointer opacity-50 transition-opacity">
+                <input type="checkbox" id="new-prod-has-condensed-milk"
+                  class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500" disabled checked>
+                Incluir Leite Condensado
+              </label>
+            </div>
+
+            <button onclick="window.addProduct()"
+              class="w-full mt-2 bg-brand-600 text-white p-3 rounded-xl hover:bg-brand-700 active:scale-95 transition-all shadow-sm flex items-center justify-center gap-2 font-bold text-xs uppercase tracking-wider">
+              <i data-lucide="plus" class="w-4 h-4"></i> Adicionar Produto
+            </button>
+          </div>
+        </div>
+
+        <!-- Lista Produtos -->
+        <div class="bg-white p-6 rounded-[2.5rem] shadow-sm border border-slate-100">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-10 h-10 rounded-full bg-orange-50 flex items-center justify-center text-orange-600"><i
+                data-lucide="package" class="w-5 h-5"></i></div>
+            <h3 class="text-sm font-black text-slate-800 uppercase tracking-wide">Controle de Estoque</h3>
+          </div>
+          <div id="stock-list"
+            class="space-y-2 max-h-[40vh] overflow-y-auto pr-1 no-scrollbar border-b border-slate-100 pb-4 mb-4"></div>
+
+          <!-- SEÇÃO DE INGREDIENTES -->
+          <div class="mt-4 pt-2">
+            <h3 class="text-sm font-black text-slate-800 uppercase tracking-wide mb-4">Ingredientes do Copo</h3>
+            <div id="stock-ing-list" class="space-y-4"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAINEL AVISOS -->
+      <div id="view-avisos" class="hidden space-y-4">
+        <div class="bg-white p-6 rounded-[2.5rem] shadow-sm border border-slate-100">
+          <h3 class="text-sm font-black text-slate-800 uppercase tracking-wide mb-4 flex items-center gap-2">
+            <i data-lucide="megaphone" class="w-4 h-4 text-brand-500"></i> Criar Aviso
+          </h3>
+          <div class="space-y-3">
+            <input id="post-title" placeholder="Título (Ex: Promoção do Dia)"
+              class="w-full p-3 bg-slate-50 rounded-xl text-xs font-bold outline-none focus:ring-2 focus:ring-brand-200">
+            <textarea id="post-msg" rows="3" placeholder="Mensagem para seus clientes..."
+              class="w-full p-3 bg-slate-50 rounded-xl text-xs font-medium outline-none resize-none focus:ring-2 focus:ring-brand-200"></textarea>
+
+            <div class="flex flex-col gap-2 mt-2">
+              <label class="text-[10px] font-bold text-slate-400 uppercase tracking-widest ml-1">Imagem do Post
+                (Opcional)</label>
+              <div class="flex items-center gap-2">
+                <input id="post-image-url" type="url" placeholder="Cole o Link da Imagem aqui"
+                  class="flex-1 p-3 bg-slate-50 rounded-xl text-xs font-medium outline-none focus:ring-2 focus:ring-brand-200"
+                  oninput="window.previewPastedImage(this.value)">
+
+                <label
+                  class="p-3 bg-brand-50 text-brand-600 rounded-xl cursor-pointer hover:bg-brand-100 transition-colors shadow-sm flex items-center justify-center relative group"
+                  title="Enviar arquivo do celular/PC">
+                  <i data-lucide="image-plus" class="w-5 h-5"></i>
+                  <input type="file" id="post-image-file" accept="image/*" class="hidden"
+                    onchange="window.handlePostImage(this)">
+                </label>
+              </div>
+
+              <div id="image-preview-container" class="hidden relative mt-2 group">
+                <img id="post-image-preview"
+                  class="w-full h-auto max-h-[500px] object-contain rounded-xl border border-slate-200 shadow-sm bg-slate-100" />
+                <button onclick="window.clearPostImage()"
+                  class="absolute top-3 right-3 p-2 bg-slate-900/60 backdrop-blur-md text-white rounded-full hover:bg-red-500 transition-all shadow-lg active:scale-95"
+                  title="Remover imagem">
+                  <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+              </div>
+            </div>
+
+            <button onclick="window.addPost()"
+              class="w-full mt-2 py-3 bg-brand-600 text-white rounded-xl font-bold text-sm shadow-md active:scale-95 transition-transform">
+              Publicar Aviso
+            </button>
+          </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-[2.5rem] shadow-sm border border-slate-100">
+          <h3 class="text-sm font-black text-slate-800 uppercase tracking-wide mb-4">Avisos Ativos</h3>
+          <div id="admin-posts-list" class="space-y-3"></div>
+        </div>
+      </div>
+
+      <!-- PAINEL DE DESTAQUES -->
+      <div id="view-destaques" class="hidden space-y-4">
+        <div class="bg-white p-6 rounded-[2.5rem] shadow-sm border border-slate-100">
+          <h3 class="text-sm font-black text-slate-800 uppercase tracking-wide mb-2 flex items-center gap-2">
+            <i data-lucide="images" class="w-4 h-4 text-brand-500"></i> Banners Principais
+          </h3>
+          <p class="text-[10px] text-slate-500 mb-5 leading-relaxed">Personalize os 3 banners que aparecem no topo do
+            site. Adicione a foto da <b>Garrafa Nova</b> ou da <b>Promoção do Sextou</b>!</p>
+
+          <div id="admin-highlights-list" class="space-y-4">
+            <!-- Injetado por JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- PAINEL CONFIG -->
+      <div id="view-config" class="hidden space-y-6">
+        <div class="bg-white p-6 rounded-[2.5rem] shadow-sm border border-slate-100">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600"><i
+                data-lucide="store" class="w-5 h-5"></i></div>
+            <h3 class="text-sm font-black text-slate-800 uppercase tracking-wide">Status Loja</h3>
+          </div>
+          <div class="flex gap-3 mb-4">
+            <button onclick="window.setStatus('open')" id="st-open"
+              class="flex-1 py-4 rounded-2xl border-2 text-xs font-black transition-all">ABRIR</button>
+            <button onclick="window.setStatus('auto')" id="st-auto"
+              class="flex-1 py-4 rounded-2xl border-2 text-xs font-black transition-all">AUTO</button>
+            <button onclick="window.setStatus('closed')" id="st-closed"
+              class="flex-1 py-4 rounded-2xl border-2 text-xs font-black transition-all">FECHAR</button>
+          </div>
+
+          <div class="pt-4 border-t border-slate-100">
+            <h4 class="text-xs font-bold text-slate-400 uppercase mb-3">Horários (Modo Auto)</h4>
+            <div class="flex gap-4">
+              <div class="flex-1">
+                <label class="text-[10px] font-bold text-slate-400 ml-1">Abertura (h)</label>
+                <input id="cfg-hour-start" type="number" min="0" max="23"
+                  class="w-full p-3 bg-slate-50 rounded-xl text-sm font-bold text-center outline-none border border-transparent focus:border-brand-200">
+              </div>
+              <div class="flex-1">
+                <label class="text-[10px] font-bold text-slate-400 ml-1">Fechamento (h)</label>
+                <input id="cfg-hour-end" type="number" min="0" max="23"
+                  class="w-full p-3 bg-slate-50 rounded-xl text-sm font-bold text-center outline-none border border-transparent focus:border-brand-200">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-[2.5rem] shadow-sm border border-slate-100">
+          <h3 class="text-sm font-black text-slate-800 uppercase tracking-wide mb-4 flex items-center gap-2">
+            <i data-lucide="map-pin" class="w-4 h-4 text-brand-500"></i> Locais de Entrega
+          </h3>
+
+          <div class="flex gap-2 mb-4">
+            <input id="new-zone-name" placeholder="Nome do Bairro"
+              class="flex-1 p-3 bg-slate-50 rounded-xl text-xs font-bold outline-none border border-transparent focus:border-brand-200 transition-all">
+            <input id="new-zone-price" type="number" placeholder="R$"
+              class="w-20 p-3 bg-slate-50 rounded-xl text-xs font-bold outline-none border border-transparent focus:border-brand-200 transition-all">
+            <button onclick="window.addZone()"
+              class="bg-green-500 text-white p-3 rounded-xl hover:bg-green-600 active:scale-95 transition-all shadow-sm">
+              <i data-lucide="plus" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <div id="admin-zones-list" class="space-y-2 max-h-60 overflow-y-auto no-scrollbar"></div>
+        </div>
+
+        <div class="bg-white p-6 rounded-[2.5rem] shadow-sm border border-slate-100 space-y-4">
+          <div class="flex items-center gap-3 mb-2">
+            <div class="w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center text-purple-600"><i
+                data-lucide="settings-2" class="w-5 h-5"></i></div>
+            <h3 class="text-sm font-black text-slate-800 uppercase tracking-wide">Loja & Script</h3>
+          </div>
+          <input id="cfg-name" class="w-full p-4 bg-slate-50 rounded-2xl text-sm font-medium outline-none"
+            placeholder="Nome Loja">
+          <input id="cfg-phone" class="w-full p-4 bg-slate-50 rounded-2xl text-sm font-medium outline-none"
+            placeholder="WhatsApp">
+          <input id="cfg-pix-key" class="w-full p-4 bg-slate-50 rounded-2xl text-sm font-medium outline-none"
+            placeholder="Chave Pix">
+          <input id="cfg-script-url" class="w-full p-4 bg-slate-50 rounded-2xl text-xs font-mono"
+            placeholder="Google Script URL">
+          <button onclick="window.saveSettings()"
+            class="w-full py-4 bg-brand-900 text-white rounded-2xl font-bold text-sm active:bg-brand-800 transition-all">Salvar
+            Tudo</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CUSTOM CONFIRM MODAL -->
+  <div id="confirm-modal"
+    class="fixed inset-0 z-[120] bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-6 transition-all">
+    <div class="bg-white w-full max-w-xs p-6 rounded-3xl shadow-2xl animate-slide-up text-center">
+      <div class="w-12 h-12 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+        <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+      </div>
+      <h3 class="font-display font-bold text-lg text-slate-900 mb-2">Atenção</h3>
+      <p id="confirm-msg" class="text-sm text-slate-500 mb-6">Tem certeza que deseja continuar?</p>
+      <div class="flex gap-3">
+        <button onclick="window.closeConfirm()"
+          class="flex-1 py-3 rounded-xl bg-slate-100 text-slate-600 font-bold text-sm active:scale-95 transition-all">Cancelar</button>
+        <button onclick="window._currentConfirmAction()"
+          class="flex-1 py-3 rounded-xl bg-red-500 text-white font-bold text-sm shadow-md shadow-red-500/20 active:scale-95 transition-all">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div id="toast"
+    class="fixed top-6 left-1/2 -translate-x-1/2 bg-slate-900/90 backdrop-blur-md text-white px-6 py-4 rounded-full shadow-2xl opacity-0 pointer-events-none z-[110] transition-all duration-500 transform -translate-y-20 flex items-center gap-3 justify-center">
+    <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+    <span class="text-xs font-bold tracking-wide" id="toast-msg">Sucesso</span>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, onSnapshot, setDoc, addDoc, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    // CONFIGURAÇÃO FIREBASE
+    const userFirebaseConfig = {
+      apiKey: "AIzaSyBakH1kufhFKj-ibAkQNTXhs-WLfxUob28",
+      authDomain: "acai-ellegance-app.firebaseapp.com",
+      projectId: "acai-ellegance-app",
+      storageBucket: "acai-ellegance-app.firebasestorage.app",
+      messagingSenderId: "190829563894",
+      appId: "1:190829563894:web:8494b3663cdd381e5281d7"
+    };
+
+    let firebaseConfig;
+    if (typeof __firebase_config !== 'undefined') {
+      firebaseConfig = JSON.parse(__firebase_config);
+    } else {
+      firebaseConfig = userFirebaseConfig;
+    }
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+    const DEFAULT_ITEMS = [
+      { name: "Garrafa Paçoca 300ml", description: "Açaí, paçoca, banana e leite condensado", price: 10.00, category: "Garrafas Tradicionais" },
+      { name: "Garrafa Ninho 300ml", description: "Açaí, leite em pó, banana e leite condensado", price: 10.00, category: "Garrafas Tradicionais" },
+      { name: "Garrafa Amendoim 300ml", description: "Açaí, amendoim, banana e leite condensado", price: 10.00, category: "Garrafas Tradicionais" },
+      { name: "Garrafa Cupuaçu 300ml", description: "Açaí, cupuaçu, leite condensado", price: 10.00, category: "Garrafas Tradicionais" },
+      { name: "Garrafa Paçoca 500ml", description: "Açai, paçoca, banana e leite condensado", price: 14.00, category: "Garrafas Tradicionais" },
+      { name: "Garrafa Ninho 500ml", description: "Açai, leite em pó, banana e leite condensado", price: 14.00, category: "Garrafas Tradicionais" },
+      { name: "Garrafa Amendoim 500ml", description: "Açai, amendoim, banana e leite condensado", price: 14.00, category: "Garrafas Tradicionais" },
+      { name: "Garrafa Cupuaçu 500ml", description: "Açai, cupuaçu e leite condensado", price: 14.00, category: "Garrafas Tradicionais" },
+      { name: "Garrafa Morango 300ml", description: "Açaí, morango, creme de morango", price: 13.00, category: "Garrafas Gourmet" },
+      { name: "Garrafa Maracujá 300ml", description: "Açaí, creme de maracujá e leite condensado", price: 13.00, category: "Garrafas Gourmet" },
+      { name: "Garrafa Ovomaltine 300ml", description: "Açaí, ovomaltine, nutella", price: 13.00, category: "Garrafas Gourmet" },
+      { name: "Garrafa Creme de Ninho 300ml", description: "Açaí, leite em pó, creme de ninho", price: 13.00, category: "Garrafas Gourmet" },
+      { name: "Garrafa M&M 300ml", description: "Açaí, leite em pó, nutella e M&M", price: 13.00, category: "Garrafas Gourmet" },
+      { name: "Garrafa Morango com Nutella 500ml", description: "Açaí, morango, nutella", price: 18.00, category: "Garrafas Gourmet" },
+      { name: "Garrafa Ovomaltine 500ml", description: "Açaí, ovomaltine e nutella", price: 18.00, category: "Garrafas Gourmet" },
+      { name: "Copo 300ml", description: "Monte do seu jeito! Escolha frutas, adicionais e coberturas.", price: 13.00, category: "Copos", hasComplements: true, hasCondensedMilk: true, condensedMilkMode: "included" },
+      { name: "Copo 500ml", description: "Monte do seu jeito! Escolha frutas, adicionais e coberturas.", price: 18.00, category: "Copos", hasComplements: true, hasCondensedMilk: true, condensedMilkMode: "optional" },
+      { name: "Tigela 1KG (Até 4 Itens)", description: "Monte com até 4 complementos.", price: 35.00, category: "Tigelas 1KG", hasComplements: true, maxComplements: 4, hasCondensedMilk: true, condensedMilkMode: "included" },
+      { name: "Tigela 1KG (Livre)", description: "Monte sua roleta de sabores da forma que desejar.", price: 25.00, category: "Tigelas 1KG", hasComplements: true, maxComplements: 0, hasCondensedMilk: true, condensedMilkMode: "optional" }
+    ];
+
+    const DEFAULT_ACCOMPANIMENTS = {
+      frutas: [{ name: "Morango", available: true }, { name: "Banana", available: true }, { name: "Kiwi", available: true }, { name: "Manga", available: true }],
+      adicionais: [{ name: "M&M", available: true }, { name: "Paçoca", available: true }, { name: "Castanha", available: true }, { name: "Amendoim", available: true }, { name: "Leite em Pó", available: true }, { name: "Fini Banana", available: true }, { name: "Fini Beijinho", available: true }, { name: "Fini Tubes Azedo", available: true }],
+      coberturas: [{ name: "Beijinho (Fini)", available: true }, { name: "Creme de Ninho", available: true }, { name: "Creme de Morango", available: true }, { name: "Creme de Maracujá", available: true }]
+    };
+
+    const DEFAULT_HIGHLIGHTS = [
+      { badge: 'Temos Novidade', title: 'Garrafa Nova', subtitle: 'Experimente a recém-lançada!', image: '', icon: 'sparkles', color: 'brand' },
+      { badge: 'O Queridinho', title: 'Mais Pedido', subtitle: 'O favorito da loja.', image: '', icon: 'heart', color: 'pink' },
+      { badge: 'Promoção', title: 'Sextou', subtitle: 'Compre 2 ganhe 1', image: '', icon: 'flame', color: 'orange' }
+    ];
+
+    let state = {
+      cart: [],
+      config: {
+        storeName: "Açaí Ellegance",
+        phone: "557998168282",
+        statusMode: "auto",
+        openingHours: { start: 16, end: 23 },
+        sizes: DEFAULT_ITEMS,
+        accompaniments: DEFAULT_ACCOMPANIMENTS,
+        highlights: DEFAULT_HIGHLIGHTS,
+        posts: [
+          { id: 1, title: 'Bem-vindo!', message: 'Faça seu pedido com facilidade.', image: '', date: new Date().toISOString() }
+        ],
+        pixKey: "57970392000139",
+        pixName: "Gabriel Santana Morais",
+        googleScriptUrl: "https://script.google.com/macros/s/AKfycbwtHwhszybzs3OzYOUCY-cHaAi-bCSuvyuViM1mHmEkSYkfHvQvpFmhQLCXXV_ASeAA/exec",
+        zones: [
+          { name: "Albano Franco", price: 0 }, { name: "Cidade nova", price: 5.00 }, { name: "Marcos Freire 1,2,3", price: 0 }, { name: "João Alves", price: 0 }, { name: "Fernando Collor", price: 0 }, { name: "Piabeta", price: 0 }, { name: "Bairro industrial", price: 4.00 }, { name: "Porto D’antas", price: 3.00 }, { name: "Lamarão", price: 6.00 }, { name: "Japaozinho", price: 4.00 }, { name: "Sede de socorro", price: 4.00 }, { name: "Cidade nova", price: 5.00 }, { name: "Barra", price: 6.00 },
+        ]
+      },
+      selectedItems: new Set(),
+      qty: 1,
+      filter: "Todos",
+      deliveryType: "Retirada",
+      paymentVerified: false,
+      isAdmin: false,
+      currentCopo: null,
+      copoQty: 1
+    };
+
+    let db, auth;
+
+    const getCollectionRef = (colName) => {
+      if (typeof __firebase_config !== 'undefined') return collection(db, 'artifacts', appId, 'public', 'data', colName);
+      return collection(db, colName);
+    };
+    const getDocRef = (colName, docId) => {
+      if (typeof __firebase_config !== 'undefined') return doc(db, 'artifacts', appId, 'public', 'data', colName, docId);
+      return doc(db, colName, docId);
+    };
+
+    window.saveConfigSafe = async (partial, merge = true) => {
+      state.config = merge ? { ...state.config, ...partial } : partial;
+      localStorage.setItem("acai_config_v7", JSON.stringify(state.config));
+      try {
+        if (db) await setDoc(getDocRef("loja", "configuracao"), partial, { merge });
+      } catch (e) {
+        console.log("Firestore save blocked/offline:", e?.code || e);
+      }
+      window.renderMenu?.();
+      window.renderPosts?.();
+      window.renderHighlights?.();
+      window.updateUI?.();
+      if (state.isAdmin) window.syncAdminFields?.();
+    };
+
+    window.migrateData = (cfg) => {
+      if (!cfg || !cfg.sizes) return false;
+      let migrated = false;
+      cfg.sizes.forEach(item => {
+        if (item.category === 'Tradicional') { item.category = 'Garrafas Tradicionais'; migrated = true; }
+        if (item.category === 'Gourmet') { item.category = 'Garrafas Gourmet'; migrated = true; }
+        if (item.name && !item.name.toLowerCase().startsWith('garrafa') && (item.category === 'Garrafas Tradicionais' || item.category === 'Garrafas Gourmet')) {
+          item.name = 'Garrafa ' + item.name;
+          migrated = true;
+        }
+        if (item.name === "Copo 300ml" && !item.condensedMilkMode) {
+          item.condensedMilkMode = "included";
+          item.hasCondensedMilk = true;
+          migrated = true;
+        }
+      });
+
+      const hasTigelas = cfg.sizes.some(i => i.category === 'Tigelas 1KG');
+      if (!hasTigelas) {
+        cfg.sizes.push({ name: "Tigela 1KG (Até 4 Itens)", description: "Monte com até 4 complementos.", price: 35.00, category: "Tigelas 1KG", hasComplements: true, maxComplements: 4, hasCondensedMilk: true, condensedMilkMode: "included" });
+        cfg.sizes.push({ name: "Tigela 1KG (Livre)", description: "Monte sua roleta de sabores da forma que desejar.", price: 25.00, category: "Tigelas 1KG", hasComplements: true, maxComplements: 0, hasCondensedMilk: true, condensedMilkMode: "optional" });
+        migrated = true;
+      }
+
+      const hasCopo500 = cfg.sizes.some(i => i.name.includes("Copo 500ml"));
+      if (!hasCopo500) {
+        cfg.sizes.push({ name: "Copo 500ml", description: "Monte do seu jeito! Escolha frutas, adicionais e coberturas.", price: 18.00, category: "Copos", hasComplements: true, hasCondensedMilk: true, condensedMilkMode: "optional" });
+        migrated = true;
+      }
+      return migrated;
+    };
+
+    window.loadLocalConfig = () => {
+      try {
+        const saved = localStorage.getItem("acai_config_v7");
+        if (saved) {
+          const cfg = JSON.parse(saved);
+          state.config = { ...state.config, ...cfg };
+          if (!state.config.accompaniments) state.config.accompaniments = DEFAULT_ACCOMPANIMENTS;
+          if (!state.config.posts) state.config.posts = [];
+          if (!state.config.highlights || state.config.highlights.length === 0) state.config.highlights = DEFAULT_HIGHLIGHTS;
+          if (!state.config.sizes) state.config.sizes = DEFAULT_ITEMS;
+          if (!state.config.zones) state.config.zones = [];
+
+          if (window.migrateData(state.config)) {
+            localStorage.setItem("acai_config_v7", JSON.stringify(state.config));
+          }
+        }
+      } catch (e) { }
+    };
+
+    window.toast = (m, t = 'success') => {
+      const el = document.getElementById('toast');
+      document.getElementById('toast-msg').innerText = m;
+      el.classList.remove('-translate-y-20', 'opacity-0');
+      el.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        el.classList.remove('translate-y-0', 'opacity-100');
+        el.classList.add('-translate-y-20', 'opacity-0');
+      }, 2500);
+    };
+    window.refreshIcons = () => { if (typeof lucide !== 'undefined') lucide.createIcons(); };
+
+    window._currentConfirmAction = null;
+    window.customConfirm = (msg, onConfirm) => {
+      const modal = document.getElementById('confirm-modal');
+      document.getElementById('confirm-msg').innerText = msg;
+      modal.classList.remove('hidden');
+      window._currentConfirmAction = () => {
+        modal.classList.add('hidden');
+        if (onConfirm) onConfirm();
+      };
+    };
+    window.closeConfirm = () => {
+      document.getElementById('confirm-modal').classList.add('hidden');
+    };
+
+    window.handleAdminClick = () => {
+      if (state.isAdmin) window.showAdminPanel();
+      else document.getElementById('admin-modal').classList.remove('hidden');
+    };
+
+    window.openChat = () => {
+      const msg = "Olá! Gostaria de tirar uma dúvida.";
+      window.open(`https://api.whatsapp.com/send?phone=${state.config.phone.replace(/\D/g, '')}&text=${encodeURIComponent(msg)}`, '_blank');
+    };
+
+    window.toggleCart = (show) => {
+      const drawer = document.getElementById('cart-drawer');
+      const back = document.getElementById('cart-backdrop');
+      if (show) {
+        window.renderCart();
+        back.classList.remove('invisible', 'opacity-0');
+        drawer.classList.remove('translate-x-full');
+      } else {
+        back.classList.add('opacity-0');
+        drawer.classList.add('translate-x-full');
+        setTimeout(() => back.classList.add('invisible'), 300);
+      }
+    };
+
+    window.filterCategory = (cat) => {
+      state.filter = cat;
+      document.querySelectorAll('.cat-btn').forEach(b => {
+        b.className = b.dataset.cat === cat
+          ? "cat-btn active px-6 py-2.5 rounded-full text-xs font-black bg-brand-900 text-white shadow-lg whitespace-nowrap active:scale-95 transition-all"
+          : "cat-btn px-6 py-2.5 rounded-full text-xs font-black bg-white text-slate-500 border border-slate-200 whitespace-nowrap active:scale-95 transition-all";
+      });
+      window.renderMenu();
+    };
+    window.filterMenu = window.filterCategory;
+
+    window.toggleSelection = (name) => {
+      if (state.selectedItems.has(name)) state.selectedItems.delete(name);
+      else state.selectedItems.add(name);
+      window.renderMenu();
+      window.updateTotalBar();
+    };
+
+    window.updateQty = (d) => {
+      state.qty = Math.max(1, state.qty + d);
+      const el = document.getElementById('qty-display');
+      if (el) el.innerText = state.qty;
+      window.updateTotalBar();
+    };
+
+    window.updateTotalBar = () => {
+      let total = 0;
+      (state.config.sizes || []).forEach(i => { if (state.selectedItems.has(i.name)) total += i.price; });
+      const final = total * state.qty;
+      const priceDisplay = document.getElementById('price-display');
+      if (priceDisplay) priceDisplay.innerText = `R$ ${final.toFixed(2).replace('.', ',')}`;
+      const btn = document.getElementById('btn-add');
+      if (btn) {
+        if (final > 0) {
+          btn.disabled = false;
+          btn.classList.replace('bg-slate-900', 'bg-brand-900');
+        } else {
+          btn.disabled = true;
+          btn.classList.replace('bg-brand-900', 'bg-slate-900');
+        }
+      }
+    };
+
+    window.addToCart = () => {
+      if (state.selectedItems.size === 0) return window.toast("Selecione!", "error");
+      const obsInput = document.getElementById('obs-input');
+      const obs = obsInput ? obsInput.value.trim() : "";
+
+      (state.config.sizes || []).forEach(i => {
+        if (state.selectedItems.has(i.name)) {
+          const idx = state.cart.findIndex(c => c.name === i.name && c.obs === obs);
+          if (idx > -1) state.cart[idx].qty += state.qty;
+          else state.cart.push({ id: Date.now() + Math.random(), name: i.name, price: i.price, obs, qty: state.qty });
+        }
+      });
+
+      state.selectedItems.clear();
+      state.qty = 1;
+      const qtyDisplay = document.getElementById('qty-display');
+      if (qtyDisplay) qtyDisplay.innerText = "1";
+      if (obsInput) obsInput.value = "";
+
+      window.renderMenu();
+      window.updateTotalBar();
+      saveCart();
+      window.renderCart();
+      window.toast("Adicionado!");
+      setTimeout(() => window.toggleCart(true), 300);
+    };
+
+    window.modCartItem = (id, d) => {
+      const idx = state.cart.findIndex(c => c.id === id);
+      if (idx > -1) {
+        state.cart[idx].qty += d;
+        if (state.cart[idx].qty <= 0) state.cart.splice(idx, 1);
+        saveCart();
+        window.renderCart();
+      }
+    };
+
+    window.renderCart = () => {
+      const list = document.getElementById('cart-items');
+      if (!list) return;
+      list.innerHTML = "";
+      let subtotal = 0;
+      let count = 0;
+
+      if (state.cart.length === 0) {
+        list.innerHTML = `<div class="flex flex-col items-center justify-center py-10 opacity-50"><i data-lucide="shopping-cart" class="w-12 h-12 text-slate-300 mb-2"></i><p class="text-sm font-bold text-slate-400">Vazio</p></div>`;
+        document.getElementById('checkout-form').classList.add('hidden');
+      } else {
+        document.getElementById('checkout-form').classList.remove('hidden');
+        state.cart.forEach(item => {
+          subtotal += item.price * item.qty;
+          count += item.qty;
+          list.innerHTML += `
+            <div class="flex justify-between items-start bg-white p-4 rounded-2xl border border-slate-100 shadow-sm animate-slide-up">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="bg-brand-50 text-brand-600 text-[10px] font-black px-2 py-0.5 rounded-lg">${item.qty}x</span>
+                  <span class="font-bold text-sm text-slate-800">${item.name}</span>
+                </div>
+                ${item.obs ? `<p class="text-[10px] text-slate-400 mt-1 italic line-clamp-2">${item.obs}</p>` : ''}
+                <p class="text-xs font-bold text-brand-600 mt-1.5">R$ ${(item.price * item.qty).toFixed(2).replace('.', ',')}</p>
+              </div>
+              <div class="flex items-center bg-slate-50 rounded-xl h-9 border border-slate-200">
+                <button onclick="window.modCartItem(${item.id}, -1)" class="w-9 active:text-red-500 font-bold">-</button>
+                <button onclick="window.modCartItem(${item.id}, 1)" class="w-9 active:text-green-500 font-bold">+</button>
+              </div>
+            </div>`;
+        });
+      }
+
+      let shipping = 0;
+      if (state.deliveryType === 'Entrega') {
+        const zone = document.getElementById('delivery-zone');
+        if (zone && zone.selectedIndex >= 0) {
+          const opt = zone.options[zone.selectedIndex];
+          if (opt.dataset.price) {
+            shipping = parseFloat(opt.dataset.price);
+          }
+        }
+      }
+
+      const totalEl = document.getElementById('cart-total');
+      if (totalEl) totalEl.innerText = `R$ ${(subtotal + shipping).toFixed(2).replace('.', ',')}`;
+
+      const badge = document.getElementById('cart-count');
+      if (badge) {
+        badge.innerText = count;
+        badge.className = `absolute -top-1 -right-1 bg-brand-600 text-white text-[9px] font-bold w-5 h-5 flex items-center justify-center rounded-full border-2 border-white transform transition-transform shadow-sm ${count > 0 ? 'scale-100' : 'scale-0'}`;
+      }
+
+      window.validateCheckout();
+      window.refreshIcons();
+    };
+
+    window.setDelivery = (type) => {
+      state.deliveryType = type;
+      const btnRet = document.getElementById('btn-retirada');
+      const btnEnt = document.getElementById('btn-entrega');
+      const details = document.getElementById('delivery-details');
+      const base = "p-4 border-2 rounded-2xl text-xs font-black uppercase tracking-wide transition-all";
+
+      if (type === 'Retirada') {
+        if (btnRet) btnRet.className = `${base} border-brand-600 bg-brand-50 text-brand-700`;
+        if (btnEnt) btnEnt.className = `${base} border-slate-100 text-slate-400`;
+        if (details) details.classList.add('hidden');
+      } else {
+        if (btnEnt) btnEnt.className = `${base} border-brand-600 bg-brand-50 text-brand-700`;
+        if (btnRet) btnRet.className = `${base} border-slate-100 text-slate-400`;
+        if (details) details.classList.remove('hidden');
+
+        const sel = document.getElementById('delivery-zone');
+        if (sel) {
+          if (sel.options.length <= 1) {
+            sel.innerHTML = '<option value="" disabled selected>Onde entregamos?</option>';
+            (state.config.zones || []).forEach((z, index) => {
+              const txt = z.price === 0 ? "Grátis" : `+R$ ${z.price.toFixed(2)}`;
+              sel.innerHTML += `<option value="${index}" data-price="${z.price}" data-name="${z.name}">${z.name} (${txt})</option>`;
+            });
+          }
+        }
+      }
+      window.renderCart();
+      window.saveFormData();
+    };
+
+    window.handlePaymentChange = () => {
+      const method = document.getElementById('payment-method').value;
+      const pixArea = document.getElementById('pix-area');
+      state.paymentVerified = !!method;
+
+      if (method === 'Pix') {
+        if (pixArea) {
+          pixArea.classList.remove('hidden');
+          const keyEl = document.getElementById('pix-key');
+          if (keyEl) keyEl.value = state.config.pixKey || '';
+        }
+      } else {
+        if (pixArea) pixArea.classList.add('hidden');
+      }
+      window.validateCheckout();
+    };
+
+    window.copyPix = () => {
+      const k = document.getElementById('pix-key');
+      if (k) {
+        k.select();
+        document.execCommand('copy');
+        window.toast("Chave Copiada!");
+      }
+    };
+
+    window.openCopoModal = (item) => {
+      state.currentCopo = item;
+      state.copoQty = 1;
+      document.getElementById('copo-modal-title').innerText = item.name;
+
+      const maxCmp = item.maxComplements || 0;
+      const limitText = maxCmp > 0 ? `Escolha até ${maxCmp} itens (Frutas, Adicionais ou Coberturas)` : "Escolha seus acompanhamentos (Ilimitado)";
+      document.querySelector('#copo-modal p').innerText = limitText;
+
+      document.getElementById('copo-qty-display').innerText = "1";
+      document.getElementById('copo-total-price').innerText = `R$ ${item.price.toFixed(2).replace('.', ',')}`;
+
+      const container = document.getElementById('copo-options-container');
+      container.innerHTML = "";
+
+      const isCopoOuTigela = item.category === 'Copos' || item.category === 'Tigelas 1KG';
+      if (isCopoOuTigela && item.hasCondensedMilk !== false) {
+        const isMilkOff = item.condensedMilkMode === 'optional' || state.config.condensedMilkOptional === true;
+
+        if (!isMilkOff) {
+          const milkPrice = state.config.condensedMilkPrice || 0;
+          const milkTextInfo = milkPrice > 0 ? `+ R$ ${milkPrice.toFixed(2).replace('.', ',')}` : "Incluso na Base";
+
+          container.innerHTML += `
+                <div class="mb-4 bg-yellow-50 border border-yellow-200 p-4 rounded-2xl flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center">
+                            <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-black text-yellow-800 uppercase">Item Fixo</h4>
+                            <p class="text-sm font-bold text-slate-700">Leite Condensado</p>
+                        </div>
+                    </div>
+                    <div class="text-[10px] text-yellow-700 font-bold bg-yellow-100 px-2 py-1 rounded-md">
+                        ${milkTextInfo}
+                    </div>
+                </div>
+            `;
+        }
+      }
+
+      const renderSection = (title, options, type, prependHtml = "") => {
+        let html = `<div class="mb-6"><h4 class="text-sm font-black text-slate-700 uppercase mb-3 flex items-center gap-2"><div class="w-1.5 h-4 bg-brand-500 rounded-full"></div>${title}</h4><div class="grid grid-cols-2 gap-3">`;
+
+        html += prependHtml;
+
+        const availableOptions = (options || []).filter(o => o.available !== false);
+
+        if (availableOptions.length === 0 && !prependHtml) {
+          html += `<p class="text-xs text-slate-400 italic p-2">Indisponível no momento.</p>`;
+        } else {
+          availableOptions.forEach(opt => {
+            let price = parseFloat(opt.price) || 0;
+
+            if (item.name === "Tigela 1KG (Livre)") {
+              const n = opt.name.toLowerCase();
+              if (n.includes('kiwi') || n.includes('morango') || n.includes('nutella')) {
+                price = 3.00;
+              } else {
+                price = 2.00;
+              }
+            } else if (maxCmp > 0) {
+              price = 0;
+            }
+
+            const priceLabel = price > 0 ? `<span class="text-[9px] text-green-600 bg-green-50 px-1 py-0.5 rounded ml-1">+ R$ ${price.toFixed(2).replace('.', ',')}</span>` : '';
+
+            html += `
+                        <label class="cursor-pointer relative group">
+                            <input type="checkbox" class="option-checkbox limit-global hidden" value="${opt.name}" data-price="${price}" data-type="${type}" onchange="window.checkCopoLimits(this)">
+                            <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl transition-all hover:bg-white hover:shadow-sm flex items-center justify-between">
+                                <div class="flex flex-col flex-1 min-w-0 pr-2">
+                                    <span class="text-xs font-bold text-slate-500 truncate">${opt.name}</span>
+                                    ${priceLabel}
+                                </div>
+                                <div class="w-4 h-4 shrink-0 rounded-full border border-slate-300 flex items-center justify-center bg-white group-active:scale-90 relative">
+                                    <i data-lucide="check" class="check-icon-sm w-3 h-3 text-brand-600 opacity-0 transform scale-50 transition-all stroke-[4] absolute"></i>
+                                </div>
+                            </div>
+                        </label>
+                    `;
+          });
+        }
+        html += `</div></div>`;
+        return html;
+      };
+
+      const acc = state.config.accompaniments || { frutas: [], adicionais: [], coberturas: [] };
+      container.innerHTML += renderSection("Frutas", acc.frutas, "fruta");
+      container.innerHTML += renderSection("Adicionais", acc.adicionais, "adicional");
+
+      let coberturasPrepend = "";
+      const isCopoOuTigelaCobertura = item.category === 'Copos' || item.category === 'Tigelas 1KG';
+      const isMilkOffCobertura = item.condensedMilkMode === 'optional' || state.config.condensedMilkOptional === true;
+      if (isCopoOuTigelaCobertura && item.hasCondensedMilk !== false && isMilkOffCobertura) {
+        let milkPrice = state.config.condensedMilkPrice || 0;
+        if (item.name === "Tigela 1KG (Livre)") {
+          milkPrice = 2.00;
+        } else if (item.maxComplements > 0) {
+          milkPrice = 0;
+        }
+
+        const priceLabel = milkPrice > 0 ? `<span class="text-[9px] text-green-600 bg-green-50 px-1 py-0.5 rounded ml-1">+ R$ ${milkPrice.toFixed(2).replace('.', ',')}</span>` : '';
+        coberturasPrepend = `
+               <label class="cursor-pointer relative group">
+                    <input type="checkbox" class="option-checkbox limit-global hidden" value="Leite Condensado" data-price="${milkPrice}" data-type="especial" onchange="window.checkCopoLimits(this)">
+                    <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl transition-all hover:bg-white hover:shadow-sm flex items-center justify-between">
+                        <div class="flex flex-col flex-1 min-w-0 pr-2">
+                            <span class="text-xs font-bold text-slate-500 truncate">Leite Cond.</span >
+                            ${priceLabel}
+                        </div>
+                        <div class="w-4 h-4 shrink-0 rounded-full border border-slate-300 flex items-center justify-center bg-white group-active:scale-90 relative">
+                            <i data-lucide="check" class="check-icon-sm w-3 h-3 text-brand-600 opacity-0 transform scale-50 transition-all stroke-[4] absolute"></i>
+                        </div>
+                    </div>
+                </label>
+          `;
+      }
+      container.innerHTML += renderSection("Coberturas", acc.coberturas, "cobertura", coberturasPrepend);
+
+      document.getElementById('copo-modal').classList.remove('hidden');
+      window.refreshIcons();
+    };
+
+    window.closeCopoModal = () => {
+      document.getElementById('copo-modal').classList.add('hidden');
+      state.currentCopo = null;
+    };
+
+    window.checkCopoLimits = (checkbox) => {
+      if (!state.currentCopo) return;
+      const maxCmp = state.currentCopo.maxComplements || 0;
+      if (maxCmp > 0) {
+        const checkboxes = document.querySelectorAll('.limit-global');
+        const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+
+        if (checkedCount >= maxCmp) {
+          checkboxes.forEach(cb => {
+            if (!cb.checked) cb.disabled = true;
+          });
+        } else {
+          checkboxes.forEach(cb => cb.disabled = false);
+        }
+      }
+
+      window.updateCalcCopoTotal();
+    };
+
+    window.updateCalcCopoTotal = () => {
+      if (!state.currentCopo) return;
+
+      let extrasTotal = 0;
+
+      // Sum price of selected regular options
+      const checkboxes = document.querySelectorAll('.option-checkbox:checked');
+      checkboxes.forEach(cb => {
+        extrasTotal += parseFloat(cb.getAttribute('data-price')) || 0;
+      });
+
+      // Sum milk condensed price ONLY if included and NOT optional
+      const isCopoOuTigelaTotal = state.currentCopo.category === 'Copos' || state.currentCopo.category === 'Tigelas 1KG';
+      const isMilkOffTotal = state.currentCopo.condensedMilkMode === 'optional' || state.config.condensedMilkOptional === true;
+      if (isCopoOuTigelaTotal && state.currentCopo.hasCondensedMilk !== false && !isMilkOffTotal) {
+        let defaultMilkTotal = state.config.condensedMilkPrice || 0;
+        if (state.currentCopo.maxComplements > 0 || state.currentCopo.condensedMilkMode === 'included') {
+          defaultMilkTotal = 0;
+        }
+        extrasTotal += defaultMilkTotal;
+      }
+
+      const basePrice = state.currentCopo.price || 0;
+      const totalUnit = basePrice + extrasTotal;
+      const total = totalUnit * state.copoQty;
+
+      // Salvar isso para o addCopoToCart ler
+      state.currentCopoUnitFinalPrice = totalUnit;
+
+      document.getElementById('copo-total-price').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+    };
+
+    window.updateCopoQty = (d) => {
+      state.copoQty = Math.max(1, state.copoQty + d);
+      document.getElementById('copo-qty-display').innerText = state.copoQty;
+      window.updateCalcCopoTotal();
+    };
+
+    window.addCopoToCart = () => {
+      if (!state.currentCopo) return;
+
+      const checkboxes = document.querySelectorAll('.option-checkbox:checked');
+      const selectedOptions = Array.from(checkboxes).map(cb => {
+        const price = parseFloat(cb.getAttribute('data-price')) || 0;
+        return price > 0 ? `${cb.value} (+R$ ${price.toFixed(2).replace('.', ',')})` : cb.value;
+      });
+
+      const isCopoOuTigelaCart = state.currentCopo.category === 'Copos' || state.currentCopo.category === 'Tigelas 1KG';
+      const isMilkOffCart = state.currentCopo.condensedMilkMode === 'optional' || state.config.condensedMilkOptional === true;
+      if (isCopoOuTigelaCart && state.currentCopo.hasCondensedMilk !== false && !isMilkOffCart) {
+        let mPrice = state.config.condensedMilkPrice || 0;
+        if (state.currentCopo.maxComplements > 0 || state.currentCopo.condensedMilkMode === 'included') {
+          mPrice = 0;
+        }
+        const mText = mPrice > 0 ? `Leite Condensado (+R$ ${mPrice.toFixed(2).replace('.', ',')})` : "Leite Condensado (Incluso)";
+        selectedOptions.unshift(mText);
+      }
+
+      let obsText = selectedOptions.length > 0 ? `Montagem: ${selectedOptions.join(', ')}` : "Sem complementos";
+      let finalPrice = state.currentCopoUnitFinalPrice || state.currentCopo.price;
+
+      // Verifica se o copo idêntico já existe no carrinho para otimizar
+      const idx = state.cart.findIndex(c => c.name === state.currentCopo.name && c.obs === obsText && c.price === finalPrice);
+
+      if (idx > -1) {
+        state.cart[idx].qty += state.copoQty;
+      } else {
+        state.cart.push({
+          id: Date.now() + Math.random(),
+          name: state.currentCopo.name,
+          price: finalPrice,
+          obs: obsText,
+          qty: state.copoQty
+        });
+      }
+
+      saveCart();
+      window.renderCart();
+      window.closeCopoModal();
+      window.toast("Copo Adicionado!");
+      setTimeout(() => window.toggleCart(true), 300);
+    };
+
+    // ====== RENDERIZAÇÃO DA PÁGINA ======
+    window.renderHighlights = () => {
+      const container = document.getElementById('highlights-container');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const highlights = state.config.highlights || [];
+      if (highlights.length === 0) {
+        container.parentElement.classList.add('hidden');
+        return;
+      }
+      container.parentElement.classList.remove('hidden');
+
+      highlights.forEach((h) => {
+        const colorMap = {
+          'brand': { bg: 'from-brand-500 to-purple-800', badgeText: 'text-brand-700', textSmall: 'text-brand-100', filter: 'Gourmet' },
+          'pink': { bg: 'from-pink-400 to-rose-600', badgeText: 'text-pink-600', textSmall: 'text-pink-100', filter: 'Tradicional' },
+          'orange': { bg: 'from-orange-400 to-red-600', badgeText: 'text-orange-600', textSmall: 'text-orange-100', filter: 'Todos' }
+        };
+        const c = colorMap[h.color || 'brand'];
+
+        container.innerHTML += `
+                <div class="relative w-[85%] sm:w-[280px] shrink-0 snap-center h-44 rounded-[2rem] overflow-hidden shadow-xl shadow-slate-900/10 group cursor-pointer active:scale-[0.98] transition-transform" onclick="window.filterCategory('${c.filter}')">
+                    <div class="absolute inset-0 bg-gradient-to-br ${c.bg}"></div>
+                    ${h.image ? `<img src="${h.image}" class="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-overlay transition-transform duration-700 group-hover:scale-110">` : ''}
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent"></div>
+                    
+                    <div class="absolute top-4 left-4 bg-white ${c.badgeText} text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full shadow-md flex items-center gap-1.5">
+                        <i data-lucide="${h.icon}" class="w-3.5 h-3.5 ${h.icon === 'star' ? 'fill-current' : ''}"></i> ${h.badge}
+                    </div>
+                    
+                    <div class="absolute bottom-5 left-5 right-5 text-white">
+                        <h3 class="font-display font-bold text-2xl leading-tight mb-1 drop-shadow-md">${h.title}</h3>
+                        <p class="text-[11px] ${c.textSmall} font-medium drop-shadow-sm">${h.subtitle}</p>
+                    </div>
+                </div>
+            `;
+      });
+      window.refreshIcons();
+    };
+
+    window.renderMenu = () => {
+      const grid = document.getElementById('products-grid');
+      if (!grid) return;
+      grid.innerHTML = "";
+
+      const searchInput = document.getElementById('search-input');
+      const term = searchInput ? searchInput.value.toLowerCase() : "";
+
+      let itemsToRender = (state.config.sizes || [])
+        .filter(item => item.available !== false)
+        .filter(item => {
+          const matches = item.name.toLowerCase().includes(term) || item.description.toLowerCase().includes(term);
+          return (state.filter === 'Todos' || item.category === state.filter) && matches;
+        });
+
+      itemsToRender.sort((a, b) => {
+        if (state.filter === 'Todos') {
+          const catOrder = { "Garrafas Tradicionais": 1, "Garrafas Gourmet": 2, "Copos": 3, "Tigelas 1KG": 4 };
+          const catA = catOrder[a.category] || 5;
+          const catB = catOrder[b.category] || 5;
+          if (catA !== catB) return catA - catB;
+        }
+
+        const matchA = a.name.match(/(\d+)\s*ml/i);
+        const matchB = b.name.match(/(\d+)\s*ml/i);
+        const mlA = matchA ? parseInt(matchA[1]) : 9999;
+        const mlB = matchB ? parseInt(matchB[1]) : 9999;
+
+        if (mlA !== mlB) return mlA - mlB;
+        return a.name.localeCompare(b.name);
+      });
+
+      if (itemsToRender.length === 0) {
+        grid.innerHTML = `<div class="text-center py-10 text-slate-400 text-sm">Nada encontrado.</div>`;
+        window.refreshIcons();
+        return;
+      }
+
+      itemsToRender.forEach((item, idx) => {
+        const isSel = state.selectedItems.has(item.name);
+        const div = document.createElement('div');
+        div.style.animationDelay = `${idx * 0.05}s`;
+        div.className = `product-card bg-white p-4 rounded-[24px] border border-slate-100 flex items-center gap-4 cursor-pointer select-none relative overflow-hidden ${isSel ? 'selected' : ''}`;
+
+        div.onclick = () => {
+          if (item.category === 'Copos' || item.hasComplements) {
+            window.openCopoModal(item);
+          } else {
+            window.toggleSelection(item.name);
+          }
+        };
+
+        const isGourmet = item.category === 'Garrafas Gourmet';
+        const isCopo = item.category === 'Copos' || item.category === 'Tigelas 1KG';
+        let icon = 'snowflake';
+        let colorClass = 'text-brand-600 bg-brand-50';
+
+        if (isGourmet) {
+          icon = 'sparkles';
+          colorClass = 'text-pink-500 bg-pink-50';
+        } else if (isCopo) {
+          icon = 'cup-soda';
+          colorClass = 'text-blue-500 bg-blue-50';
+        }
+
+        div.innerHTML = `
+            <div class="relative w-[72px] h-[72px] rounded-2xl ${colorClass} flex items-center justify-center shrink-0 shadow-sm overflow-hidden">
+              <i data-lucide="${icon}" class="w-8 h-8 relative z-10"></i>
+              <div class="absolute -bottom-4 -right-4 w-12 h-12 bg-current opacity-10 rounded-full blur-sm"></div>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h3 class="font-bold text-slate-800 text-sm leading-tight">${item.name}</h3>
+                  <p class="text-[11px] text-slate-400 mt-0.5 line-clamp-2 leading-tight">${item.description}</p>
+                </div>
+                ${!isCopo ? `
+                <div class="check-circle w-6 h-6 rounded-full border-2 border-slate-200 flex items-center justify-center shrink-0 ml-2 ${isSel ? 'bg-brand-600 border-brand-600' : 'bg-white'}">
+                  <i data-lucide="check" class="check-icon w-3.5 h-3.5 text-white transition-all duration-300 ${isSel ? 'opacity-100 scale-100' : 'opacity-0 scale-50'} stroke-[3]"></i>
+                </div>` :
+            `<div class="w-6 h-6 flex items-center justify-center shrink-0 ml-2 text-brand-200"><i data-lucide="chevron-right" class="w-4 h-4"></i></div>`
+          }
+              </div>
+              <div class="mt-2 flex items-center gap-2">
+                <span class="font-display font-bold text-slate-900">R$ ${(item.price || 0).toFixed(2).replace('.', ',')}</span>
+              </div>
+            </div>`;
+        grid.appendChild(div);
+      });
+      window.refreshIcons();
+    };
+
+    window.renderPosts = () => {
+      const feed = document.getElementById('news-feed');
+      if (!feed) return;
+      feed.innerHTML = "";
+
+      const posts = state.config.posts || [];
+      if (posts.length === 0) {
+        feed.classList.add('hidden');
+        return;
+      }
+
+      feed.classList.remove('hidden');
+      posts.forEach(post => {
+        feed.innerHTML += `
+                <div class="news-card highlight p-4 rounded-[20px] flex flex-col gap-3 animate-slide-up">
+                    <div class="flex gap-4">
+                        <div class="w-12 h-12 rounded-full bg-white border border-brand-100 flex items-center justify-center text-brand-500 shadow-sm shrink-0">
+                            <i data-lucide="megaphone" class="w-6 h-6"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-display font-bold text-slate-800 text-sm leading-tight">${post.title}</h3>
+                            <p class="text-xs text-slate-500 mt-1 leading-relaxed">${post.message}</p>
+                            <p class="text-[10px] text-slate-400 mt-2 font-bold uppercase tracking-wider">Aviso da Loja</p>
+                        </div>
+                    </div>
+                    ${post.image ? `<img src="${post.image}" class="w-full h-auto rounded-xl shadow-sm border border-slate-100 mt-2" onerror="this.style.display='none'">` : ''}
+                </div>
+            `;
+      });
+      window.refreshIcons();
+    };
+
+    window.isStoreOpen = () => {
+      if (state.config.statusMode === 'open') return true;
+      if (state.config.statusMode === 'closed') return false;
+
+      const h = new Date().getHours();
+      const start = parseInt(state.config.openingHours?.start);
+      const end = parseInt(state.config.openingHours?.end);
+
+      // Trava de segurança caso algum valor fique nulo
+      if (isNaN(start) || isNaN(end)) return true;
+
+      if (start < end) {
+        return h >= start && h < end;
+      } else if (start > end) {
+        return h >= start || h < end;
+      } else {
+        return false;
+      }
+    };
+
+    window.updateUI = () => {
+      const isOpen = window.isStoreOpen();
+
+      const stDot = document.getElementById('status-indicator');
+      const stTxt = document.getElementById('status-text');
+      const stDotH = document.getElementById('status-dot');
+
+      if (stDot) stDot.className = `absolute bottom-0 right-0 w-3.5 h-3.5 border-2 border-white rounded-full ${isOpen ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`;
+      if (stDotH) stDotH.className = `w-1.5 h-1.5 rounded-full ${isOpen ? 'bg-green-500' : 'bg-red-500'}`;
+      if (stTxt) {
+        stTxt.innerText = isOpen ? "Aberto Agora" : "Fechado";
+        stTxt.className = `text-[10px] font-bold uppercase tracking-wider ${isOpen ? 'text-green-600' : 'text-red-500'}`;
+      }
+
+      window.validateCheckout();
+    };
+
+    window.setupPhoneMask = () => {
+      const input = document.getElementById('client-phone');
+      if (!input) return;
+      input.addEventListener('input', (e) => {
+        let val = e.target.value.replace(/\D/g, '');
+        if (val.length === 0) { e.target.value = ''; return; }
+
+        let x = val.match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
+        if (x) {
+          e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+        }
+        window.saveFormData();
+        window.validateCheckout();
+      });
+    };
+
+    window.saveFormData = () => {
+      const data = {
+        name: document.getElementById('client-name')?.value,
+        phone: document.getElementById('client-phone')?.value,
+        address: document.getElementById('client-address')?.value,
+        payment: document.getElementById('payment-method')?.value,
+        deliveryType: state.deliveryType,
+        zoneVal: document.getElementById('delivery-zone')?.value,
+        obs: document.getElementById('obs-input')?.value
+      };
+      localStorage.setItem('acai_form_data', JSON.stringify(data));
+    };
+
+    window.restoreFormData = () => {
+      const saved = localStorage.getItem('acai_form_data');
+      if (saved) {
+        try {
+          const data = JSON.parse(saved);
+          if (document.getElementById('client-name')) document.getElementById('client-name').value = data.name || '';
+          if (document.getElementById('client-phone')) document.getElementById('client-phone').value = data.phone || '';
+          if (document.getElementById('client-address')) document.getElementById('client-address').value = data.address || '';
+          if (document.getElementById('payment-method')) document.getElementById('payment-method').value = data.payment || '';
+          if (document.getElementById('obs-input')) document.getElementById('obs-input').value = data.obs || '';
+
+          if (data.deliveryType) {
+            window.setDelivery(data.deliveryType);
+            if (data.deliveryType === 'Entrega' && data.zoneVal) {
+              setTimeout(() => {
+                const zoneSelect = document.getElementById('delivery-zone');
+                if (zoneSelect) {
+                  zoneSelect.value = data.zoneVal;
+                  window.renderCart();
+                }
+              }, 100);
+            }
+          }
+          window.handlePaymentChange();
+          window.validateCheckout();
+        } catch (e) { }
+      }
+    };
+
+    window.validateCheckout = () => {
+      const btn = document.getElementById('btn-checkout');
+      if (!btn) return;
+
+      const isOpen = window.isStoreOpen();
+      const cartOk = state.cart.length > 0;
+      const name = document.getElementById('client-name')?.value.trim();
+      const phone = document.getElementById('client-phone')?.value.trim();
+      const method = document.getElementById('payment-method')?.value;
+      const isDelivery = state.deliveryType === 'Entrega';
+      const zoneVal = document.getElementById('delivery-zone')?.value;
+      const address = document.getElementById('client-address')?.value.trim();
+
+      let msg = "Finalizar no WhatsApp";
+      let disabled = false;
+
+      if (!isOpen) {
+        msg = "Loja Fechada";
+        disabled = true;
+      } else if (!cartOk) {
+        msg = "Carrinho Vazio";
+        disabled = true;
+      } else if (!name) {
+        msg = "Informe seu Nome";
+        disabled = true;
+      } else if (!phone || phone.length < 10) {
+        msg = "Informe seu Telefone";
+        disabled = true;
+      } else if (isDelivery && !zoneVal) {
+        msg = "Selecione o Bairro";
+        disabled = true;
+      } else if (isDelivery && !address) {
+        msg = "Informe o Endereço";
+        disabled = true;
+      } else if (!method) {
+        msg = "Escolha o Pagamento";
+        disabled = true;
+      }
+
+      btn.disabled = disabled;
+      const icon = disabled ? 'alert-circle' : 'message-circle';
+      const currentText = btn.querySelector('span')?.innerText;
+      if (currentText !== msg) {
+        btn.innerHTML = `<div class="relative z-10 flex items-center gap-2"><i data-lucide="${icon}" class="w-6 h-6 fill-white/20"></i><span>${msg}</span></div>`;
+        window.refreshIcons();
+      }
+    };
+
+    window.sendOrder = () => {
+      try {
+        if (!state.cart || state.cart.length === 0) {
+          window.toast("Seu carrinho está vazio!", "error");
+          window.validateCheckout();
+          return;
+        }
+
+        if (!window.isStoreOpen()) {
+          window.toast("Loja fechada. Volte no horário!", "error");
+          window.updateUI();
+          return;
+        }
+
+        const btn = document.getElementById('btn-checkout');
+        const originalBtnContent = btn.innerHTML;
+        btn.innerHTML = '<div class="spinner"></div>';
+        btn.disabled = true;
+
+        const name = document.getElementById('client-name').value;
+        const phone = document.getElementById('client-phone').value;
+        const method = document.getElementById('payment-method').value;
+
+        let zoneName = "";
+        let address = "";
+        let shipText = "Grátis";
+        let shipValue = 0;
+        let deliveryDetailsStorage = "Retirada";
+
+        if (state.deliveryType === 'Entrega') {
+          const zoneSelect = document.getElementById('delivery-zone');
+          const zoneOption = zoneSelect?.selectedOptions?.[0];
+
+          zoneName = zoneOption ? (zoneOption.getAttribute('data-name') || zoneOption.text) : "";
+          shipValue = zoneOption ? parseFloat(zoneOption.getAttribute('data-price') || 0) : 0;
+
+          address = document.getElementById('client-address').value;
+          shipText = shipValue === 0 ? "Grátis" : `R$ ${shipValue.toFixed(2).replace('.', ',')}`;
+          deliveryDetailsStorage = `${zoneName} - ${address}`;
+        }
+
+        let paymentStatusFull = method;
+        if (method === 'Pix') paymentStatusFull += " (Confirmado no Site ✅)";
+
+        let subtotalVal = 0;
+        state.cart.forEach(i => subtotalVal += i.price * i.qty);
+        const subtotalStr = subtotalVal.toFixed(2).replace('.', ',');
+
+        const totalFinalCalculated = subtotalVal + shipValue;
+        const totalFinal = `R$ ${totalFinalCalculated.toFixed(2).replace('.', ',')}`;
+
+        const itemsStr = state.cart.map(i => `${i.qty}x ${i.name}`).join(", ");
+        const orderObj = {
+          date: new Date().toISOString(),
+          clientName: name,
+          clientPhone: phone,
+          itemsSummary: itemsStr,
+          total: totalFinal,
+          deliveryFee: shipText,
+          paymentMethod: method,
+          deliveryType: state.deliveryType,
+          deliveryDetails: deliveryDetailsStorage,
+          status: 'new',
+          userId: auth?.currentUser?.uid || 'anonymous'
+        };
+
+        try {
+          if (db) {
+            addDoc(getCollectionRef("pedidos"), orderObj).catch(() => { });
+          }
+        } catch (e) { }
+
+        const localOrders = JSON.parse(localStorage.getItem('acai_orders_local') || '[]');
+        localOrders.push(orderObj);
+        localStorage.setItem('acai_orders_local', JSON.stringify(localOrders));
+
+        if (state.config.googleScriptUrl) {
+          const dataHora = new Date().toLocaleString('pt-BR');
+          const data = {
+            data: dataHora,
+            cliente: name,
+            telefone: phone,
+            valor: totalFinal,
+            pagamento: paymentStatusFull,
+            endereco: deliveryDetailsStorage,
+            itens: itemsStr,
+            taxa: shipText
+          };
+          fetch(state.config.googleScriptUrl, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'text/plain' },
+            body: JSON.stringify(data)
+          }).catch(() => { });
+        }
+
+        let msg = `🥤 *PEDIDO - AÇAÍ ELLEGANCE*\n`;
+        msg += `👤 *Cliente:* ${name}\n`;
+        msg += `💳 *Pagamento:* ${paymentStatusFull}\n`;
+
+        if (state.deliveryType === 'Entrega') {
+          msg += `📍 *Entrega:* ${zoneName}\n`;
+          msg += `🏠 *Endereço:* ${address}\n`;
+        } else {
+          msg += `📍 *Entrega:* Retirada na Loja\n`;
+        }
+
+        msg += `\n*ITENS:*\n`;
+        state.cart.forEach(i => {
+          const itemTotal = (i.price * i.qty).toFixed(2).replace('.', ',');
+          msg += `- ${i.qty}x ${i.name} ${i.obs ? `(${i.obs}) ` : ''}(R$ ${itemTotal})\n`;
+        });
+
+        msg += `\n🧾 *RESUMO:*\n`;
+        msg += `Subtotal: R$ ${subtotalStr}\n`;
+        msg += `Taxa de Entrega: ${shipText}\n`;
+        msg += `💰 *TOTAL FINAL: ${totalFinal}*`;
+
+        const phoneNum = state.config.phone ? state.config.phone.replace(/\D/g, '') : "557998168282";
+
+        const url = `https://api.whatsapp.com/send?phone=${phoneNum}&text=${encodeURIComponent(msg)}`;
+
+        state.cart = [];
+        saveCart();
+
+        const win = window.open(url, '_blank');
+        if (!win) {
+          window.location.href = url;
+        }
+
+        setTimeout(() => window.location.reload(), 3000);
+
+      } catch (err) {
+        console.error("Erro ao enviar pedido:", err);
+        window.toast("Erro ao enviar. Tente novamente.", "error");
+        const btn = document.getElementById('btn-checkout');
+        if (btn) {
+          btn.innerHTML = '<div class="relative z-10 flex items-center gap-2"><i data-lucide="message-circle" class="w-6 h-6 fill-white/20"></i><span>Tentar Novamente</span></div>';
+          btn.disabled = false;
+        }
+      }
+    };
+
+    // ====== PAINEL ADMIN ======
+    window.adminLogin = async () => {
+      const e = document.getElementById('adm-email').value;
+      const p = document.getElementById('adm-pass').value;
+
+      if (p === 'Açaiellgance123') {
+        document.getElementById('admin-modal').classList.add('hidden');
+        window.showAdminPanel();
+        return;
+      }
+
+      if (!e || !p) return window.toast("Preencha tudo", "error");
+      const btn = document.querySelector('#admin-modal button[onclick*="adminLogin"]');
+      const originalText = btn.innerText;
+      btn.innerText = "Verificando...";
+      btn.disabled = true;
+
+      try {
+        await signInWithEmailAndPassword(auth, e, p);
+        document.getElementById('admin-modal').classList.add('hidden');
+        window.toast("Admin Conectado!");
+      } catch (err) {
+        try {
+          await createUserWithEmailAndPassword(auth, e, p);
+          document.getElementById('admin-modal').classList.add('hidden');
+          window.toast("Conta criada!");
+        } catch (createErr) {
+          if (p === '1234') {
+            document.getElementById('admin-modal').classList.add('hidden');
+            window.showAdminPanel();
+          } else {
+            console.error(createErr);
+            window.toast("Erro. Tente senha 1234", "error");
+          }
+        }
+      } finally {
+        btn.innerText = originalText;
+        btn.disabled = false;
+      }
+    };
+
+    window.showAdminPanel = () => {
+      state.isAdmin = true;
+      document.getElementById('admin-panel').classList.remove('hidden');
+      window.syncAdminFields();
+      window.switchAdminTab('estoque');
+      window.toast("Admin aberto!");
+    };
+
+    window.adminLogout = () => {
+      try { if (auth) signOut(auth).catch(() => { }); } catch (e) { }
+      state.isAdmin = false;
+      document.getElementById('admin-panel')?.classList.add('hidden');
+      window.toast("Saiu do admin");
+    };
+
+    window.switchAdminTab = (tab) => {
+      const tabs = ['estoque', 'avisos', 'destaques', 'config'];
+      tabs.forEach(t => {
+        const view = document.getElementById(`view-${t}`);
+        const btn = document.getElementById(`tab-${t}`);
+        if (t === tab) {
+          view?.classList.remove('hidden');
+          if (btn) btn.className = "px-4 py-2 text-xs font-bold rounded-lg bg-white shadow-sm text-slate-800 transition-all shrink-0";
+        } else {
+          view?.classList.add('hidden');
+          if (btn) btn.className = "px-4 py-2 text-xs font-bold rounded-lg text-slate-500 transition-all shrink-0";
+        }
+      });
+      window.refreshIcons();
+    };
+
+    window.syncAdminFields = () => {
+      document.getElementById('cfg-name').value = state.config.storeName || '';
+      document.getElementById('cfg-phone').value = state.config.phone || '';
+      document.getElementById('cfg-pix-key').value = state.config.pixKey || '';
+      document.getElementById('cfg-script-url').value = state.config.googleScriptUrl || "";
+      if (document.getElementById('cfg-hour-start')) document.getElementById('cfg-hour-start').value = state.config.openingHours?.start ?? 16;
+      if (document.getElementById('cfg-hour-end')) document.getElementById('cfg-hour-end').value = state.config.openingHours?.end ?? 23;
+
+      ['open', 'auto', 'closed'].forEach(m => {
+        const btn = document.getElementById(`st-${m}`);
+        if (btn) btn.className = `flex-1 py-4 rounded-2xl border-2 text-xs font-black ${state.config.statusMode === m ? 'border-brand-600 bg-brand-50 text-brand-700' : 'border-slate-100 text-slate-400'}`;
+      });
+
+      window.renderStockAdmin();
+      window.renderPostsAdmin();
+      window.renderHighlightsAdmin();
+      window.renderZonesAdmin();
+    };
+
+    window.renderStockAdmin = () => {
+      const list = document.getElementById('stock-list');
+      if (!list) return;
+      list.innerHTML = "";
+
+      const renderItemHTML = (item) => {
+        const isOff = item.available === false;
+        return `
+          <div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl text-xs border border-slate-100 mb-2">
+            <div>
+              <span class="${isOff ? 'line-through opacity-50' : 'font-bold'} block text-slate-700">${item.name}</span>
+              <span class="text-[10px] text-slate-400">R$ ${(item.price || 0).toFixed(2)}</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="window.toggleStock(${item.originalIndex})" class="px-3 py-1.5 rounded-lg border font-bold text-[10px] ${isOff ? 'bg-green-50 text-green-600 border-green-200' : 'bg-yellow-50 text-yellow-600 border-yellow-200'}">
+                ${isOff ? 'ATIVAR' : 'PAUSAR'}
+              </button>
+              <button onclick="window.openEditModal(${item.originalIndex})" class="p-1.5 text-blue-400 hover:text-blue-600 bg-blue-50 rounded-lg">
+                <i data-lucide="edit-2" class="w-4 h-4"></i>
+              </button>
+              <button onclick="window.removeProduct(${item.originalIndex})" class="p-1.5 text-red-400 hover:text-red-600 bg-red-50 rounded-lg">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>`;
+      };
+
+      const sortAdminStock = (a, b) => {
+        const matchA = a.name.match(/(\d+)\s*ml/i);
+        const matchB = b.name.match(/(\d+)\s*ml/i);
+        const mlA = matchA ? parseInt(matchA[1]) : 9999;
+        const mlB = matchB ? parseInt(matchB[1]) : 9999;
+        if (mlA !== mlB) return mlA - mlB;
+        return a.name.localeCompare(b.name);
+      };
+
+      const itemsWithIndex = (state.config.sizes || []).map((item, index) => ({ ...item, originalIndex: index }));
+
+      const tradicionais = itemsWithIndex.filter(i => i.category === 'Garrafas Tradicionais').sort(sortAdminStock);
+      const gourmets = itemsWithIndex.filter(i => i.category === 'Garrafas Gourmet').sort(sortAdminStock);
+      const copos = itemsWithIndex.filter(i => i.category === 'Copos').sort(sortAdminStock);
+      const tigelas = itemsWithIndex.filter(i => i.category === 'Tigelas 1KG').sort(sortAdminStock);
+      const outros = itemsWithIndex.filter(i => i.category !== 'Garrafas Tradicionais' && i.category !== 'Garrafas Gourmet' && i.category !== 'Copos' && i.category !== 'Tigelas 1KG').sort(sortAdminStock);
+
+      if (tradicionais.length > 0) {
+        list.innerHTML += `<div class="sticky top-0 bg-white py-3 z-10 border-b border-slate-100 mb-2"><h4 class="text-xs font-black text-brand-600 uppercase tracking-widest flex items-center gap-2"><i data-lucide="ice-cream-2" class="w-3 h-3"></i> Garrafas Tradicionais</h4></div>`;
+        tradicionais.forEach(item => list.innerHTML += renderItemHTML(item));
+      }
+      if (gourmets.length > 0) {
+        list.innerHTML += `<div class="sticky top-0 bg-white py-3 z-10 border-b border-slate-100 mb-2 mt-2"><h4 class="text-xs font-black text-pink-500 uppercase tracking-widest flex items-center gap-2"><i data-lucide="sparkles" class="w-3 h-3"></i> Garrafas Gourmet</h4></div>`;
+        gourmets.forEach(item => list.innerHTML += renderItemHTML(item));
+      }
+      if (copos.length > 0) {
+        list.innerHTML += `<div class="sticky top-0 bg-white py-3 z-10 border-b border-slate-100 mb-2 mt-2"><h4 class="text-xs font-black text-blue-500 uppercase tracking-widest flex items-center gap-2"><i data-lucide="cup-soda" class="w-3 h-3"></i> Copos</h4></div>`;
+        copos.forEach(item => list.innerHTML += renderItemHTML(item));
+      }
+      if (tigelas.length > 0) {
+        list.innerHTML += `<div class="sticky top-0 bg-white py-3 z-10 border-b border-slate-100 mb-2 mt-2"><h4 class="text-xs font-black text-orange-500 uppercase tracking-widest flex items-center gap-2"><i data-lucide="package" class="w-3 h-3"></i> Tigelas 1KG</h4></div>`;
+        tigelas.forEach(item => list.innerHTML += renderItemHTML(item));
+      }
+      if (outros.length > 0) {
+        list.innerHTML += `<div class="sticky top-0 bg-white py-3 z-10 border-b border-slate-100 mb-2 mt-2"><h4 class="text-xs font-black text-slate-500 uppercase tracking-widest">Outros</h4></div>`;
+        outros.forEach(item => list.innerHTML += renderItemHTML(item));
+      }
+
+      window.renderAccompanimentsAdmin();
+      window.refreshIcons();
+    };
+
+    window.renderAccompanimentsAdmin = () => {
+      const list = document.getElementById('stock-ing-list');
+      if (!list) return;
+      list.innerHTML = "";
+
+      const renderCat = (catName, items, type) => {
+        let html = `<div class="mb-4"><h4 class="text-xs font-bold text-slate-500 uppercase mb-2 border-b border-slate-100 pb-1">${catName}</h4>`;
+
+        (items || []).forEach((item, idx) => {
+          const isOff = item.available === false;
+          const price = item.price || 0;
+          let priceStr = price > 0 ? `+ R$ ${price.toFixed(2).replace('.', ',')}` : "Grátis";
+
+          html += `
+                    <div class="flex justify-between items-center p-2 bg-slate-50 rounded-lg text-xs mb-1.5 border border-slate-100">
+                        <div class="flex flex-col">
+                            <span class="${isOff ? 'line-through opacity-50' : 'font-bold'} text-slate-700">${item.name}</span>
+                            <span class="text-[10px] text-slate-400 font-bold">${priceStr}</span>
+                        </div>
+                        <div class="flex gap-2 items-center">
+                            <button onclick="window.editAccompanimentPrice('${type}', ${idx})" class="p-1.5 text-blue-500 hover:text-blue-700 bg-blue-50 rounded-lg transition-colors" title="Editar Preço">
+                                <i data-lucide="dollar-sign" class="w-3.5 h-3.5"></i>
+                            </button>
+                            <button onclick="window.toggleAccompaniment('${type}', ${idx})" class="px-2 py-1 rounded border font-bold text-[9px] ${isOff ? 'bg-green-50 text-green-600 border-green-200' : 'bg-yellow-50 text-yellow-600 border-yellow-200'}">
+                                ${isOff ? 'ATIVAR' : 'PAUSAR'}
+                            </button>
+                            <button onclick="window.removeAccompaniment('${type}', ${idx})" class="p-1.5 text-red-500 hover:text-red-700 bg-red-50 rounded-lg">
+                                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+        });
+
+        html += `
+                <div class="flex gap-2 mt-2">
+                    <input id="new-ing-${type}" placeholder="Novo item..." class="flex-1 p-2 bg-white border border-slate-200 rounded-lg text-xs outline-none focus:border-brand-300">
+                    <input id="new-ing-price-${type}" type="number" step="0.01" placeholder="R$ 0,00" class="w-20 p-2 bg-white border border-slate-200 rounded-lg text-xs outline-none focus:border-brand-300">
+                    <button onclick="window.addAccompaniment('${type}')" class="p-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>`;
+        return html;
+      };
+
+      const acc = state.config.accompaniments || { frutas: [], adicionais: [], coberturas: [] };
+      list.innerHTML += renderCat("Frutas", acc.frutas, "frutas");
+      list.innerHTML += renderCat("Adicionais", acc.adicionais, "adicionais");
+      list.innerHTML += renderCat("Coberturas", acc.coberturas, "coberturas");
+
+      const condensedMilkPrice = state.config.condensedMilkPrice || 0;
+      let milkPriceStr = condensedMilkPrice > 0 ? `+ R$ ${condensedMilkPrice.toFixed(2).replace('.', ',')}` : "Grátis";
+      const isMilkOff = state.config.condensedMilkOptional === true;
+
+      list.innerHTML += `<div class="mb-4 pt-2 border-t border-slate-100">
+        <h4 class="text-xs font-bold text-slate-500 uppercase mb-2">Item Especial (Leite Condensado)</h4>
+        <div class="flex justify-between items-center p-2 bg-yellow-50 rounded-lg text-xs border border-yellow-200">
+            <div class="flex flex-col">
+                <span class="${isMilkOff ? 'line-through opacity-50' : 'font-bold'} text-yellow-800">Leite Condensado ${isMilkOff ? '(Opcional)' : '(Fixo na Base)'}</span>
+                <span class="text-[10px] text-yellow-600 font-bold">${milkPriceStr}</span>
+            </div>
+            <div class="flex gap-2 items-center">
+                <button onclick="window.editCondensedMilkPrice()" class="p-1.5 text-blue-500 hover:text-blue-700 bg-blue-50 rounded-lg transition-colors" title="Editar Preço">
+                     <i data-lucide="dollar-sign" class="w-3.5 h-3.5"></i>
+                </button>
+                <button onclick="window.toggleCondensedMilk()" class="px-2 py-1 rounded border font-bold text-[9px] ${isMilkOff ? 'bg-yellow-50 text-yellow-600 border-yellow-200' : 'bg-green-50 text-green-600 border-green-200'}">
+                    ${isMilkOff ? 'TORNAR FIXO' : 'TORNAR OPCIONAL'}
+                </button>
+            </div>
+        </div>
+      </div>`;
+    };
+
+    window.toggleCondensedMilk = async () => {
+      const current = state.config.condensedMilkOptional === true;
+      await window.saveConfigSafe({ condensedMilkOptional: !current }, true);
+      window.toast("Regra do Leite Condensado alterada!");
+    };
+
+    window.toggleAccompaniment = async (type, idx) => {
+      const list = [...(state.config.accompaniments[type] || [])];
+      if (!list[idx]) return;
+      list[idx].available = !list[idx].available;
+      const newAccompaniments = { ...state.config.accompaniments, [type]: list };
+      await window.saveConfigSafe({ accompaniments: newAccompaniments }, true);
+      window.toast("Ingrediente atualizado!");
+    };
+
+    window.addAccompaniment = async (type) => {
+      const input = document.getElementById(`new-ing-${type}`);
+      const priceInput = document.getElementById(`new-ing-price-${type}`);
+      const name = input.value.trim();
+      const price = parseFloat(priceInput.value) || 0;
+      if (!name) return;
+
+      const list = [...(state.config.accompaniments[type] || [])];
+      list.push({ name, price, available: true });
+
+      const newAccompaniments = { ...state.config.accompaniments, [type]: list };
+      await window.saveConfigSafe({ accompaniments: newAccompaniments }, true);
+      window.toast("Ingrediente adicionado!");
+    };
+
+    window.removeAccompaniment = (type, idx) => {
+      window.customConfirm("Deseja realmente remover este ingrediente?", async () => {
+        const list = [...(state.config.accompaniments[type] || [])];
+        if (!list[idx]) return;
+        list.splice(idx, 1);
+        const newAccompaniments = { ...state.config.accompaniments, [type]: list };
+        await window.saveConfigSafe({ accompaniments: newAccompaniments }, true);
+        window.toast("Ingrediente removido!");
+      });
+    };
+
+    window.editAccompanimentPrice = async (type, idx) => {
+      const list = [...(state.config.accompaniments[type] || [])];
+      if (!list[idx]) return;
+
+      const currentPrice = list[idx].price || 0;
+      const newPriceStr = prompt(`Definir novo valor para ${list[idx].name} (em R$):\nDeixe vazio ou 0 para ser Grátis.`, currentPrice.toFixed(2));
+
+      if (newPriceStr !== null) {
+        let newPrice = parseFloat(newPriceStr.replace(',', '.'));
+        if (isNaN(newPrice) || newPrice < 0) newPrice = 0;
+
+        list[idx].price = newPrice;
+        const newAccompaniments = { ...state.config.accompaniments, [type]: list };
+        await window.saveConfigSafe({ accompaniments: newAccompaniments }, true);
+        window.toast("Preço atualizado!");
+      }
+    };
+
+    window.editCondensedMilkPrice = async () => {
+      const currentPrice = state.config.condensedMilkPrice || 0;
+      const newPriceStr = prompt(`Definir novo valor para o Leite Condensado (em R$):\nDeixe vazio ou 0 para ser Grátis.`, currentPrice.toFixed(2));
+
+      if (newPriceStr !== null) {
+        let newPrice = parseFloat(newPriceStr.replace(',', '.'));
+        if (isNaN(newPrice) || newPrice < 0) newPrice = 0;
+
+        await window.saveConfigSafe({ condensedMilkPrice: newPrice }, true);
+        window.toast("Preço do Leite Condensado atualizado!");
+      }
+    };
+
+    window.addProduct = async () => {
+      const name = document.getElementById('new-prod-name').value.trim();
+      const desc = document.getElementById('new-prod-desc').value.trim();
+      const price = parseFloat(document.getElementById('new-prod-price').value);
+      const cat = document.getElementById('new-prod-cat').value;
+
+      const hasComplements = document.getElementById('new-prod-has-complements').checked;
+      const maxComplements = parseInt(document.getElementById('new-prod-max-comp').value, 10) || 0;
+      const hasCondensedMilk = document.getElementById('new-prod-has-condensed-milk').checked;
+
+      if (!name || isNaN(price)) return window.toast("Dados inválidos", "error");
+
+      const newSizes = [...(state.config.sizes || []), {
+        name, description: desc, price, category: cat, available: true,
+        hasComplements, maxComplements, hasCondensedMilk
+      }];
+      await window.saveConfigSafe({ sizes: newSizes }, true);
+
+      document.getElementById('new-prod-name').value = '';
+      document.getElementById('new-prod-desc').value = '';
+      document.getElementById('new-prod-price').value = '';
+
+      const cbMatch = document.getElementById('new-prod-has-complements');
+      if (cbMatch) {
+        cbMatch.checked = false;
+        document.getElementById('new-prod-max-comp-container').classList.add('opacity-50');
+        document.getElementById('new-prod-max-comp').disabled = true;
+        document.getElementById('new-prod-max-comp').value = "0";
+        document.getElementById('new-prod-condensed-milk-container').classList.add('opacity-50');
+        document.getElementById('new-prod-has-condensed-milk').disabled = true;
+        document.getElementById('new-prod-has-condensed-milk').checked = true;
+      }
+
+      window.toast("Produto Adicionado!");
+    };
+
+    window.removeProduct = (idx) => {
+      window.customConfirm("Tem certeza que deseja remover este produto?", async () => {
+        const newSizes = [...(state.config.sizes || [])];
+        if (!newSizes[idx]) return;
+        newSizes.splice(idx, 1);
+        await window.saveConfigSafe({ sizes: newSizes }, true);
+        window.toast("Produto Removido!");
+      });
+    };
+
+    window.openEditModal = (idx) => {
+      const item = state.config.sizes[idx];
+      if (!item) return;
+
+      document.getElementById('edit-prod-index').value = idx;
+      document.getElementById('edit-prod-name').value = item.name || '';
+      document.getElementById('edit-prod-desc').value = item.description || '';
+      document.getElementById('edit-prod-price').value = item.price || 0;
+
+      const catSelect = document.getElementById('edit-prod-cat');
+      if (Array.from(catSelect.options).some(o => o.value === item.category)) {
+        catSelect.value = item.category;
+      }
+
+      window.toggleEditCopoOpts();
+
+      if (item.category === 'Copos' || item.category === 'Tigelas 1KG') {
+        const hasComp = item.hasComplements !== false;
+        document.getElementById('edit-prod-has-complements').checked = hasComp;
+        document.getElementById('edit-prod-max-comp').value = item.maxComplements || 0;
+        document.getElementById('edit-prod-has-condensed-milk').checked = item.hasCondensedMilk !== false;
+        document.getElementById('edit-prod-milk-mode').value = item.condensedMilkMode || 'optional';
+
+        document.getElementById('edit-prod-max-comp-container').classList.toggle('opacity-50', !hasComp);
+        document.getElementById('edit-prod-max-comp').disabled = !hasComp;
+        document.getElementById('edit-prod-condensed-milk-container').classList.toggle('opacity-50', !hasComp);
+        document.getElementById('edit-prod-has-condensed-milk').disabled = !hasComp;
+        document.getElementById('edit-prod-milk-mode-container').classList.toggle('opacity-50', !hasComp);
+        document.getElementById('edit-prod-milk-mode').disabled = !hasComp;
+      }
+
+      document.getElementById('edit-product-modal').classList.remove('hidden');
+    };
+
+    window.closeEditModal = () => {
+      document.getElementById('edit-product-modal').classList.add('hidden');
+    };
+
+    window.toggleEditCopoOpts = () => {
+      const cat = document.getElementById('edit-prod-cat').value;
+      const sec = document.getElementById('edit-prod-copo-opts');
+      if (cat === 'Copos' || cat === 'Tigelas 1KG') sec.classList.remove('hidden');
+      else sec.classList.add('hidden');
+    };
+
+    window.saveEditedProduct = async () => {
+      const idxStr = document.getElementById('edit-prod-index').value;
+      if (idxStr === '') return;
+      const idx = parseInt(idxStr);
+
+      const name = document.getElementById('edit-prod-name').value.trim();
+      const desc = document.getElementById('edit-prod-desc').value.trim();
+      const price = parseFloat(document.getElementById('edit-prod-price').value);
+      const cat = document.getElementById('edit-prod-cat').value;
+
+      if (!name || isNaN(price)) return window.toast("Dados incompletos!", "error");
+
+      const newSizes = [...(state.config.sizes || [])];
+      if (!newSizes[idx]) return;
+
+      const updatedItem = {
+        ...newSizes[idx],
+        name,
+        description: desc,
+        price,
+        category: cat
+      };
+
+      if (cat === 'Copos' || cat === 'Tigelas 1KG') {
+        const hasComp = document.getElementById('edit-prod-has-complements').checked;
+        updatedItem.hasComplements = hasComp;
+        if (hasComp) {
+          updatedItem.maxComplements = parseInt(document.getElementById('edit-prod-max-comp').value) || 0;
+          updatedItem.hasCondensedMilk = document.getElementById('edit-prod-has-condensed-milk').checked;
+          updatedItem.condensedMilkMode = document.getElementById('edit-prod-milk-mode').value;
+        } else {
+          updatedItem.maxComplements = 0;
+          updatedItem.hasCondensedMilk = false;
+        }
+      } else {
+        delete updatedItem.hasComplements;
+        delete updatedItem.maxComplements;
+        delete updatedItem.hasCondensedMilk;
+        delete updatedItem.condensedMilkMode;
+      }
+
+      newSizes[idx] = updatedItem;
+      await window.saveConfigSafe({ sizes: newSizes }, true);
+
+      window.closeEditModal();
+      window.toast("Produto Salvo!");
+    };
+
+    window.toggleStock = async (idx) => {
+      const newSizes = [...(state.config.sizes || [])];
+      if (!newSizes[idx]) return;
+      newSizes[idx].available = !(newSizes[idx].available !== false);
+      await window.saveConfigSafe({ sizes: newSizes }, true);
+      window.toast("Estoque atualizado!");
+    };
+
+    window.renderPostsAdmin = () => {
+      const list = document.getElementById('admin-posts-list');
+      if (!list) return;
+      list.innerHTML = "";
+
+      const posts = state.config.posts || [];
+      if (posts.length === 0) list.innerHTML = `<p class="text-xs text-slate-400 italic">Nenhum aviso ativo.</p>`;
+
+      posts.forEach((post, index) => {
+        list.innerHTML += `
+                <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 flex justify-between items-start gap-3">
+                    ${post.image ? `<img src="${post.image}" class="w-16 h-16 rounded-xl object-cover shrink-0 border border-slate-200 shadow-sm">` : ''}
+                    <div class="flex-1">
+                        <h4 class="text-xs font-bold text-slate-800">${post.title}</h4>
+                        <p class="text-[10px] text-slate-500 mt-0.5 line-clamp-2">${post.message}</p>
+                    </div>
+                    <button onclick="window.removePost(${index})" class="p-1.5 text-red-400 hover:text-red-600 bg-white rounded-lg shadow-sm shrink-0">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </button>
+                </div>
+             `;
+      });
+      window.refreshIcons();
+    };
+
+    window.handlePostImage = (input) => {
+      const file = input.files[0];
+      if (!file) return;
+
+      window.toast("Processando imagem...", "success");
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const MAX_WIDTH = 600;
+          const MAX_HEIGHT = 900;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
+          } else {
+            if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.5);
+
+          const urlInput = document.getElementById('post-image-url');
+          const preview = document.getElementById('post-image-preview');
+          const previewContainer = document.getElementById('image-preview-container');
+
+          if (urlInput) urlInput.value = dataUrl;
+          if (preview) preview.src = dataUrl;
+          if (previewContainer) previewContainer.classList.remove('hidden');
+
+          window.toast("Imagem anexada!");
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    };
+
+    window.previewPastedImage = (url) => {
+      const preview = document.getElementById('post-image-preview');
+      const previewContainer = document.getElementById('image-preview-container');
+      if (url && (url.startsWith('http') || url.startsWith('data:image'))) {
+        if (preview) preview.src = url;
+        if (previewContainer) previewContainer.classList.remove('hidden');
+      } else {
+        if (previewContainer) previewContainer.classList.add('hidden');
+      }
+    };
+
+    window.clearPostImage = () => {
+      document.getElementById('post-image-url').value = '';
+      const fileInput = document.getElementById('post-image-file');
+      if (fileInput) fileInput.value = '';
+      const previewContainer = document.getElementById('image-preview-container');
+      if (previewContainer) previewContainer.classList.add('hidden');
+    };
+
+    window.addPost = async () => {
+      const title = document.getElementById('post-title').value.trim();
+      const msg = document.getElementById('post-msg').value.trim();
+      const imgUrl = document.getElementById('post-image-url').value.trim();
+
+      if (!title || !msg) return window.toast("Preencha título e mensagem", "error");
+
+      const newPost = { id: Date.now(), title, message: msg, image: imgUrl, date: new Date().toISOString() };
+      const newPosts = [newPost, ...(state.config.posts || [])].slice(0, 5);
+
+      await window.saveConfigSafe({ posts: newPosts }, true);
+
+      document.getElementById('post-title').value = "";
+      document.getElementById('post-msg').value = "";
+      window.clearPostImage();
+      window.toast("Aviso Publicado!");
+    };
+
+    window.removePost = (index) => {
+      window.customConfirm("Deseja realmente remover este aviso?", async () => {
+        const newPosts = [...(state.config.posts || [])];
+        if (!newPosts[index]) return;
+        newPosts.splice(index, 1);
+        await window.saveConfigSafe({ posts: newPosts }, true);
+        window.toast("Aviso Removido!");
+      });
+    };
+
+    window.renderHighlightsAdmin = () => {
+      const list = document.getElementById('admin-highlights-list');
+      if (!list) return;
+      list.innerHTML = '';
+
+      const highlights = state.config.highlights || [];
+      highlights.forEach((h, idx) => {
+        list.innerHTML += `
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 mb-4 animate-slide-up" style="animation-delay: ${idx * 0.1}s">
+                    <h4 class="text-xs font-black text-slate-800 mb-3 uppercase tracking-widest bg-white inline-block px-3 py-1 rounded-full border border-slate-200">Destaque ${idx + 1}</h4>
+                    <div class="space-y-2">
+                        <input id="hl-badge-${idx}" value="${h.badge}" placeholder="Selo (Ex: Temos Novidade)" class="w-full p-3 bg-white rounded-xl text-xs font-bold outline-none border border-transparent focus:border-brand-300">
+                        <input id="hl-title-${idx}" value="${h.title}" placeholder="Título Principal" class="w-full p-3 bg-white rounded-xl text-sm font-bold outline-none border border-transparent focus:border-brand-300">
+                        <input id="hl-subtitle-${idx}" value="${h.subtitle}" placeholder="Subtítulo Curto" class="w-full p-3 bg-white rounded-xl text-xs font-medium outline-none border border-transparent focus:border-brand-300">
+
+                        <div class="flex items-center gap-2 mt-4 pt-2 border-t border-slate-200">
+                            ${h.image
+            ? `<div class="relative"><img src="${h.image}" class="w-14 h-14 rounded-xl object-cover border border-slate-200 shadow-sm"><button onclick="window.clearHighlightImage(${idx})" class="absolute -top-2 -right-2 bg-red-500 text-white p-1 rounded-full shadow-md"><i data-lucide="x" class="w-3 h-3"></i></button></div>`
+            : `<div class="w-14 h-14 rounded-xl bg-slate-200 flex items-center justify-center border border-slate-300 shrink-0"><i data-lucide="image" class="w-6 h-6 text-slate-400"></i></div>`
+          }
+                            <label class="flex-1 p-3 bg-brand-50 text-brand-600 rounded-xl cursor-pointer hover:bg-brand-100 transition-colors shadow-sm flex items-center justify-center text-xs font-bold">
+                                <i data-lucide="upload" class="w-4 h-4 mr-2"></i> Adicionar Foto
+                                <input type="file" accept="image/*" class="hidden" onchange="window.handleHighlightImage(this, ${idx})">
+                            </label>
+                        </div>
+                        <button onclick="window.saveHighlightText(${idx})" class="w-full mt-2 py-3 bg-slate-900 text-white rounded-xl text-xs font-bold shadow-sm active:scale-95 transition-transform">
+                            Salvar Textos
+                        </button>
+                    </div>
+                </div>
+             `;
+      });
+      window.refreshIcons();
+    };
+
+    window.saveHighlightText = async (idx) => {
+      const newHighlights = [...(state.config.highlights || [])];
+      if (!newHighlights[idx]) return;
+      newHighlights[idx].badge = document.getElementById(`hl-badge-${idx}`).value.trim();
+      newHighlights[idx].title = document.getElementById(`hl-title-${idx}`).value.trim();
+      newHighlights[idx].subtitle = document.getElementById(`hl-subtitle-${idx}`).value.trim();
+
+      await window.saveConfigSafe({ highlights: newHighlights }, true);
+      window.toast("Destaque Atualizado!");
+    };
+
+    window.clearHighlightImage = async (idx) => {
+      window.customConfirm("Remover esta imagem?", async () => {
+        const newHighlights = [...(state.config.highlights || [])];
+        if (!newHighlights[idx]) return;
+        newHighlights[idx].image = "";
+        await window.saveConfigSafe({ highlights: newHighlights }, true);
+        window.toast("Imagem Removida!");
+      });
+    };
+
+    window.handleHighlightImage = (input, idx) => {
+      const file = input.files[0];
+      if (!file) return;
+
+      window.toast("Processando imagem...", "success");
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = async () => {
+          const canvas = document.createElement('canvas');
+          const MAX_WIDTH = 600;
+          const MAX_HEIGHT = 600;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
+          } else {
+            if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.5);
+
+          const newHighlights = [...(state.config.highlights || [])];
+          if (newHighlights[idx]) {
+            newHighlights[idx].image = dataUrl;
+            newHighlights[idx].badge = document.getElementById(`hl-badge-${idx}`).value.trim();
+            newHighlights[idx].title = document.getElementById(`hl-title-${idx}`).value.trim();
+            newHighlights[idx].subtitle = document.getElementById(`hl-subtitle-${idx}`).value.trim();
+            await window.saveConfigSafe({ highlights: newHighlights }, true);
+            window.toast("Imagem e Textos Salvos!");
+          }
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    };
+
+    window.renderZonesAdmin = () => {
+      const list = document.getElementById('admin-zones-list');
+      if (!list) return;
+      list.innerHTML = '';
+      (state.config.zones || []).forEach((z, i) => {
+        list.innerHTML += `
+          <div class="flex justify-between items-center p-3 bg-slate-50 rounded-xl border border-slate-100">
+            <span class="text-xs font-bold text-slate-700">${z.name}</span>
+            <div class="flex items-center gap-3">
+              <div class="flex items-center gap-1 bg-white border border-slate-200 rounded-lg px-2">
+                <span class="text-[10px] text-slate-400 font-bold">R$</span>
+                <input type="number" step="0.01" min="0" value="${(z.price || 0).toFixed(2)}"
+                  class="w-16 p-1.5 text-xs font-bold text-brand-600 outline-none text-right"
+                  onchange="window.updateZonePrice(${i}, this.value)">
+              </div>
+              <button onclick="window.removeZone(${i})" class="text-red-400 hover:text-red-600 p-1">
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+        `;
+      });
+      window.refreshIcons();
+    };
+
+    window.updateZonePrice = async (idx, newPrice) => {
+      const price = parseFloat(newPrice);
+      if (isNaN(price) || price < 0) {
+        window.toast("Valor inválido", "error");
+        window.renderZonesAdmin(); // Revert back
+        return;
+      }
+
+      const newZones = [...(state.config.zones || [])];
+      if (!newZones[idx]) return;
+      newZones[idx].price = price;
+
+      await window.saveConfigSafe({ zones: newZones }, true);
+      window.toast("Preço do local atualizado!");
+    };
+
+    window.addZone = async () => {
+      const name = document.getElementById('new-zone-name').value.trim();
+      const price = parseFloat(document.getElementById('new-zone-price').value);
+      if (!name || isNaN(price)) return window.toast("Dados inválidos", "error");
+      const newZones = [...(state.config.zones || []), { name, price }];
+      await window.saveConfigSafe({ zones: newZones }, true);
+
+      document.getElementById('new-zone-name').value = '';
+      document.getElementById('new-zone-price').value = '';
+      window.toast("Local adicionado!");
+    };
+
+    window.removeZone = (idx) => {
+      window.customConfirm("Deseja realmente remover este local?", async () => {
+        const newZones = [...(state.config.zones || [])];
+        if (!newZones[idx]) return;
+        newZones.splice(idx, 1);
+        await window.saveConfigSafe({ zones: newZones }, true);
+        window.toast("Local removido!");
+      });
+    };
+
+    window.saveSettings = async () => {
+      const newConfig = {
+        storeName: document.getElementById('cfg-name').value,
+        phone: document.getElementById('cfg-phone').value,
+        pixKey: document.getElementById('cfg-pix-key').value,
+        googleScriptUrl: document.getElementById('cfg-script-url').value,
+        openingHours: {
+          start: parseInt(document.getElementById('cfg-hour-start').value),
+          end: parseInt(document.getElementById('cfg-hour-end').value)
+        }
+      };
+      await window.saveConfigSafe(newConfig, true);
+      window.toast("Configurações Salvas!");
+    };
+
+    window.setStatus = async (mode) => {
+      await window.saveConfigSafe({ statusMode: mode }, true);
+      window.toast("Status Atualizado!");
+    };
+
+    function saveCart() { localStorage.setItem('acai_cart_v3', JSON.stringify(state.cart)); }
+
+    window.init = async () => {
+      const hideSplash = () => {
+        const splash = document.getElementById('splash');
+        if (splash) {
+          splash.style.opacity = '0';
+          setTimeout(() => splash.style.display = 'none', 500);
+        }
+      };
+      setTimeout(hideSplash, 3000);
+
+      try {
+        window.loadLocalConfig();
+
+        const savedCart = localStorage.getItem('acai_cart_v3');
+        if (savedCart) state.cart = JSON.parse(savedCart);
+
+        window.setupPhoneMask();
+        window.renderMenu();
+        window.renderCart();
+        window.renderPosts();
+        window.renderHighlights();
+        window.updateUI();
+        window.restoreFormData();
+        hideSplash();
+
+        try {
+          const app = initializeApp(firebaseConfig);
+          auth = getAuth(app);
+          db = getFirestore(app);
+
+          let unsubConfig = null;
+
+          const startDatabaseListeners = () => {
+            if (!unsubConfig) {
+              unsubConfig = onSnapshot(getDocRef('loja', 'configuracao'), (snap) => {
+                if (snap.exists()) {
+                  state.config = { ...state.config, ...snap.data() };
+
+                  // Rodar migração nos dados da nuvem para evitar limpar as abas novas
+                  if (window.migrateData(state.config)) {
+                    try { setDoc(getDocRef('loja', 'configuracao'), state.config, { merge: true }); } catch (e) { }
+                  }
+
+                  localStorage.setItem("acai_config_v7", JSON.stringify(state.config));
+                  window.renderMenu();
+                  window.renderPosts();
+                  window.renderHighlights();
+                  window.updateUI();
+                  if (state.isAdmin) window.syncAdminFields();
+                }
+              }, (err) => {
+                console.log("Using local config (offline / blocked).", err);
+              });
+            }
+          };
+
+          if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+            await signInWithCustomToken(auth, __initial_auth_token);
+          } else {
+            if (!auth.currentUser) {
+              try { await signInAnonymously(auth); } catch (e) { }
+            }
+          }
+
+          onAuthStateChanged(auth, (user) => {
+            if (user && user.email) {
+              state.isAdmin = true;
+            } else if (state.isAdmin && !user) {
+              state.isAdmin = false;
+            }
+            startDatabaseListeners();
+          });
+
+        } catch (fbError) {
+          console.warn("Firebase Init Failed (Offline Mode Active)", fbError);
+        }
+
+      } catch (e) {
+        console.error("Critical Init Error", e);
+        hideSplash();
+      }
+
+      setInterval(window.updateUI, 60000);
+    };
+
+    window.onload = window.init;
+  </script>
+</body>
+
+</html>
