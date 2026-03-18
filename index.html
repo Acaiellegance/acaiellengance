@@ -491,8 +491,7 @@
 
           <div id="pix-area"
             class="hidden bg-brand-50 p-5 rounded-3xl border border-brand-100 text-center animate-slide-up">
-            <p class="text-[10px] font-black text-brand-900 uppercase mb-1 tracking-widest">Titular: Gabriel Santana
-              Morais</p>
+            <p id="pix-name-display" class="text-[10px] font-black text-brand-900 uppercase mb-1 tracking-widest">Titular: Gabriel Santana Morais</p>
             <p class="text-[10px] font-black text-brand-900 uppercase mb-3 tracking-widest">Chave Pix</p>
             <div class="flex gap-2 mb-4">
               <input id="pix-key" readonly
@@ -919,6 +918,8 @@
             placeholder="WhatsApp">
           <input id="cfg-pix-key" class="w-full p-4 bg-slate-50 rounded-2xl text-sm font-medium outline-none"
             placeholder="Chave Pix">
+          <input id="cfg-pix-name" class="w-full p-4 bg-slate-50 rounded-2xl text-sm font-medium outline-none"
+            placeholder="Nome Titular Pix">
           <input id="cfg-script-url" class="w-full p-4 bg-slate-50 rounded-2xl text-xs font-mono"
             placeholder="Google Script URL">
           <button onclick="window.saveSettings()"
@@ -1346,6 +1347,8 @@
           pixArea.classList.remove('hidden');
           const keyEl = document.getElementById('pix-key');
           if (keyEl) keyEl.value = state.config.pixKey || '';
+          const nameEl = document.getElementById('pix-name-display');
+          if (nameEl) nameEl.innerText = `Titular: ${state.config.pixName || 'Gabriel Santana Morais'}`;
         }
       } else {
         if (pixArea) pixArea.classList.add('hidden');
@@ -2121,6 +2124,7 @@
       document.getElementById('cfg-name').value = state.config.storeName || '';
       document.getElementById('cfg-phone').value = state.config.phone || '';
       document.getElementById('cfg-pix-key').value = state.config.pixKey || '';
+      document.getElementById('cfg-pix-name').value = state.config.pixName || '';
       document.getElementById('cfg-script-url').value = state.config.googleScriptUrl || "";
       if (document.getElementById('cfg-hour-start')) document.getElementById('cfg-hour-start').value = state.config.openingHours?.start ?? 16;
       if (document.getElementById('cfg-hour-end')) document.getElementById('cfg-hour-end').value = state.config.openingHours?.end ?? 23;
@@ -2781,6 +2785,7 @@
         storeName: document.getElementById('cfg-name').value,
         phone: document.getElementById('cfg-phone').value,
         pixKey: document.getElementById('cfg-pix-key').value,
+        pixName: document.getElementById('cfg-pix-name').value,
         googleScriptUrl: document.getElementById('cfg-script-url').value,
         openingHours: {
           start: parseInt(document.getElementById('cfg-hour-start').value),
