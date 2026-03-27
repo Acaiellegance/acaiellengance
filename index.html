@@ -988,6 +988,19 @@
     }
     const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
 
+    const ALL_BATIDA_OPTIONS = [
+      "C/ Leite Condensado",
+      "C/ Creme de Avelã",
+      "C/ Creme de Ninho",
+      "C/ Creme de Morango",
+      "C/ Creme de Maracujá",
+      "C/ Creme de Cookies",
+      "C/ Creme de Avelã + Creme de Ninho",
+      "C/ Creme de Morango + Leite Condensado",
+      "C/ Creme de Maracujá + Leite Condensado",
+      "C/ Cobertura Fini Banana"
+    ];
+
     const DEFAULT_ITEMS = [
       { name: "Garrafa Paçoca 300ml", description: "Açaí, paçoca, banana e leite condensado", price: 10.00, category: "Garrafas Tradicionais" },
       { name: "Garrafa Ninho 300ml", description: "Açaí, leite em pó, banana e leite condensado", price: 10.00, category: "Garrafas Tradicionais" },
@@ -1003,7 +1016,7 @@
         price: 13.00, 
         category: "Garrafas Gourmet",
         hasComplements: true,
-        customOptions: ["C/ Creme de Avelã + Creme de Ninho", "C/ Creme de Ninho", "C/ Creme de Morango", "C/ Creme de Cookies", "C/ Creme de Maracujá", "C/ Cobertura Fini Banana"]
+        customOptions: ALL_BATIDA_OPTIONS
       },
       { 
         name: "Morango (Batida) 300ml", 
@@ -1011,7 +1024,7 @@
         price: 13.00, 
         category: "Garrafas Gourmet",
         hasComplements: true,
-        customOptions: ["C/ Leite Condensado", "C/ Creme de Avelã + Creme de Morango", "C/ Creme de Ninho", "C/ Creme de Morango + Leite Condensado", "C/ Creme de Cookies", "C/ Creme de Maracujá", "C/ Cobertura Fini Banana"]
+        customOptions: ALL_BATIDA_OPTIONS
       },
       { 
         name: "Ovomaltine (Batida) 300ml", 
@@ -1019,7 +1032,7 @@
         price: 13.00, 
         category: "Garrafas Gourmet",
         hasComplements: true,
-        customOptions: ["C/ Leite Condensado", "C/ Creme de Avelã", "C/ Creme de Ninho", "C/ Creme de Morango", "C/ Creme de Cookies", "C/ Creme de Maracujá", "C/ Cobertura Fini Banana"]
+        customOptions: ALL_BATIDA_OPTIONS
       },
       { 
         name: "Maracujá (Batida) 300ml", 
@@ -1027,7 +1040,7 @@
         price: 13.00, 
         category: "Garrafas Gourmet",
         hasComplements: true,
-        customOptions: ["C/ Leite Condensado", "C/ Creme de Avelã", "C/ Creme de Morango", "C/ Creme de Cookies", "C/ Creme de Maracujá + Leite Condensado", "C/ Cobertura Fini Banana"]
+        customOptions: ALL_BATIDA_OPTIONS
       },
       { 
         name: "Ninho (Batida) 500ml", 
@@ -1035,7 +1048,7 @@
         price: 18.00, 
         category: "Garrafas Gourmet",
         hasComplements: true,
-        customOptions: ["C/ Creme de Avelã + Creme de Ninho", "C/ Creme de Ninho", "C/ Creme de Morango", "C/ Creme de Cookies", "C/ Creme de Maracujá", "C/ Cobertura Fini Banana"]
+        customOptions: ALL_BATIDA_OPTIONS
       },
       { 
         name: "Morango (Batida) 500ml", 
@@ -1043,7 +1056,7 @@
         price: 18.00, 
         category: "Garrafas Gourmet",
         hasComplements: true,
-        customOptions: ["C/ Leite Condensado", "C/ Creme de Avelã + Creme de Morango", "C/ Creme de Ninho", "C/ Creme de Morango + Leite Condensado", "C/ Creme de Cookies", "C/ Creme de Maracujá", "C/ Cobertura Fini Banana"]
+        customOptions: ALL_BATIDA_OPTIONS
       },
       { 
         name: "Ovomaltine (Batida) 500ml", 
@@ -1051,7 +1064,7 @@
         price: 18.00, 
         category: "Garrafas Gourmet",
         hasComplements: true,
-        customOptions: ["C/ Leite Condensado", "C/ Creme de Avelã", "C/ Creme de Ninho", "C/ Creme de Morango", "C/ Creme de Cookies", "C/ Creme de Maracujá", "C/ Cobertura Fini Banana"]
+        customOptions: ALL_BATIDA_OPTIONS
       },
       { 
         name: "Maracujá (Batida) 500ml", 
@@ -1059,7 +1072,7 @@
         price: 18.00, 
         category: "Garrafas Gourmet",
         hasComplements: true,
-        customOptions: ["C/ Leite Condensado", "C/ Creme de Avelã", "C/ Creme de Morango", "C/ Creme de Cookies", "C/ Creme de Maracujá + Leite Condensado", "C/ Cobertura Fini Banana"]
+        customOptions: ALL_BATIDA_OPTIONS
       },
       { name: "Copo 300ml", description: "Monte do seu jeito! Escolha frutas, adicionais e coberturas.", price: 13.00, category: "Copos", hasComplements: true, hasCondensedMilk: true, condensedMilkMode: "included" },
       { name: "Copo 500ml", description: "Monte do seu jeito! Escolha frutas, adicionais e coberturas.", price: 18.00, category: "Copos", hasComplements: true, hasCondensedMilk: true, condensedMilkMode: "optional" },
@@ -1070,7 +1083,8 @@
     const DEFAULT_ACCOMPANIMENTS = {
       frutas: [{ name: "Morango", available: true }, { name: "Banana", available: true }, { name: "Kiwi", available: true }, { name: "Manga", available: true }],
       adicionais: [{ name: "M&M", available: true }, { name: "Paçoca", available: true }, { name: "Castanha", available: true }, { name: "Amendoim", available: true }, { name: "Leite em Pó", available: true }, { name: "Fini Banana", available: true }, { name: "Fini Beijinho", available: true }, { name: "Fini Tubes Azedo", available: true }],
-      coberturas: [{ name: "Beijinho (Fini)", available: true }, { name: "Creme de Ninho", available: true }, { name: "Creme de Morango", available: true }, { name: "Creme de Maracujá", available: true }]
+      coberturas: [{ name: "Beijinho (Fini)", available: true }],
+      cremes: [{ name: "Creme de Avelã", available: true }, { name: "Creme de Ninho", available: true }, { name: "Creme de Morango", available: true }, { name: "Creme de Maracujá", available: true }, { name: "Creme de Cookies", available: true }]
     };
 
     const DEFAULT_HIGHLIGHTS = [
@@ -1172,6 +1186,30 @@
         cfg.sizes.push({ name: "Copo 500ml", description: "Monte do seu jeito! Escolha frutas, adicionais e coberturas.", price: 18.00, category: "Copos", hasComplements: true, hasCondensedMilk: true, condensedMilkMode: "optional" });
         migrated = true;
       }
+
+      cfg.sizes.forEach(item => {
+        if (item.name && item.name.includes("(Batida)")) {
+          const expectedStr = JSON.stringify(ALL_BATIDA_OPTIONS);
+          const currentStr = JSON.stringify(item.customOptions || []);
+          if (expectedStr !== currentStr) {
+            item.customOptions = [...ALL_BATIDA_OPTIONS];
+            item.hasComplements = true;
+            migrated = true;
+          }
+        }
+      });
+
+      if (!cfg.accompaniments) cfg.accompaniments = DEFAULT_ACCOMPANIMENTS;
+      Object.keys(DEFAULT_ACCOMPANIMENTS).forEach(catName => {
+        if (!cfg.accompaniments[catName]) cfg.accompaniments[catName] = [];
+        DEFAULT_ACCOMPANIMENTS[catName].forEach(defaultItem => {
+          if (!cfg.accompaniments[catName].find(c => c.name === defaultItem.name)) {
+            cfg.accompaniments[catName].push({ ...defaultItem });
+            migrated = true;
+          }
+        });
+      });
+
       return migrated;
     };
 
@@ -1182,6 +1220,7 @@
           const cfg = JSON.parse(saved);
           state.config = { ...state.config, ...cfg };
           if (!state.config.accompaniments) state.config.accompaniments = DEFAULT_ACCOMPANIMENTS;
+          if (!state.config.accompaniments.cremes) state.config.accompaniments.cremes = DEFAULT_ACCOMPANIMENTS.cremes;
           if (!state.config.posts) state.config.posts = [];
           if (!state.config.highlights || state.config.highlights.length === 0) state.config.highlights = DEFAULT_HIGHLIGHTS;
           if (!state.config.sizes) state.config.sizes = DEFAULT_ITEMS;
@@ -1457,27 +1496,55 @@
 
       if (item.customOptions) {
         document.querySelector('#copo-modal p').innerText = "Escolha sua montagem";
-        let html = `<div class="mb-6"><div class="grid grid-cols-1 gap-3">`;
-        item.customOptions.forEach((opt, idx) => {
-          html += `
-            <label class="cursor-pointer relative group">
-                <input type="radio" name="custom-opt-radio" class="option-checkbox hidden" value="${opt}" data-price="0" ${idx === 0 ? 'checked' : ''} onchange="window.updateCalcCopoTotal()">
-                <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl transition-all hover:bg-white hover:shadow-sm flex items-center justify-between">
-                    <span class="text-xs font-bold text-slate-700">${opt}</span>
-                    <div class="w-4 h-4 shrink-0 rounded-full border border-slate-300 flex items-center justify-center bg-white group-active:scale-90 relative">
-                        <i data-lucide="check" class="check-icon-sm w-3 h-3 text-brand-600 opacity-0 transform scale-50 transition-all stroke-[4] absolute"></i>
-                    </div>
-                </div>
-            </label>
-          `;
+
+        let unavailableStrings = [];
+        Object.values(state.config.accompaniments || {}).forEach(arr => {
+          (arr || []).forEach(ing => {
+            if (ing.available === false && ing.name) unavailableStrings.push(ing.name.toLowerCase().trim());
+          });
         });
-        html += `</div></div>`;
-        container.innerHTML = html;
-        window.updateCalcCopoTotal();
+
+        if (state.config.condensedMilkPaused) {
+          unavailableStrings.push("leite condensado");
+        }
+
+        const availableCustomOptions = item.customOptions.filter(opt => {
+          let parts = opt.replace("C/ ", "").replace("Cobertura ", "").split(" + ").map(p => p.trim().toLowerCase());
+          for (let un of unavailableStrings) {
+            if (parts.includes(un)) return false;
+          }
+          return true;
+        });
+
+        if (availableCustomOptions.length === 0) {
+          container.innerHTML = `<div class="mb-6"><p class="text-sm text-slate-500 italic text-center py-4 bg-slate-50 rounded-xl border border-slate-200">As opções de montagem desta batida estão indisponíveis no estoque no momento.</p></div>`;
+          document.getElementById('copo-qty-display').innerText = "0";
+          document.getElementById('copo-total-price').innerText = `R$ 0,00`;
+          state.currentCopoUnitFinalPrice = 0;
+          state.currentCopo = null;
+        } else {
+          let html = `<div class="mb-6"><div class="grid grid-cols-1 gap-3">`;
+          availableCustomOptions.forEach((opt, idx) => {
+            html += `
+              <label class="cursor-pointer relative group">
+                  <input type="radio" name="custom-opt-radio" class="option-checkbox hidden" value="${opt}" data-price="0" ${idx === 0 ? 'checked' : ''} onchange="window.updateCalcCopoTotal()">
+                  <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl transition-all hover:bg-white hover:shadow-sm flex items-center justify-between">
+                      <span class="text-xs font-bold text-slate-700">${opt}</span>
+                      <div class="w-4 h-4 shrink-0 rounded-full border border-slate-300 flex items-center justify-center bg-white group-active:scale-90 relative">
+                          <i data-lucide="check" class="check-icon-sm w-3 h-3 text-brand-600 opacity-0 transform scale-50 transition-all stroke-[4] absolute"></i>
+                      </div>
+                  </div>
+              </label>
+            `;
+          });
+          html += `</div></div>`;
+          container.innerHTML = html;
+          window.updateCalcCopoTotal();
+        }
       } else {
 
         const isCopoOuTigela = item.category === 'Copos' || item.category === 'Tigelas 1KG';
-        if (isCopoOuTigela && item.hasCondensedMilk !== false) {
+        if (isCopoOuTigela && item.hasCondensedMilk !== false && !state.config.condensedMilkPaused) {
           const isMilkOff = item.condensedMilkMode === 'optional' || state.config.condensedMilkOptional === true;
 
           if (!isMilkOff) {
@@ -1549,9 +1616,10 @@
           return html;
         };
 
-        const acc = state.config.accompaniments || { frutas: [], adicionais: [], coberturas: [] };
+        const acc = state.config.accompaniments || { frutas: [], adicionais: [], coberturas: [], cremes: [] };
         container.innerHTML += renderSection("Frutas", acc.frutas, "fruta");
         container.innerHTML += renderSection("Adicionais", acc.adicionais, "adicional");
+        container.innerHTML += renderSection("Cremes", acc.cremes, "creme");
 
         let coberturasPrepend = "";
         const isCopoOuTigelaCobertura = item.category === 'Copos' || item.category === 'Tigelas 1KG';
@@ -2389,9 +2457,10 @@
         return html;
       };
 
-      const acc = state.config.accompaniments || { frutas: [], adicionais: [], coberturas: [] };
+      const acc = state.config.accompaniments || { frutas: [], adicionais: [], coberturas: [], cremes: [] };
       list.innerHTML += renderCat("Frutas", acc.frutas, "frutas");
       list.innerHTML += renderCat("Adicionais", acc.adicionais, "adicionais");
+      list.innerHTML += renderCat("Cremes", acc.cremes, "cremes");
       list.innerHTML += renderCat("Coberturas", acc.coberturas, "coberturas");
 
       const condensedMilkPrice = state.config.condensedMilkPrice || 0;
@@ -2402,12 +2471,15 @@
         <h4 class="text-xs font-bold text-slate-500 uppercase mb-2">Item Especial (Leite Condensado)</h4>
         <div class="flex justify-between items-center p-2 bg-yellow-50 rounded-lg text-xs border border-yellow-200">
             <div class="flex flex-col">
-                <span class="${isMilkOff ? 'line-through opacity-50' : 'font-bold'} text-yellow-800">Leite Condensado ${isMilkOff ? '(Opcional)' : '(Fixo na Base)'}</span>
+                <span class="${isMilkOff ? 'line-through opacity-50' : 'font-bold'} text-yellow-800">Leite Condensado ${isMilkOff ? '(Opcional)' : '(Fixo na Base)'} ${state.config.condensedMilkPaused ? '<span class="text-red-500">(Pausado)</span>' : ''}</span>
                 <span class="text-[10px] text-yellow-600 font-bold">${milkPriceStr}</span>
             </div>
             <div class="flex gap-2 items-center">
                 <button onclick="window.editCondensedMilkPrice()" class="p-1.5 text-blue-500 hover:text-blue-700 bg-blue-50 rounded-lg transition-colors" title="Editar Preço">
                      <i data-lucide="dollar-sign" class="w-3.5 h-3.5"></i>
+                </button>
+                <button onclick="window.pauseCondensedMilk()" class="px-2 py-1 rounded border font-bold text-[9px] ${state.config.condensedMilkPaused ? 'bg-green-50 text-green-600 border-green-200' : 'bg-red-50 text-red-600 border-red-200'}">
+                    ${state.config.condensedMilkPaused ? 'ATIVAR' : 'PAUSAR'}
                 </button>
                 <button onclick="window.toggleCondensedMilk()" class="px-2 py-1 rounded border font-bold text-[9px] ${isMilkOff ? 'bg-yellow-50 text-yellow-600 border-yellow-200' : 'bg-green-50 text-green-600 border-green-200'}">
                     ${isMilkOff ? 'TORNAR FIXO' : 'TORNAR OPCIONAL'}
@@ -2421,6 +2493,12 @@
       const current = state.config.condensedMilkOptional === true;
       await window.saveConfigSafe({ condensedMilkOptional: !current }, true);
       window.toast("Regra do Leite Condensado alterada!");
+    };
+
+    window.pauseCondensedMilk = async () => {
+      const current = state.config.condensedMilkPaused === true;
+      await window.saveConfigSafe({ condensedMilkPaused: !current }, true);
+      window.toast(current ? "Leite Condensado Ativado!" : "Leite Condensado Pausado!");
     };
 
     window.toggleAccompaniment = async (type, idx) => {
@@ -2974,6 +3052,9 @@
               unsubConfig = onSnapshot(getDocRef('loja', 'configuracao'), (snap) => {
                 if (snap.exists()) {
                   state.config = { ...state.config, ...snap.data() };
+                  if (state.config.accompaniments && !state.config.accompaniments.cremes) {
+                    state.config.accompaniments.cremes = DEFAULT_ACCOMPANIMENTS.cremes;
+                  }
 
                   // Rodar migração nos dados da nuvem para evitar limpar as abas novas
                   if (window.migrateData(state.config)) {
