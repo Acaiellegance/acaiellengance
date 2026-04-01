@@ -1991,6 +1991,24 @@
         stTxt.className = `text-[10px] font-bold uppercase tracking-wider ${isOpen ? 'text-green-600' : 'text-red-500'}`;
       }
 
+      const paymentSelect = document.getElementById('payment-method');
+      if (paymentSelect) {
+        let pixOption = Array.from(paymentSelect.options).find(opt => opt.value === 'Pix');
+        if (pixOption) {
+          if (!isOpen) {
+            pixOption.disabled = true;
+            pixOption.style.display = 'none';
+            if (paymentSelect.value === 'Pix') {
+              paymentSelect.value = '';
+              window.handlePaymentChange();
+            }
+          } else {
+            pixOption.disabled = false;
+            pixOption.style.display = '';
+          }
+        }
+      }
+
       window.validateCheckout();
     };
 
