@@ -728,36 +728,53 @@
               </select>
             </div>
 
-            <div id="new-prod-copo-opts" class="mt-2 p-3 bg-blue-50/50 border border-blue-100 rounded-xl space-y-3">
-              <label class="flex items-center gap-2 text-xs font-bold text-slate-700 cursor-pointer">
+            <div id="new-prod-copo-opts" class="mt-2 p-4 bg-slate-50 border border-slate-100 rounded-2xl space-y-4">
+              <label class="flex items-center gap-3 text-xs font-black text-slate-700 cursor-pointer group">
                 <input type="checkbox" id="new-prod-has-complements"
-                  class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500" onchange="
-                    document.getElementById('new-prod-max-comp-container').classList.toggle('opacity-50', !this.checked); 
-                    document.getElementById('new-prod-max-comp').disabled = !this.checked;
-                    document.getElementById('new-prod-condensed-milk-container').classList.toggle('opacity-50', !this.checked);
-                    document.getElementById('new-prod-has-condensed-milk').disabled = !this.checked;
+                  class="w-5 h-5 text-brand-600 rounded-lg border-slate-300 focus:ring-brand-500 transition-all" onchange="
+                    const isChecked = this.checked;
+                    ['new-prod-max-comp-container', 'new-prod-condensed-milk-container', 'new-prod-milk-mode-container'].forEach(id => {
+                      const el = document.getElementById(id);
+                      if (el) {
+                        el.classList.toggle('opacity-50', !isChecked);
+                        const input = el.querySelector('input, select, button');
+                        if (input) input.disabled = !isChecked;
+                        // Special for buttons inside max-comp
+                        el.querySelectorAll('button').forEach(b => b.disabled = !isChecked);
+                      }
+                    });
                   ">
                 Permitir Complementos
               </label>
-              <div id="new-prod-max-comp-container"
-                class="flex items-center justify-between opacity-50 transition-opacity">
-                <span class="text-xs font-medium text-slate-600">Límite Cmp. (0 = Ilim.)</span>
-                <div class="flex items-center bg-white border border-slate-200 rounded-lg overflow-hidden shrink-0">
-                  <button type="button" onclick="document.getElementById('new-prod-max-comp').stepDown()"
-                    class="px-2 py-1 text-slate-500 hover:bg-slate-50 font-bold" style="width:25px;">-</button>
+
+              <div id="new-prod-max-comp-container" class="flex items-center justify-between opacity-50 transition-opacity">
+                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Limite de itens (0=Ilim.)</span>
+                <div class="flex items-center bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+                  <button type="button" onclick="document.getElementById('new-prod-max-comp').stepDown()" disabled
+                    class="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-brand-600 hover:bg-slate-50 transition-colors">-</button>
                   <input type="number" id="new-prod-max-comp" value="0" min="0" disabled
-                    class="w-10 text-center text-xs font-bold py-1 outline-none border-x border-slate-200">
-                  <button type="button" onclick="document.getElementById('new-prod-max-comp').stepUp()"
-                    class="px-2 py-1 text-slate-500 hover:bg-slate-50 font-bold" style="width:25px;">+</button>
+                    class="w-10 text-center text-xs font-black py-1 outline-none border-x border-slate-100">
+                  <button type="button" onclick="document.getElementById('new-prod-max-comp').stepUp()" disabled
+                    class="w-8 h-8 flex items-center justify-center text-slate-400 hover:text-brand-600 hover:bg-slate-50 transition-colors">+</button>
                 </div>
               </div>
 
-              <label id="new-prod-condensed-milk-container"
-                class="flex items-center gap-2 text-xs font-bold text-slate-700 cursor-pointer opacity-50 transition-opacity">
-                <input type="checkbox" id="new-prod-has-condensed-milk"
-                  class="w-4 h-4 text-brand-600 rounded border-slate-300 focus:ring-brand-500" disabled checked>
-                Incluir Leite Condensado
-              </label>
+              <div id="new-prod-condensed-milk-container" class="flex items-center justify-between opacity-50 transition-opacity">
+                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Leite Condensado</span>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" id="new-prod-has-condensed-milk" class="sr-only peer" disabled checked>
+                  <div class="w-9 h-5 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-brand-600"></div>
+                </label>
+              </div>
+
+              <div id="new-prod-milk-mode-container" class="flex flex-col gap-2 opacity-50 transition-opacity">
+                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-wider ml-1">Regra do Leite Cond.</span>
+                <select id="new-prod-milk-mode" disabled
+                  class="w-full p-3 bg-white border border-slate-200 rounded-xl text-xs font-bold outline-none focus:border-brand-500 transition-colors">
+                  <option value="included" selected>Incluso no Preço (Grátis)</option>
+                  <option value="optional">Opcional (Usa limite ou Pago)</option>
+                </select>
+              </div>
             </div>
 
             <button onclick="window.addProduct()"
@@ -1188,14 +1205,9 @@
       }
 
       cfg.sizes.forEach(item => {
-        if (item.name && item.name.includes("(Batida)")) {
-          const expectedStr = JSON.stringify(ALL_BATIDA_OPTIONS);
-          const currentStr = JSON.stringify(item.customOptions || []);
-          if (expectedStr !== currentStr) {
-            item.customOptions = [...ALL_BATIDA_OPTIONS];
-            item.hasComplements = true;
-            migrated = true;
-          }
+        if (item.customOptions !== undefined) {
+          delete item.customOptions;
+          migrated = true;
         }
       });
 
@@ -1219,8 +1231,8 @@
         if (saved) {
           const cfg = JSON.parse(saved);
           state.config = { ...state.config, ...cfg };
-          if (!state.config.accompaniments) state.config.accompaniments = DEFAULT_ACCOMPANIMENTS;
-          if (!state.config.accompaniments.cremes) state.config.accompaniments.cremes = DEFAULT_ACCOMPANIMENTS.cremes;
+          if (!state.config.accompaniments) state.config.accompaniments = JSON.parse(JSON.stringify(DEFAULT_ACCOMPANIMENTS));
+          if (!state.config.accompaniments.cremes) state.config.accompaniments.cremes = JSON.parse(JSON.stringify(DEFAULT_ACCOMPANIMENTS.cremes));
           if (!state.config.posts) state.config.posts = [];
           if (!state.config.highlights || state.config.highlights.length === 0) state.config.highlights = DEFAULT_HIGHLIGHTS;
           if (!state.config.sizes) state.config.sizes = DEFAULT_ITEMS;
@@ -1482,69 +1494,95 @@
     window.openCopoModal = (item) => {
       state.currentCopo = item;
       state.copoQty = 1;
-      document.getElementById('copo-modal-title').innerText = item.name;
-
-      const maxCmp = item.maxComplements || 0;
-      const limitText = maxCmp > 0 ? `Escolha até ${maxCmp} itens (Frutas, Adicionais ou Coberturas)` : "Escolha seus acompanhamentos (Ilimitado)";
-      document.querySelector('#copo-modal p').innerText = limitText;
-
-      document.getElementById('copo-qty-display').innerText = "1";
-      document.getElementById('copo-total-price').innerText = `R$ ${item.price.toFixed(2).replace('.', ',')}`;
+      
+      const title = document.getElementById('copo-modal-title');
+      if (title) title.innerText = `Opções para ${item.name} (${item.category})`;
+      
+      const qtyDisp = document.getElementById('copo-qty-display');
+      if (qtyDisp) qtyDisp.innerText = "1";
+      
+      const priceDisp = document.getElementById('copo-total-price');
+      if (priceDisp) priceDisp.innerText = `R$ ${(item.price || 0).toFixed(2).replace('.', ',')}`;
 
       const container = document.getElementById('copo-options-container');
+      if (!container) return;
       container.innerHTML = "";
 
-      if (item.customOptions) {
+      if (item.category === 'Garrafas Gourmet') {
         document.querySelector('#copo-modal p').innerText = "Escolha sua montagem";
-
-        let unavailableStrings = [];
-        Object.values(state.config.accompaniments || {}).forEach(arr => {
-          (arr || []).forEach(ing => {
-            if (ing.available === false && ing.name) unavailableStrings.push(ing.name.toLowerCase().trim());
-          });
+        
+        let availableCustomOptions = [];
+        ["cremes"].forEach(catName => {
+           if (state.config.accompaniments[catName]) {
+              state.config.accompaniments[catName].forEach(ing => {
+                 const isAllowedInGourmet = !ing.allowedCats || ing.allowedCats.includes('Garrafas Gourmet');
+                 if (ing.available !== false && isAllowedInGourmet) {
+                     if (!availableCustomOptions.some(opt => opt.name.toLowerCase() === ing.name.toLowerCase())) {
+                         availableCustomOptions.push({ name: ing.name, price: ing.price || 0 });
+                     }
+                 }
+              });
+           }
         });
 
-        if (state.config.condensedMilkPaused) {
-          unavailableStrings.push("leite condensado");
-        }
-
-        const availableCustomOptions = item.customOptions.filter(opt => {
-          let parts = opt.replace("C/ ", "").replace("Cobertura ", "").split(" + ").map(p => p.trim().toLowerCase());
-          for (let un of unavailableStrings) {
-            if (parts.includes(un)) return false;
-          }
-          return true;
-        });
-
-        if (availableCustomOptions.length === 0) {
-          container.innerHTML = `<div class="mb-6"><p class="text-sm text-slate-500 italic text-center py-4 bg-slate-50 rounded-xl border border-slate-200">As opções de montagem desta batida estão indisponíveis no estoque no momento.</p></div>`;
-          document.getElementById('copo-qty-display').innerText = "0";
-          document.getElementById('copo-total-price').innerText = `R$ 0,00`;
-          state.currentCopoUnitFinalPrice = 0;
-          state.currentCopo = null;
-        } else {
-          let html = `<div class="mb-6"><div class="grid grid-cols-1 gap-3">`;
-          availableCustomOptions.forEach((opt, idx) => {
-            html += `
-              <label class="cursor-pointer relative group">
-                  <input type="radio" name="custom-opt-radio" class="option-checkbox hidden" value="${opt}" data-price="0" ${idx === 0 ? 'checked' : ''} onchange="window.updateCalcCopoTotal()">
-                  <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl transition-all hover:bg-white hover:shadow-sm flex items-center justify-between">
-                      <span class="text-xs font-bold text-slate-700">${opt}</span>
-                      <div class="w-4 h-4 shrink-0 rounded-full border border-slate-300 flex items-center justify-center bg-white group-active:scale-90 relative">
-                          <i data-lucide="check" class="check-icon-sm w-3 h-3 text-brand-600 opacity-0 transform scale-50 transition-all stroke-[4] absolute"></i>
-                      </div>
-                  </div>
-              </label>
+        let html = availableCustomOptions.map((opt, i) => {
+            const p = parseFloat(opt.price) || 0;
+            const priceLabel = p > 0 ? `<span class="text-[9px] text-green-600 bg-green-50 px-1 py-0.5 rounded ml-1">+ R$ ${p.toFixed(2).replace('.', ',')}</span>` : '';
+            return `
+                <label class="cursor-pointer relative group">
+                    <input type="radio" name="custom-opt-radio" class="option-checkbox hidden" value="${opt.name}" data-price="${p}" ${i === 0 ? 'checked' : ''} onchange="window.updateCalcCopoTotal()">
+                    <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl transition-all hover:bg-white hover:shadow-sm flex items-center justify-between">
+                        <div class="flex flex-col">
+                            <span class="text-xs font-bold text-slate-700">${opt.name}</span>
+                            ${priceLabel}
+                        </div>
+                        <div class="w-4 h-4 shrink-0 rounded-full border border-slate-300 flex items-center justify-center bg-white group-active:scale-90 relative">
+                            <i data-lucide="check" class="check-icon-sm w-3 h-3 text-brand-600 opacity-0 transform scale-50 transition-all stroke-[4] absolute"></i>
+                        </div>
+                    </div>
+                </label>
             `;
-          });
-          html += `</div></div>`;
-          container.innerHTML = html;
-          window.updateCalcCopoTotal();
-        }
-      } else {
+        }).join('');
 
-        const isCopoOuTigela = item.category === 'Copos' || item.category === 'Tigelas 1KG';
-        if (isCopoOuTigela && item.hasCondensedMilk !== false && !state.config.condensedMilkPaused) {
+        if (state.config.hasSpoons) {
+          html += `
+            <div class="mt-6 pt-4 border-t border-slate-200">
+              <h4 class="text-sm font-black text-slate-700 uppercase mb-3 text-center">Acompanha Colher?</h4>
+              <div class="grid grid-cols-2 gap-3">
+                  <label class="cursor-pointer relative group">
+                      <input type="radio" name="colher-option" class="option-checkbox hidden" value="Sem Colher" data-price="0" checked onchange="window.updateCalcCopoTotal()">
+                      <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl transition-all hover:bg-white flex items-center justify-between">
+                          <span class="text-xs font-bold text-slate-500">Não precisa</span>
+                          <div class="w-4 h-4 shrink-0 rounded-full border border-slate-300 flex items-center justify-center bg-white group-active:scale-90 relative">
+                              <i data-lucide="check" class="check-icon-sm w-3 h-3 text-brand-600 opacity-0 transform scale-50 transition-all stroke-[4] absolute"></i>
+                          </div>
+                      </div>
+                  </label>
+                  <label class="cursor-pointer relative group">
+                      <input type="radio" name="colher-option" class="option-checkbox hidden" value="Com Colher" data-price="0" onchange="window.updateCalcCopoTotal()">
+                      <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl transition-all hover:bg-white flex items-center justify-between">
+                          <span class="text-xs font-bold text-slate-500">Sim, p/ favor</span>
+                          <div class="w-4 h-4 shrink-0 rounded-full border border-slate-300 flex items-center justify-center bg-white group-active:scale-90 relative">
+                              <i data-lucide="check" class="check-icon-sm w-3 h-3 text-brand-600 opacity-0 transform scale-50 transition-all stroke-[4] absolute"></i>
+                          </div>
+                      </div>
+                  </label>
+              </div>
+            </div>
+          `;
+        }
+
+        container.innerHTML = `<div class="flex flex-col gap-2 mb-4">${html}</div>`;
+        document.getElementById('copo-modal').classList.remove('hidden');
+        window.refreshIcons();
+        window.updateCalcCopoTotal();
+        return;
+      }
+
+      document.querySelector('#copo-modal p').innerText = item.maxComplements > 0 ? `Escolha até ${item.maxComplements} complementos incluídos` : "Customize seu pedido";
+
+      const isCopoOuTigela = item.category === 'Copos' || item.category === 'Tigelas 1KG';
+      if (isCopoOuTigela && item.hasCondensedMilk !== false && !state.config.condensedMilkPaused) {
           const isMilkOff = item.condensedMilkMode === 'optional' || state.config.condensedMilkOptional === true;
 
           if (!isMilkOff) {
@@ -1575,7 +1613,11 @@
 
           html += prependHtml;
 
-          const availableOptions = (options || []).filter(o => o.available !== false);
+          const availableOptions = (options || []).filter(o => {
+            if (o.available === false) return false;
+            if (o.allowedCats && !o.allowedCats.includes(item.category)) return false;
+            return true;
+          });
 
           if (availableOptions.length === 0 && !prependHtml) {
             html += `<p class="text-xs text-slate-400 italic p-2">Indisponível no momento.</p>`;
@@ -1622,9 +1664,8 @@
         container.innerHTML += renderSection("Cremes", acc.cremes, "creme");
 
         let coberturasPrepend = "";
-        const isCopoOuTigelaCobertura = item.category === 'Copos' || item.category === 'Tigelas 1KG';
         const isMilkOffCobertura = item.condensedMilkMode === 'optional' || state.config.condensedMilkOptional === true;
-        if (isCopoOuTigelaCobertura && item.hasCondensedMilk !== false && isMilkOffCobertura) {
+        if (item.hasCondensedMilk !== false && isMilkOffCobertura) {
           let milkPrice = state.config.condensedMilkPrice || 0;
           if (item.name === "Tigela 1KG (Livre)") {
             milkPrice = 2.00;
@@ -1649,7 +1690,6 @@
             `;
         }
         container.innerHTML += renderSection("Coberturas", acc.coberturas, "cobertura", coberturasPrepend);
-      }
 
       if (state.config.hasSpoons !== false) {
         container.innerHTML += `
@@ -2441,35 +2481,55 @@
           const isOff = item.available === false;
           const price = item.price || 0;
           let priceStr = price > 0 ? `+ R$ ${price.toFixed(2).replace('.', ',')}` : "Grátis";
+          
+          let hasCopos = !item.allowedCats || item.allowedCats.includes("Copos");
+          let hasGourmet = !item.allowedCats || item.allowedCats.includes("Garrafas Gourmet");
+          let hasTradicional = !item.allowedCats || item.allowedCats.includes("Garrafas Tradicionais");
 
           html += `
-                    <div class="flex justify-between items-center p-2 bg-slate-50 rounded-lg text-xs mb-1.5 border border-slate-100">
-                        <div class="flex flex-col">
-                            <span class="${isOff ? 'line-through opacity-50' : 'font-bold'} text-slate-700">${item.name}</span>
-                            <span class="text-[10px] text-slate-400 font-bold">${priceStr}</span>
+                    <div class="p-2 bg-slate-50 rounded-lg text-xs mb-1.5 border border-slate-100 flex flex-col gap-2">
+                        <div class="flex justify-between items-center">
+                            <div class="flex flex-col">
+                                <span class="${isOff ? 'line-through opacity-50' : 'font-bold'} text-slate-700">${item.name}</span>
+                                <span class="text-[10px] text-slate-400 font-bold">${priceStr}</span>
+                            </div>
+                            <div class="flex gap-2 items-center">
+                                <button onclick="window.editAccompanimentPrice('${type}', ${idx})" class="p-1.5 text-blue-500 hover:text-blue-700 bg-blue-50 rounded-lg transition-colors" title="Editar Preço">
+                                    <i data-lucide="dollar-sign" class="w-3.5 h-3.5"></i>
+                                </button>
+                                <button onclick="window.toggleAccompaniment('${type}', ${idx})" class="px-2 py-1 rounded border font-bold text-[9px] ${isOff ? 'bg-green-50 text-green-600 border-green-200' : 'bg-yellow-50 text-yellow-600 border-yellow-200'}">
+                                    ${isOff ? 'ATIVAR' : 'PAUSAR'}
+                                </button>
+                                <button onclick="window.removeAccompaniment('${type}', ${idx})" class="p-1.5 text-red-500 hover:text-red-700 bg-red-50 rounded-lg">
+                                    <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                </button>
+                            </div>
                         </div>
-                        <div class="flex gap-2 items-center">
-                            <button onclick="window.editAccompanimentPrice('${type}', ${idx})" class="p-1.5 text-blue-500 hover:text-blue-700 bg-blue-50 rounded-lg transition-colors" title="Editar Preço">
-                                <i data-lucide="dollar-sign" class="w-3.5 h-3.5"></i>
-                            </button>
-                            <button onclick="window.toggleAccompaniment('${type}', ${idx})" class="px-2 py-1 rounded border font-bold text-[9px] ${isOff ? 'bg-green-50 text-green-600 border-green-200' : 'bg-yellow-50 text-yellow-600 border-yellow-200'}">
-                                ${isOff ? 'ATIVAR' : 'PAUSAR'}
-                            </button>
-                            <button onclick="window.removeAccompaniment('${type}', ${idx})" class="p-1.5 text-red-500 hover:text-red-700 bg-red-50 rounded-lg">
-                                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                            </button>
+                        <div class="text-[9px] text-slate-500 font-bold uppercase flex items-center gap-3 bg-white p-1.5 rounded border border-slate-100">
+                            <span>Exibir em:</span>
+                            <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" onchange="window.toggleIngCat('${type}', ${idx}, 'Copos')" ${hasCopos ? 'checked' : ''} class="accent-brand-500">Copos/Tigelas</label>
+                            <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" onchange="window.toggleIngCat('${type}', ${idx}, 'Garrafas Gourmet')" ${hasGourmet ? 'checked' : ''} class="accent-pink-500">Batidas</label>
+                            <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" onchange="window.toggleIngCat('${type}', ${idx}, 'Garrafas Tradicionais')" ${hasTradicional ? 'checked' : ''} class="accent-brand-500">Tradicionais</label>
                         </div>
                     </div>
                 `;
         });
 
         html += `
-                <div class="flex gap-2 mt-2">
-                    <input id="new-ing-${type}" placeholder="Novo item..." class="flex-1 p-2 bg-white border border-slate-200 rounded-lg text-xs outline-none focus:border-brand-300">
-                    <input id="new-ing-price-${type}" type="number" step="0.01" placeholder="R$ 0,00" class="w-20 p-2 bg-white border border-slate-200 rounded-lg text-xs outline-none focus:border-brand-300">
-                    <button onclick="window.addAccompaniment('${type}')" class="p-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700">
-                        <i data-lucide="plus" class="w-4 h-4"></i>
-                    </button>
+                <div class="flex flex-col gap-2 mt-2 bg-white p-2 rounded-lg border border-slate-200">
+                    <div class="flex gap-2">
+                        <input id="new-ing-${type}" placeholder="Novo item..." class="flex-1 p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none focus:border-brand-300">
+                        <input id="new-ing-price-${type}" type="number" step="0.01" placeholder="R$ 0,00" class="w-20 p-2 bg-slate-50 border border-slate-200 rounded-lg text-xs outline-none focus:border-brand-300">
+                        <button onclick="window.addAccompaniment('${type}')" class="p-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700">
+                            <i data-lucide="plus" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                    <div class="text-[9px] text-slate-500 font-bold uppercase flex items-center gap-3 mt-1">
+                        <span>Adicionar também em:</span>
+                        <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="new-ing-cat-copos-${type}" checked class="accent-brand-500">Copos/Tigelas</label>
+                        <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="new-ing-cat-batida-${type}" ${type === 'cremes' ? 'checked' : ''} class="accent-pink-500">Batidas</label>
+                        <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="new-ing-cat-tradicional-${type}" class="accent-brand-500">Tradicionais</label>
+                    </div>
                 </div>
             </div>`;
         return html;
@@ -2528,6 +2588,36 @@
       window.toast("Ingrediente atualizado!");
     };
 
+    window.toggleIngCat = async (type, idx, catName) => {
+      const list = [...(state.config.accompaniments[type] || [])];
+      if (!list[idx]) return;
+      
+      let cats = list[idx].allowedCats;
+      if (!cats) {
+        cats = ["Copos", "Tigelas 1KG", "Garrafas Gourmet", "Garrafas Tradicionais"];
+      }
+
+      if (catName === 'Copos') {
+        const hasCopos = cats.includes('Copos');
+        if (hasCopos) {
+          cats = cats.filter(c => c !== 'Copos' && c !== 'Tigelas 1KG');
+        } else {
+          cats.push('Copos', 'Tigelas 1KG');
+        }
+      } else {
+        if (cats.includes(catName)) {
+           cats = cats.filter(c => c !== catName);
+        } else {
+           cats.push(catName);
+        }
+      }
+      list[idx].allowedCats = cats;
+
+      const newAccompaniments = { ...state.config.accompaniments, [type]: list };
+      await window.saveConfigSafe({ accompaniments: newAccompaniments }, true);
+      window.toast("Exibição atualizada!");
+    };
+
     window.addAccompaniment = async (type) => {
       const input = document.getElementById(`new-ing-${type}`);
       const priceInput = document.getElementById(`new-ing-price-${type}`);
@@ -2535,8 +2625,17 @@
       const price = parseFloat(priceInput.value) || 0;
       if (!name) return;
 
+      const copoChecked = document.getElementById(`new-ing-cat-copos-${type}`).checked;
+      const batidaChecked = document.getElementById(`new-ing-cat-batida-${type}`).checked;
+      const tradChecked = document.getElementById(`new-ing-cat-tradicional-${type}`).checked;
+
+      let allowedCats = [];
+      if (copoChecked) allowedCats.push("Copos", "Tigelas 1KG");
+      if (batidaChecked) allowedCats.push("Garrafas Gourmet");
+      if (tradChecked) allowedCats.push("Garrafas Tradicionais");
+
       const list = [...(state.config.accompaniments[type] || [])];
-      list.push({ name, price, available: true });
+      list.push({ name, price, available: true, allowedCats });
 
       const newAccompaniments = { ...state.config.accompaniments, [type]: list };
       await window.saveConfigSafe({ accompaniments: newAccompaniments }, true);
@@ -2594,12 +2693,13 @@
       const hasComplements = document.getElementById('new-prod-has-complements').checked;
       const maxComplements = parseInt(document.getElementById('new-prod-max-comp').value, 10) || 0;
       const hasCondensedMilk = document.getElementById('new-prod-has-condensed-milk').checked;
+      const condensedMilkMode = document.getElementById('new-prod-milk-mode').value;
 
       if (!name || isNaN(price)) return window.toast("Dados inválidos", "error");
 
       const newSizes = [...(state.config.sizes || []), {
         name, description: desc, price, category: cat, available: true,
-        hasComplements, maxComplements, hasCondensedMilk
+        hasComplements, maxComplements, hasCondensedMilk, condensedMilkMode
       }];
       await window.saveConfigSafe({ sizes: newSizes }, true);
 
@@ -2647,20 +2747,18 @@
 
       window.toggleEditCopoOpts();
 
-      if (item.category === 'Copos' || item.category === 'Tigelas 1KG') {
-        const hasComp = item.hasComplements !== false;
-        document.getElementById('edit-prod-has-complements').checked = hasComp;
-        document.getElementById('edit-prod-max-comp').value = item.maxComplements || 0;
-        document.getElementById('edit-prod-has-condensed-milk').checked = item.hasCondensedMilk !== false;
-        document.getElementById('edit-prod-milk-mode').value = item.condensedMilkMode || 'optional';
+      const hasComp = item.hasComplements !== false;
+      document.getElementById('edit-prod-has-complements').checked = hasComp;
+      document.getElementById('edit-prod-max-comp').value = item.maxComplements || 0;
+      document.getElementById('edit-prod-has-condensed-milk').checked = item.hasCondensedMilk !== false;
+      document.getElementById('edit-prod-milk-mode').value = item.condensedMilkMode || 'optional';
 
-        document.getElementById('edit-prod-max-comp-container').classList.toggle('opacity-50', !hasComp);
-        document.getElementById('edit-prod-max-comp').disabled = !hasComp;
-        document.getElementById('edit-prod-condensed-milk-container').classList.toggle('opacity-50', !hasComp);
-        document.getElementById('edit-prod-has-condensed-milk').disabled = !hasComp;
-        document.getElementById('edit-prod-milk-mode-container').classList.toggle('opacity-50', !hasComp);
-        document.getElementById('edit-prod-milk-mode').disabled = !hasComp;
-      }
+      document.getElementById('edit-prod-max-comp-container').classList.toggle('opacity-50', !hasComp);
+      document.getElementById('edit-prod-max-comp').disabled = !hasComp;
+      document.getElementById('edit-prod-condensed-milk-container').classList.toggle('opacity-50', !hasComp);
+      document.getElementById('edit-prod-has-condensed-milk').disabled = !hasComp;
+      document.getElementById('edit-prod-milk-mode-container').classList.toggle('opacity-50', !hasComp);
+      document.getElementById('edit-prod-milk-mode').disabled = !hasComp;
 
       document.getElementById('edit-product-modal').classList.remove('hidden');
     };
@@ -2670,10 +2768,7 @@
     };
 
     window.toggleEditCopoOpts = () => {
-      const cat = document.getElementById('edit-prod-cat').value;
-      const sec = document.getElementById('edit-prod-copo-opts');
-      if (cat === 'Copos' || cat === 'Tigelas 1KG') sec.classList.remove('hidden');
-      else sec.classList.add('hidden');
+      // Options are now available for all product categories.
     };
 
     window.saveEditedProduct = async () => {
@@ -2699,23 +2794,17 @@
         category: cat
       };
 
-      if (cat === 'Copos' || cat === 'Tigelas 1KG') {
-        const hasComp = document.getElementById('edit-prod-has-complements').checked;
-        updatedItem.hasComplements = hasComp;
-        if (hasComp) {
-          updatedItem.maxComplements = parseInt(document.getElementById('edit-prod-max-comp').value) || 0;
-          updatedItem.hasCondensedMilk = document.getElementById('edit-prod-has-condensed-milk').checked;
-          updatedItem.condensedMilkMode = document.getElementById('edit-prod-milk-mode').value;
-        } else {
-          updatedItem.maxComplements = 0;
-          updatedItem.hasCondensedMilk = false;
-        }
+      const hasComp = document.getElementById('edit-prod-has-complements').checked;
+      updatedItem.hasComplements = hasComp;
+      if (hasComp) {
+        updatedItem.maxComplements = parseInt(document.getElementById('edit-prod-max-comp').value) || 0;
+        updatedItem.hasCondensedMilk = document.getElementById('edit-prod-has-condensed-milk').checked;
+        updatedItem.condensedMilkMode = document.getElementById('edit-prod-milk-mode').value;
       } else {
-        delete updatedItem.hasComplements;
-        delete updatedItem.maxComplements;
-        delete updatedItem.hasCondensedMilk;
-        delete updatedItem.condensedMilkMode;
+        updatedItem.maxComplements = 0;
+        updatedItem.hasCondensedMilk = false;
       }
+
 
       newSizes[idx] = updatedItem;
       await window.saveConfigSafe({ sizes: newSizes }, true);
