@@ -1,4 +1,4 @@
-const CACHE_NAME = 'acai-ellegance-v2';
+const CACHE_NAME = 'acai-ellegance-v4';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -11,6 +11,7 @@ const ASSETS_TO_CACHE = [
 
 // 1. Instalação: Guarda os ficheiros na memória (Cache)
 self.addEventListener('install', (event) => {
+  self.skipWaiting(); // Força o novo service worker a assumir imediatamente
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       console.log('[Service Worker] A guardar ficheiros...');
@@ -34,23 +35,23 @@ self.addEventListener('activate', (event) => {
   return self.clients.claim();
 });
 
-// 3. Interceção: Serve o site da memória se não houver internet
+// 3. Interceção: Serve o site da memória se não houver internet (Network-First)
 self.addEventListener('fetch', (event) => {
-  // Ignora pedidos para outros domínios (como Google Analytics ou Firebase) na estratégia Cache-First
-  // para evitar erros de CORS opacos, mas tenta cachear fontes e bibliotecas conhecidas.
   if (event.request.method !== 'GET') return;
 
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      // Se estiver na cache, devolve o da cache (Rápido!)
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-      // Se não, vai à internet buscar (Network)
-      return fetch(event.request).catch(() => {
-        // Se falhar (sem net), não faz nada ou mostra página de erro (opcional)
-        console.log('Sem internet e sem cache para:', event.request.url);
+    fetch(event.request).then((networkResponse) => {
+      // Se tiver internet, devolve a versão real e atualiza no cache
+      const responseClone = networkResponse.clone();
+      caches.open(CACHE_NAME).then((cache) => {
+        if (event.request.url.startsWith('http')) {
+          cache.put(event.request, responseClone);
+        }
       });
+      return networkResponse;
+    }).catch(() => {
+      // Se falhar (sem net), busca do cache
+      return caches.match(event.request);
     })
   );
 });

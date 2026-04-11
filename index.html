@@ -1153,45 +1153,29 @@
       if (!cfg || !cfg.sizes) return false;
       let migrated = false;
 
-      if (!cfg.v12_migration) {
+      if (!cfg.v13_migration) {
         cfg.sizes = JSON.parse(JSON.stringify(DEFAULT_ITEMS));
         cfg.accompaniments = JSON.parse(JSON.stringify(DEFAULT_ACCOMPANIMENTS));
-        cfg.v12_migration = true;
+        cfg.v13_migration = true;
         migrated = true;
       }
 
       const hasBatida = cfg.sizes.some(i => i.name.includes("(Batida)"));
       if (!hasBatida) {
-        cfg.sizes = DEFAULT_ITEMS;
+        cfg.sizes = JSON.parse(JSON.stringify(DEFAULT_ITEMS));
         migrated = true;
       }
 
       cfg.sizes.forEach(item => {
         if (item.category === 'Tradicional') { item.category = 'Garrafas Tradicionais'; migrated = true; }
         if (item.category === 'Gourmet') { item.category = 'Garrafas Gourmet'; migrated = true; }
-        if (item.name && !item.name.toLowerCase().startsWith('garrafa') && (item.category === 'Garrafas Tradicionais' || item.category === 'Garrafas Gourmet')) {
-          item.name = 'Garrafa ' + item.name;
-          migrated = true;
-        }
+        
         if (item.name === "Copo 300ml" && !item.condensedMilkMode) {
           item.condensedMilkMode = "included";
           item.hasCondensedMilk = true;
           migrated = true;
         }
       });
-
-      const hasTigelas = cfg.sizes.some(i => i.category === 'Tigelas 1KG');
-      if (!hasTigelas) {
-        cfg.sizes.push({ name: "Tigela 1KG (Até 4 Itens)", description: "Monte com até 4 complementos.", price: 35.00, category: "Tigelas 1KG", hasComplements: true, maxComplements: 4, hasCondensedMilk: true, condensedMilkMode: "included" });
-        cfg.sizes.push({ name: "Tigela 1KG (Livre)", description: "Monte sua roleta de sabores da forma que desejar.", price: 25.00, category: "Tigelas 1KG", hasComplements: true, maxComplements: 0, hasCondensedMilk: true, condensedMilkMode: "optional" });
-        migrated = true;
-      }
-
-      const hasCopo500 = cfg.sizes.some(i => i.name.includes("Copo 500ml"));
-      if (!hasCopo500) {
-        cfg.sizes.push({ name: "Copo 500ml", description: "Monte do seu jeito! Escolha frutas, adicionais e coberturas.", price: 18.00, category: "Copos", hasComplements: true, hasCondensedMilk: true, condensedMilkMode: "optional" });
-        migrated = true;
-      }
 
       cfg.sizes.forEach(item => {
         if (item.customOptions !== undefined) {
@@ -1200,15 +1184,38 @@
         }
       });
 
-      if (!cfg.accompaniments) cfg.accompaniments = DEFAULT_ACCOMPANIMENTS;
+      // Fail-Safe Master Deduplicator: Elimina itens duplicados fisicamente no banco
+      const uniqueSizes = [];
+      const seenSizeNames = new Set();
+      cfg.sizes.forEach(item => {
+        if (!seenSizeNames.has(item.name)) {
+          seenSizeNames.add(item.name);
+          uniqueSizes.push(item);
+        } else {
+          migrated = true; // Força salvamento pois havia duplicata
+        }
+      });
+      cfg.sizes = uniqueSizes;
+
+      if (!cfg.accompaniments) cfg.accompaniments = JSON.parse(JSON.stringify(DEFAULT_ACCOMPANIMENTS));
       Object.keys(DEFAULT_ACCOMPANIMENTS).forEach(catName => {
         if (!cfg.accompaniments[catName]) cfg.accompaniments[catName] = [];
-        DEFAULT_ACCOMPANIMENTS[catName].forEach(defaultItem => {
-          if (!cfg.accompaniments[catName].find(c => c.name === defaultItem.name)) {
-            cfg.accompaniments[catName].push({ ...defaultItem });
+
+        // REMOVIDO: Restauração agressiva de itens padrão que causava "zumbis" de complementos
+
+        // Deduplicate Exato
+        const uniqueAcc = [];
+        const seenAccNames = new Set();
+        cfg.accompaniments[catName].forEach(item => {
+          const norm = item.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+          if (!seenAccNames.has(norm)) {
+            seenAccNames.add(norm);
+            uniqueAcc.push(item);
+          } else {
             migrated = true;
           }
         });
+        cfg.accompaniments[catName] = uniqueAcc;
       });
 
       return migrated;
@@ -1570,12 +1577,17 @@
       document.querySelector('#copo-modal p').innerText = item.maxComplements > 0 ? `Escolha até ${item.maxComplements} complementos incluídos` : "Customize seu pedido";
 
       const isCopoOuTigela = item.category === 'Copos' || item.category === 'Tigelas 1KG';
+      
+      const renderedOptionNames = new Set(); // Evita duplicação de itens no modal
+
       if (isCopoOuTigela && item.hasCondensedMilk !== false && !state.config.condensedMilkPaused) {
           const isMilkOff = item.condensedMilkMode === 'optional' || state.config.condensedMilkOptional === true;
 
           if (!isMilkOff) {
             const milkPrice = state.config.condensedMilkPrice || 0;
             const milkTextInfo = milkPrice > 0 ? `+ R$ ${milkPrice.toFixed(2).replace('.', ',')}` : "Incluso na Base";
+            
+            renderedOptionNames.add("leitecondensado"); // Registra para não aparecer de novo
 
             container.innerHTML += `
                   <div class="mb-4 bg-yellow-50 border border-yellow-200 p-4 rounded-2xl flex items-center justify-between">
@@ -1604,6 +1616,11 @@
           const availableOptions = (options || []).filter(o => {
             if (o.available === false) return false;
             if (o.allowedCats && !o.allowedCats.includes(item.category)) return false;
+            
+            const n = o.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+            if (renderedOptionNames.has(n)) return false; // Impede complementos repetidos
+            renderedOptionNames.add(n);
+            
             return true;
           });
 
@@ -1645,19 +1662,18 @@
         };
 
         const acc = state.config.accompaniments || { frutas: [], adicionais: [], coberturas: [], cremesCopo: [], cremesGourmet: [] };
-        container.innerHTML += renderSection("Frutas", acc.frutas, "fruta");
-        container.innerHTML += renderSection("Complementos", acc.adicionais, "adicional");
-        container.innerHTML += renderSection("Cremes", acc.cremesCopo, "creme");
-
+        
         let coberturasPrepend = "";
         const isMilkOffCobertura = item.condensedMilkMode === 'optional' || state.config.condensedMilkOptional === true;
-        if (item.hasCondensedMilk !== false && isMilkOffCobertura) {
+        if (item.hasCondensedMilk !== false && isMilkOffCobertura && !state.config.condensedMilkPaused) {
           let milkPrice = state.config.condensedMilkPrice || 0;
           if (item.name === "Tigela 1KG") {
             milkPrice = 2.00;
           } else if (item.maxComplements > 0) {
             milkPrice = 0;
           }
+
+          renderedOptionNames.add("leitecondensado"); // Pre-add it BEFORE rending Cremes so it doesn't appear again
 
           const priceLabel = milkPrice > 0 ? `<span class="text-[9px] text-green-600 bg-green-50 px-1 py-0.5 rounded ml-1">+ R$ ${milkPrice.toFixed(2).replace('.', ',')}</span>` : '';
           coberturasPrepend = `
@@ -1675,6 +1691,10 @@
                   </label>
             `;
         }
+
+        container.innerHTML += renderSection("Frutas", acc.frutas, "fruta");
+        container.innerHTML += renderSection("Complementos", acc.adicionais, "adicional");
+        container.innerHTML += renderSection("Cremes", acc.cremesCopo, "creme");
         container.innerHTML += renderSection("Coberturas", acc.coberturas, "cobertura", coberturasPrepend);
 
       if (state.config.hasSpoons !== false) {
@@ -1890,6 +1910,15 @@
         if (mlA !== mlB) return mlA - mlB;
         return a.name.localeCompare(b.name);
       });
+
+      // Fail-safe: Deduplicar itens por nome para corrigir qualquer glitch do banco de dados antigo
+      const uniqueItems = new Map();
+      itemsToRender.forEach(item => {
+        if (!uniqueItems.has(item.name)) {
+          uniqueItems.set(item.name, item);
+        }
+      });
+      itemsToRender = Array.from(uniqueItems.values());
 
       if (itemsToRender.length === 0) {
         grid.innerHTML = `<div class="text-center py-10 text-slate-400 text-sm">Nada encontrado.</div>`;
@@ -3149,7 +3178,17 @@
             if (!unsubConfig) {
               unsubConfig = onSnapshot(getDocRef('loja', 'configuracao'), (snap) => {
                 if (snap.exists()) {
-                  state.config = { ...state.config, ...snap.data() };
+                  const dbData = snap.data();
+                  
+                  // Força o reset no payload do Firebase para corrigir itens corrompidos no banco
+                  if (!dbData.v14_migration) {
+                    dbData.sizes = JSON.parse(JSON.stringify(DEFAULT_ITEMS));
+                    dbData.accompaniments = JSON.parse(JSON.stringify(DEFAULT_ACCOMPANIMENTS));
+                    dbData.v14_migration = true;
+                  }
+
+                  state.config = { ...state.config, ...dbData };
+                  
                   if (state.config.accompaniments && !state.config.accompaniments.cremes) {
                     state.config.accompaniments.cremes = DEFAULT_ACCOMPANIMENTS.cremes;
                   }
