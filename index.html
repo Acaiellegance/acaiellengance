@@ -1019,89 +1019,71 @@
     ];
 
     const DEFAULT_ITEMS = [
-      { name: "Garrafa Paçoca 300ml", description: "Açaí, paçoca, banana e leite condensado", price: 10.00, category: "Garrafas Tradicionais" },
-      { name: "Garrafa Ninho 300ml", description: "Açaí, leite em pó, banana e leite condensado", price: 10.00, category: "Garrafas Tradicionais" },
-      { name: "Garrafa Amendoim 300ml", description: "Açaí, amendoim, banana e leite condensado", price: 10.00, category: "Garrafas Tradicionais" },
-      { name: "Garrafa Cupuaçu 300ml", description: "Açaí, cupuaçu, leite condensado", price: 10.00, category: "Garrafas Tradicionais" },
-      { name: "Garrafa Paçoca 500ml", description: "Açai, paçoca, banana e leite condensado", price: 14.00, category: "Garrafas Tradicionais" },
-      { name: "Garrafa Ninho 500ml", description: "Açai, leite em pó, banana e leite condensado", price: 14.00, category: "Garrafas Tradicionais" },
-      { name: "Garrafa Amendoim 500ml", description: "Açai, amendoim, banana e leite condensado", price: 14.00, category: "Garrafas Tradicionais" },
-      { name: "Garrafa Cupuaçu 500ml", description: "Açai, cupuaçu e leite condensado", price: 14.00, category: "Garrafas Tradicionais" },
-      { 
-        name: "Ninho (Batida) 300ml", 
-        description: "Açaí batido com leite em pó. Escolha sua montagem.", 
-        price: 13.00, 
-        category: "Garrafas Gourmet",
-        hasComplements: true,
-        customOptions: ALL_BATIDA_OPTIONS
-      },
-      { 
-        name: "Morango (Batida) 300ml", 
-        description: "Açaí batido com morango e leite em pó. Escolha sua montagem.", 
-        price: 13.00, 
-        category: "Garrafas Gourmet",
-        hasComplements: true,
-        customOptions: ALL_BATIDA_OPTIONS
-      },
-      { 
-        name: "Ovomaltine (Batida) 300ml", 
-        description: "Açaí batido com ovomaltine e leite em pó. Escolha sua montagem.", 
-        price: 13.00, 
-        category: "Garrafas Gourmet",
-        hasComplements: true,
-        customOptions: ALL_BATIDA_OPTIONS
-      },
-      { 
-        name: "Maracujá (Batida) 300ml", 
-        description: "Açaí batido com maracujá e leite em pó. Escolha sua montagem.", 
-        price: 13.00, 
-        category: "Garrafas Gourmet",
-        hasComplements: true,
-        customOptions: ALL_BATIDA_OPTIONS
-      },
-      { 
-        name: "Ninho (Batida) 500ml", 
-        description: "Açaí batido com leite em pó. Escolha sua montagem.", 
-        price: 18.00, 
-        category: "Garrafas Gourmet",
-        hasComplements: true,
-        customOptions: ALL_BATIDA_OPTIONS
-      },
-      { 
-        name: "Morango (Batida) 500ml", 
-        description: "Açaí batido com morango e leite em pó. Escolha sua montagem.", 
-        price: 18.00, 
-        category: "Garrafas Gourmet",
-        hasComplements: true,
-        customOptions: ALL_BATIDA_OPTIONS
-      },
-      { 
-        name: "Ovomaltine (Batida) 500ml", 
-        description: "Açaí batido com ovomaltine e leite em pó. Escolha sua montagem.", 
-        price: 18.00, 
-        category: "Garrafas Gourmet",
-        hasComplements: true,
-        customOptions: ALL_BATIDA_OPTIONS
-      },
-      { 
-        name: "Maracujá (Batida) 500ml", 
-        description: "Açaí batido com maracujá e leite em pó. Escolha sua montagem.", 
-        price: 18.00, 
-        category: "Garrafas Gourmet",
-        hasComplements: true,
-        customOptions: ALL_BATIDA_OPTIONS
-      },
-      { name: "Copo 300ml", description: "Monte do seu jeito! Escolha frutas, adicionais e coberturas.", price: 13.00, category: "Copos", hasComplements: true, hasCondensedMilk: true, condensedMilkMode: "included" },
-      { name: "Copo 500ml", description: "Monte do seu jeito! Escolha frutas, adicionais e coberturas.", price: 18.00, category: "Copos", hasComplements: true, hasCondensedMilk: true, condensedMilkMode: "optional" },
-      { name: "Tigela 1KG (Até 4 Itens)", description: "Monte com até 4 complementos.", price: 35.00, category: "Tigelas 1KG", hasComplements: true, maxComplements: 4, hasCondensedMilk: true, condensedMilkMode: "included" },
-      { name: "Tigela 1KG (Livre)", description: "Monte sua roleta de sabores da forma que desejar.", price: 25.00, category: "Tigelas 1KG", hasComplements: true, maxComplements: 0, hasCondensedMilk: true, condensedMilkMode: "optional" }
+      { name: "Garrafa Ninho 300ml", description: "Açaí batido com leite em pó (Acompanha leite condensado)", price: 10.00, category: "Garrafas Tradicionais" },
+      { name: "Garrafa Paçoca 300ml", description: "Açaí batido com leite em pó e paçoca (Acompanha leite condensado)", price: 10.00, category: "Garrafas Tradicionais" },
+      { name: "Garrafa Cupuaçu 300ml", description: "Açaí batido com leite em pó e cupuaçu (Acompanha leite condensado)", price: 10.00, category: "Garrafas Tradicionais" },
+      { name: "Garrafa Amendoim 300ml", description: "Açaí batido com leite em pó e amendoim (Acompanha leite condensado)", price: 10.00, category: "Garrafas Tradicionais" },
+      { name: "Garrafa Ninho 500ml", description: "Açaí batido com leite em pó (Acompanha leite condensado)", price: 14.00, category: "Garrafas Tradicionais" },
+      { name: "Garrafa Paçoca 500ml", description: "Açaí batido com leite em pó e paçoca (Acompanha leite condensado)", price: 14.00, category: "Garrafas Tradicionais" },
+      { name: "Garrafa Cupuaçu 500ml", description: "Açaí batido com leite em pó e cupuaçu (Acompanha leite condensado)", price: 14.00, category: "Garrafas Tradicionais" },
+      { name: "Garrafa Amendoim 500ml", description: "Açaí batido com leite em pó e amendoim (Acompanha leite condensado)", price: 14.00, category: "Garrafas Tradicionais" },
+
+      { name: "Ninho (Batida) 300ml", description: "Açaí batido com leite em pó. Escolha até 2 complementos.", price: 13.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 2 },
+      { name: "Cupuaçu (Batida) 300ml", description: "Açaí batido com leite em pó e cupuaçu. Escolha até 2 complementos.", price: 13.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 2 },
+      { name: "Morango (Batida) 300ml", description: "Açaí batido com leite em pó e morango. Escolha até 2 complementos.", price: 13.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 2 },
+      { name: "Maracujá (Batida) 300ml", description: "Açaí batido com leite em pó e maracujá. Escolha até 2 complementos.", price: 13.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 2 },
+      { name: "Ovomaltine (Batida) 300ml", description: "Açaí batido com leite em pó e ovomaltine. Escolha até 2 complementos.", price: 13.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 2 },
+      { name: "Ninho (Batida) 500ml", description: "Açaí batido com leite em pó. Escolha até 2 complementos.", price: 18.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 2 },
+      { name: "Cupuaçu (Batida) 500ml", description: "Açaí batido com leite em pó e cupuaçu. Escolha até 2 complementos.", price: 18.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 2 },
+      { name: "Morango (Batida) 500ml", description: "Açaí batido com leite em pó e morango. Escolha até 2 complementos.", price: 18.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 2 },
+      { name: "Maracujá (Batida) 500ml", description: "Açaí batido com leite em pó e maracujá. Escolha até 2 complementos.", price: 18.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 2 },
+      { name: "Ovomaltine (Batida) 500ml", description: "Açaí batido com leite em pó e ovomaltine. Escolha até 2 complementos.", price: 18.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 2 },
+
+      { name: "Copo 300ml", description: "Escolha até 3 adicionais", price: 13.00, category: "Copos", hasComplements: true, maxComplements: 3, hasCondensedMilk: false },
+      { name: "Copo 500ml", description: "Escolha até 5 adicionais", price: 20.00, category: "Copos", hasComplements: true, maxComplements: 5, hasCondensedMilk: false },
+
+      { name: "Tigela 1KG", description: "Acompanha leite em pó e leite condensado", price: 25.00, category: "Tigelas 1KG", hasComplements: true, maxComplements: 0, hasCondensedMilk: false },
+      { name: "Tigela 1KG (Até 4 Itens)", description: "Escolha até 4 adicionais", price: 35.00, category: "Tigelas 1KG", hasComplements: true, maxComplements: 4, hasCondensedMilk: false }
     ];
 
     const DEFAULT_ACCOMPANIMENTS = {
-      frutas: [{ name: "Morango", available: true }, { name: "Banana", available: true }, { name: "Kiwi", available: true }, { name: "Manga", available: true }],
-      adicionais: [{ name: "M&M", available: true }, { name: "Paçoca", available: true }, { name: "Castanha", available: true }, { name: "Amendoim", available: true }, { name: "Leite em Pó", available: true }, { name: "Fini Banana", available: true }, { name: "Fini Beijinho", available: true }, { name: "Fini Tubes Azedo", available: true }],
-      coberturas: [{ name: "Beijinho (Fini)", available: true }],
-      cremes: [{ name: "Creme de Avelã", available: true }, { name: "Creme de Ninho", available: true }, { name: "Creme de Morango", available: true }, { name: "Creme de Maracujá", available: true }, { name: "Creme de Cookies", available: true }]
+      frutas: [
+        { name: "Kiwi", available: true },
+        { name: "Banana", available: true },
+        { name: "Morango", available: true }
+      ],
+      adicionais: [
+        { name: "MM", available: true },
+        { name: "Paçoca", available: true },
+        { name: "Ovomaltine", available: true },
+        { name: "Amendoim - Triturado ou inteiro", available: true },
+        { name: "Leite em Pó", available: true },
+        { name: "Cookies (bolinha de chocolate)", available: true },
+        { name: "Fini - Dentadura", available: true },
+        { name: "Fini - Beijinho", available: true },
+        { name: "Fini - Banana", available: true },
+        { name: "Fini - Amora", available: true },
+        { name: "Fini - Tubes", available: true }
+      ],
+      coberturas: [],
+      cremesCopo: [
+        { name: "Creme de Ninho", available: true },
+        { name: "Creme de Avelã", available: true },
+        { name: "Creme de Morango", available: true },
+        { name: "Creme de Ovomaltine", price: 2.00, available: true },
+        { name: "Creme de Amendoim", available: true },
+        { name: "Leite Condensado", available: true },
+        { name: "Calda Banana (Fini)", available: true }
+      ],
+      cremesGourmet: [
+        { name: "Creme de Ninho", available: true },
+        { name: "Creme de Avelã", available: true },
+        { name: "Creme de Morango", available: true },
+        { name: "Creme de Ovomaltine", price: 2.00, available: true },
+        { name: "Creme de Amendoim", available: true },
+        { name: "Leite Condensado", available: true },
+        { name: "Calda Banana (Fini)", available: true }
+      ]
     };
 
     const DEFAULT_HIGHLIGHTS = [
@@ -1170,6 +1152,13 @@
     window.migrateData = (cfg) => {
       if (!cfg || !cfg.sizes) return false;
       let migrated = false;
+
+      if (!cfg.v12_migration) {
+        cfg.sizes = JSON.parse(JSON.stringify(DEFAULT_ITEMS));
+        cfg.accompaniments = JSON.parse(JSON.stringify(DEFAULT_ACCOMPANIMENTS));
+        cfg.v12_migration = true;
+        migrated = true;
+      }
 
       const hasBatida = cfg.sizes.some(i => i.name.includes("(Batida)"));
       if (!hasBatida) {
@@ -1512,11 +1501,10 @@
         document.querySelector('#copo-modal p').innerText = "Escolha sua montagem";
         
         let availableCustomOptions = [];
-        ["cremes"].forEach(catName => {
+        ["cremesGourmet"].forEach(catName => {
            if (state.config.accompaniments[catName]) {
               state.config.accompaniments[catName].forEach(ing => {
-                 const isAllowedInGourmet = !ing.allowedCats || ing.allowedCats.includes('Garrafas Gourmet');
-                 if (ing.available !== false && isAllowedInGourmet) {
+                 if (ing.available !== false) {
                      if (!availableCustomOptions.some(opt => opt.name.toLowerCase() === ing.name.toLowerCase())) {
                          availableCustomOptions.push({ name: ing.name, price: ing.price || 0 });
                      }
@@ -1530,7 +1518,7 @@
             const priceLabel = p > 0 ? `<span class="text-[9px] text-green-600 bg-green-50 px-1 py-0.5 rounded ml-1">+ R$ ${p.toFixed(2).replace('.', ',')}</span>` : '';
             return `
                 <label class="cursor-pointer relative group">
-                    <input type="radio" name="custom-opt-radio" class="option-checkbox hidden" value="${opt.name}" data-price="${p}" ${i === 0 ? 'checked' : ''} onchange="window.updateCalcCopoTotal()">
+                    <input type="checkbox" name="custom-opt-radio" class="option-checkbox limit-global hidden" value="${opt.name}" data-price="${p}" onchange="window.checkCopoLimits(this)">
                     <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl transition-all hover:bg-white hover:shadow-sm flex items-center justify-between">
                         <div class="flex flex-col">
                             <span class="text-xs font-bold text-slate-700">${opt.name}</span>
@@ -1625,15 +1613,13 @@
             availableOptions.forEach(opt => {
               let price = parseFloat(opt.price) || 0;
 
-              if (item.name === "Tigela 1KG (Livre)") {
+              if (item.name === "Tigela 1KG") {
                 const n = opt.name.toLowerCase();
                 if (n.includes('kiwi') || n.includes('morango') || n.includes('nutella')) {
                   price = 3.00;
                 } else {
                   price = 2.00;
                 }
-              } else if (item.maxComplements > 0) {
-                price = 0;
               }
 
               const priceLabel = price > 0 ? `<span class="text-[9px] text-green-600 bg-green-50 px-1 py-0.5 rounded ml-1">+ R$ ${price.toFixed(2).replace('.', ',')}</span>` : '';
@@ -1658,16 +1644,16 @@
           return html;
         };
 
-        const acc = state.config.accompaniments || { frutas: [], adicionais: [], coberturas: [], cremes: [] };
+        const acc = state.config.accompaniments || { frutas: [], adicionais: [], coberturas: [], cremesCopo: [], cremesGourmet: [] };
         container.innerHTML += renderSection("Frutas", acc.frutas, "fruta");
-        container.innerHTML += renderSection("Adicionais", acc.adicionais, "adicional");
-        container.innerHTML += renderSection("Cremes", acc.cremes, "creme");
+        container.innerHTML += renderSection("Complementos", acc.adicionais, "adicional");
+        container.innerHTML += renderSection("Cremes", acc.cremesCopo, "creme");
 
         let coberturasPrepend = "";
         const isMilkOffCobertura = item.condensedMilkMode === 'optional' || state.config.condensedMilkOptional === true;
         if (item.hasCondensedMilk !== false && isMilkOffCobertura) {
           let milkPrice = state.config.condensedMilkPrice || 0;
-          if (item.name === "Tigela 1KG (Livre)") {
+          if (item.name === "Tigela 1KG") {
             milkPrice = 2.00;
           } else if (item.maxComplements > 0) {
             milkPrice = 0;
@@ -2505,12 +2491,14 @@
                                 </button>
                             </div>
                         </div>
+                        ${(type === 'cremesCopo' || type === 'cremesGourmet') ? '' : `
                         <div class="text-[9px] text-slate-500 font-bold uppercase flex items-center gap-3 bg-white p-1.5 rounded border border-slate-100">
                             <span>Exibir em:</span>
                             <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" onchange="window.toggleIngCat('${type}', ${idx}, 'Copos')" ${hasCopos ? 'checked' : ''} class="accent-brand-500">Copos/Tigelas</label>
                             <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" onchange="window.toggleIngCat('${type}', ${idx}, 'Garrafas Gourmet')" ${hasGourmet ? 'checked' : ''} class="accent-pink-500">Batidas</label>
                             <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" onchange="window.toggleIngCat('${type}', ${idx}, 'Garrafas Tradicionais')" ${hasTradicional ? 'checked' : ''} class="accent-brand-500">Tradicionais</label>
                         </div>
+                        `}
                     </div>
                 `;
         });
@@ -2524,21 +2512,24 @@
                             <i data-lucide="plus" class="w-4 h-4"></i>
                         </button>
                     </div>
+                    ${(type === 'cremesCopo' || type === 'cremesGourmet') ? '' : `
                     <div class="text-[9px] text-slate-500 font-bold uppercase flex items-center gap-3 mt-1">
                         <span>Adicionar também em:</span>
                         <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="new-ing-cat-copos-${type}" checked class="accent-brand-500">Copos/Tigelas</label>
                         <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="new-ing-cat-batida-${type}" ${type === 'cremes' ? 'checked' : ''} class="accent-pink-500">Batidas</label>
                         <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="new-ing-cat-tradicional-${type}" class="accent-brand-500">Tradicionais</label>
                     </div>
+                    `}
                 </div>
             </div>`;
         return html;
       };
 
-      const acc = state.config.accompaniments || { frutas: [], adicionais: [], coberturas: [], cremes: [] };
+      const acc = state.config.accompaniments || { frutas: [], adicionais: [], coberturas: [], cremesCopo: [], cremesGourmet: [] };
       list.innerHTML += renderCat("Frutas", acc.frutas, "frutas");
       list.innerHTML += renderCat("Adicionais", acc.adicionais, "adicionais");
-      list.innerHTML += renderCat("Cremes", acc.cremes, "cremes");
+      list.innerHTML += renderCat("Cremes (Copos/Tigelas)", acc.cremesCopo, "cremesCopo");
+      list.innerHTML += renderCat("Cremes (Gourmets/Batidas)", acc.cremesGourmet, "cremesGourmet");
       list.innerHTML += renderCat("Coberturas", acc.coberturas, "coberturas");
 
       const condensedMilkPrice = state.config.condensedMilkPrice || 0;
@@ -2625,14 +2616,14 @@
       const price = parseFloat(priceInput.value) || 0;
       if (!name) return;
 
-      const copoChecked = document.getElementById(`new-ing-cat-copos-${type}`).checked;
-      const batidaChecked = document.getElementById(`new-ing-cat-batida-${type}`).checked;
-      const tradChecked = document.getElementById(`new-ing-cat-tradicional-${type}`).checked;
+      const copoEl = document.getElementById(`new-ing-cat-copos-${type}`);
+      const batidaEl = document.getElementById(`new-ing-cat-batida-${type}`);
+      const tradEl = document.getElementById(`new-ing-cat-tradicional-${type}`);
 
       let allowedCats = [];
-      if (copoChecked) allowedCats.push("Copos", "Tigelas 1KG");
-      if (batidaChecked) allowedCats.push("Garrafas Gourmet");
-      if (tradChecked) allowedCats.push("Garrafas Tradicionais");
+      if (copoEl && copoEl.checked) allowedCats.push("Copos", "Tigelas 1KG");
+      if (batidaEl && batidaEl.checked) allowedCats.push("Garrafas Gourmet");
+      if (tradEl && tradEl.checked) allowedCats.push("Garrafas Tradicionais");
 
       const list = [...(state.config.accompaniments[type] || [])];
       list.push({ name, price, available: true, allowedCats });
