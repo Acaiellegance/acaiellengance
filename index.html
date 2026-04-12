@@ -1033,11 +1033,11 @@
       { name: "Morango (Batida) 300ml", description: "Açaí batido com leite em pó e morango. Escolha até 2 complementos.", price: 13.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 2 },
       { name: "Maracujá (Batida) 300ml", description: "Açaí batido com leite em pó e maracujá. Escolha até 2 complementos.", price: 13.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 2 },
       { name: "Ovomaltine (Batida) 300ml", description: "Açaí batido com leite em pó e ovomaltine. Escolha até 2 complementos.", price: 13.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 2 },
-      { name: "Ninho (Batida) 500ml", description: "Açaí batido com leite em pó. Escolha até 2 complementos.", price: 18.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 2 },
-      { name: "Cupuaçu (Batida) 500ml", description: "Açaí batido com leite em pó e cupuaçu. Escolha até 2 complementos.", price: 18.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 2 },
-      { name: "Morango (Batida) 500ml", description: "Açaí batido com leite em pó e morango. Escolha até 2 complementos.", price: 18.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 2 },
-      { name: "Maracujá (Batida) 500ml", description: "Açaí batido com leite em pó e maracujá. Escolha até 2 complementos.", price: 18.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 2 },
-      { name: "Ovomaltine (Batida) 500ml", description: "Açaí batido com leite em pó e ovomaltine. Escolha até 2 complementos.", price: 18.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 2 },
+      { name: "Ninho (Batida) 500ml", description: "Açaí batido com leite em pó. Escolha até 3 complementos.", price: 18.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 3 },
+      { name: "Cupuaçu (Batida) 500ml", description: "Açaí batido com leite em pó e cupuaçu. Escolha até 3 complementos.", price: 18.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 3 },
+      { name: "Morango (Batida) 500ml", description: "Açaí batido com leite em pó e morango. Escolha até 3 complementos.", price: 18.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 3 },
+      { name: "Maracujá (Batida) 500ml", description: "Açaí batido com leite em pó e maracujá. Escolha até 3 complementos.", price: 18.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 3 },
+      { name: "Ovomaltine (Batida) 500ml", description: "Açaí batido com leite em pó e ovomaltine. Escolha até 3 complementos.", price: 18.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 3 },
 
       { name: "Copo 300ml", description: "Escolha até 3 adicionais", price: 13.00, category: "Copos", hasComplements: true, maxComplements: 3, hasCondensedMilk: false },
       { name: "Copo 500ml", description: "Escolha até 5 adicionais", price: 20.00, category: "Copos", hasComplements: true, maxComplements: 5, hasCondensedMilk: false },
@@ -1174,6 +1174,19 @@
           item.condensedMilkMode = "included";
           item.hasCondensedMilk = true;
           migrated = true;
+        }
+
+        if (item.category === 'Garrafas Gourmet') {
+          if (item.name.includes('500ml') && item.maxComplements !== 3) {
+            item.maxComplements = 3;
+            item.description = item.description.replace(/\d+ complementos/, '3 complementos');
+            migrated = true;
+          }
+          if (item.name.includes('300ml') && item.maxComplements !== 2) {
+            item.maxComplements = 2;
+            item.description = item.description.replace(/\d+ complementos/, '2 complementos');
+            migrated = true;
+          }
         }
       });
 
