@@ -620,7 +620,7 @@
             Permitir Complementos
           </label>
           <div id="edit-prod-max-comp-container" class="flex items-center justify-between transition-opacity">
-            <span class="text-xs font-medium text-slate-600">Límite Cmp. (0 = Ilim.)</span>
+            <span class="text-xs font-medium text-slate-600">Limite Cmp. (0 = Ilim.)</span>
             <div class="flex items-center bg-white border border-slate-200 rounded-lg overflow-hidden shrink-0">
               <button type="button" onclick="document.getElementById('edit-prod-max-comp').stepDown()"
                 class="px-2 py-1 text-slate-500 hover:bg-slate-50 font-bold" style="width:25px;">-</button>
@@ -1033,11 +1033,11 @@
       { name: "Morango (Batida) 300ml", description: "Açaí batido com leite em pó e morango. Escolha até 2 complementos.", price: 13.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 2 },
       { name: "Maracujá (Batida) 300ml", description: "Açaí batido com leite em pó e maracujá. Escolha até 2 complementos.", price: 13.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 2 },
       { name: "Ovomaltine (Batida) 300ml", description: "Açaí batido com leite em pó e ovomaltine. Escolha até 2 complementos.", price: 13.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 2 },
-      { name: "Ninho (Batida) 500ml", description: "Açaí batido com leite em pó. Escolha até 3 complementos.", price: 18.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 3 },
-      { name: "Cupuaçu (Batida) 500ml", description: "Açaí batido com leite em pó e cupuaçu. Escolha até 3 complementos.", price: 18.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 3 },
-      { name: "Morango (Batida) 500ml", description: "Açaí batido com leite em pó e morango. Escolha até 3 complementos.", price: 18.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 3 },
-      { name: "Maracujá (Batida) 500ml", description: "Açaí batido com leite em pó e maracujá. Escolha até 3 complementos.", price: 18.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 3 },
-      { name: "Ovomaltine (Batida) 500ml", description: "Açaí batido com leite em pó e ovomaltine. Escolha até 3 complementos.", price: 18.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 3 },
+      { name: "Ninho (Batida) 500ml", description: "Açaí batido com leite em pó. Escolha até 2 complementos.", price: 18.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 2 },
+      { name: "Cupuaçu (Batida) 500ml", description: "Açaí batido com leite em pó e cupuaçu. Escolha até 2 complementos.", price: 18.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 2 },
+      { name: "Morango (Batida) 500ml", description: "Açaí batido com leite em pó e morango. Escolha até 2 complementos.", price: 18.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 2 },
+      { name: "Maracujá (Batida) 500ml", description: "Açaí batido com leite em pó e maracujá. Escolha até 2 complementos.", price: 18.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 2 },
+      { name: "Ovomaltine (Batida) 500ml", description: "Açaí batido com leite em pó e ovomaltine. Escolha até 2 complementos.", price: 18.00, category: "Garrafas Gourmet", hasComplements: true, maxComplements: 2 },
 
       { name: "Copo 300ml", description: "Escolha até 3 adicionais", price: 13.00, category: "Copos", hasComplements: true, maxComplements: 3, hasCondensedMilk: false },
       { name: "Copo 500ml", description: "Escolha até 5 adicionais", price: 20.00, category: "Copos", hasComplements: true, maxComplements: 5, hasCondensedMilk: false },
@@ -1110,7 +1110,7 @@
         googleScriptUrl: "https://script.google.com/macros/s/AKfycbwtHwhszybzs3OzYOUCY-cHaAi-bCSuvyuViM1mHmEkSYkfHvQvpFmhQLCXXV_ASeAA/exec",
         hasSpoons: true,
         zones: [
-          { name: "Albano Franco", price: 0 }, { name: "Cidade nova", price: 5.00 }, { name: "Marcos Freire 1,2,3", price: 0 }, { name: "João Alves", price: 0 }, { name: "Fernando Collor", price: 0 }, { name: "Piabeta", price: 0 }, { name: "Bairro industrial", price: 4.00 }, { name: "Porto D’antas", price: 3.00 }, { name: "Lamarão", price: 6.00 }, { name: "Japaozinho", price: 4.00 }, { name: "Sede de socorro", price: 4.00 }, { name: "Cidade nova", price: 5.00 }, { name: "Barra", price: 6.00 },
+          { name: "Albano Franco", price: 0 }, { name: "Cidade nova", price: 5.00 }, { name: "Marcos Freire 1,2,3", price: 0 }, { name: "João Alves", price: 0 }, { name: "Fernando Collor", price: 0 }, { name: "Piabeta", price: 0 }, { name: "Bairro industrial", price: 4.00 }, { name: "Porto D’antas", price: 3.00 }, { name: "Lamarão", price: 6.00 }, { name: "Japaozinho", price: 4.00 }, { name: "Sede de socorro", price: 4.00 }, { name: "Barra", price: 6.00 },
         ]
       },
       selectedItems: new Set(),
@@ -1162,7 +1162,9 @@
 
       const hasBatida = cfg.sizes.some(i => i.name.includes("(Batida)"));
       if (!hasBatida) {
-        cfg.sizes = JSON.parse(JSON.stringify(DEFAULT_ITEMS));
+        // Adiciona apenas os produtos Batida/Gourmet faltantes sem apagar os customizados
+        const batidasToAdd = JSON.parse(JSON.stringify(DEFAULT_ITEMS)).filter(i => i.name.includes("(Batida)"));
+        cfg.sizes = [...cfg.sizes, ...batidasToAdd];
         migrated = true;
       }
 
@@ -1177,12 +1179,7 @@
         }
 
         if (item.category === 'Garrafas Gourmet') {
-          if (item.name.includes('500ml') && item.maxComplements !== 3) {
-            item.maxComplements = 3;
-            item.description = item.description.replace(/\d+ complementos/, '3 complementos');
-            migrated = true;
-          }
-          if (item.name.includes('300ml') && item.maxComplements !== 2) {
+          if ((item.name.includes('500ml') || item.name.includes('300ml')) && item.maxComplements !== 2) {
             item.maxComplements = 2;
             item.description = item.description.replace(/\d+ complementos/, '2 complementos');
             migrated = true;
@@ -1241,7 +1238,6 @@
           const cfg = JSON.parse(saved);
           state.config = { ...state.config, ...cfg };
           if (!state.config.accompaniments) state.config.accompaniments = JSON.parse(JSON.stringify(DEFAULT_ACCOMPANIMENTS));
-          if (!state.config.accompaniments.cremes) state.config.accompaniments.cremes = JSON.parse(JSON.stringify(DEFAULT_ACCOMPANIMENTS.cremes));
           if (!state.config.posts) state.config.posts = [];
           if (!state.config.highlights || state.config.highlights.length === 0) state.config.highlights = DEFAULT_HIGHLIGHTS;
           if (!state.config.sizes) state.config.sizes = DEFAULT_ITEMS;
@@ -1518,7 +1514,8 @@
       container.innerHTML = "";
 
       if (item.category === 'Garrafas Gourmet') {
-        document.querySelector('#copo-modal p').innerText = "Escolha sua montagem";
+        const modalSubtitle = document.querySelector('#copo-modal p');
+        if (modalSubtitle) modalSubtitle.innerText = "Escolha sua montagem";
         
         let availableCustomOptions = [];
         ["cremesGourmet"].forEach(catName => {
@@ -1587,7 +1584,8 @@
         return;
       }
 
-      document.querySelector('#copo-modal p').innerText = item.maxComplements > 0 ? `Escolha até ${item.maxComplements} complementos incluídos` : "Customize seu pedido";
+      const modalSubtitleCopos = document.querySelector('#copo-modal p');
+      if (modalSubtitleCopos) modalSubtitleCopos.innerText = item.maxComplements > 0 ? `Escolha até ${item.maxComplements} complementos incluídos` : "Customize seu pedido";
 
       const isCopoOuTigela = item.category === 'Copos' || item.category === 'Tigelas 1KG';
       
@@ -1866,8 +1864,8 @@
 
       highlights.forEach((h) => {
         const colorMap = {
-          'brand': { bg: 'from-brand-500 to-purple-800', badgeText: 'text-brand-700', textSmall: 'text-brand-100', filter: 'Gourmet' },
-          'pink': { bg: 'from-pink-400 to-rose-600', badgeText: 'text-pink-600', textSmall: 'text-pink-100', filter: 'Tradicional' },
+          'brand': { bg: 'from-brand-500 to-purple-800', badgeText: 'text-brand-700', textSmall: 'text-brand-100', filter: 'Garrafas Gourmet' },
+          'pink': { bg: 'from-pink-400 to-rose-600', badgeText: 'text-pink-600', textSmall: 'text-pink-100', filter: 'Garrafas Tradicionais' },
           'orange': { bg: 'from-orange-400 to-red-600', badgeText: 'text-orange-600', textSmall: 'text-orange-100', filter: 'Todos' }
         };
         const c = colorMap[h.color || 'brand'];
@@ -2558,7 +2556,7 @@
                     <div class="text-[9px] text-slate-500 font-bold uppercase flex items-center gap-3 mt-1">
                         <span>Adicionar também em:</span>
                         <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="new-ing-cat-copos-${type}" checked class="accent-brand-500">Copos/Tigelas</label>
-                        <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="new-ing-cat-batida-${type}" ${type === 'cremes' ? 'checked' : ''} class="accent-pink-500">Batidas</label>
+                        <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="new-ing-cat-batida-${type}" class="accent-pink-500">Batidas</label>
                         <label class="flex items-center gap-1 cursor-pointer"><input type="checkbox" id="new-ing-cat-tradicional-${type}" class="accent-brand-500">Tradicionais</label>
                     </div>
                     `}
@@ -2801,7 +2799,8 @@
     };
 
     window.toggleEditCopoOpts = () => {
-      // Options are now available for all product categories.
+      const optsDiv = document.getElementById('edit-prod-copo-opts');
+      if (optsDiv) optsDiv.classList.remove('hidden');
     };
 
     window.saveEditedProduct = async () => {
@@ -3202,10 +3201,6 @@
 
                   state.config = { ...state.config, ...dbData };
                   
-                  if (state.config.accompaniments && !state.config.accompaniments.cremes) {
-                    state.config.accompaniments.cremes = DEFAULT_ACCOMPANIMENTS.cremes;
-                  }
-
                   // Rodar migração nos dados da nuvem para evitar limpar as abas novas
                   if (window.migrateData(state.config)) {
                     try { setDoc(getDocRef('loja', 'configuracao'), state.config, { merge: true }); } catch (e) { }
