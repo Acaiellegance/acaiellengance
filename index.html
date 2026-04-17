@@ -489,6 +489,22 @@
             <option value="Cartão">Cartão na Entrega</option>
           </select>
 
+          <div id="cash-area"
+            class="hidden bg-slate-50 p-5 rounded-3xl border border-slate-200 animate-slide-up">
+            <p class="text-xs font-black text-slate-600 uppercase tracking-widest mb-3">Precisa de troco?</p>
+            <div class="flex gap-3 mb-3">
+              <button id="btn-troco-sim" onclick="window.handleTrocoChoice(true)"
+                class="flex-1 py-2 rounded-xl text-sm font-bold border-2 border-transparent bg-white text-slate-700 transition-all">Sim</button>
+              <button id="btn-troco-nao" onclick="window.handleTrocoChoice(false)"
+                class="flex-1 py-2 rounded-xl text-sm font-bold border-2 border-transparent bg-white text-slate-700 transition-all">Não</button>
+            </div>
+            <div id="troco-valor-area" class="hidden">
+              <input id="troco-valor" type="number" min="0" step="0.01" placeholder="Troco para quanto? (R$)"
+                class="w-full p-3 bg-white rounded-xl text-sm font-bold border-2 border-slate-200 focus:border-brand-500/40 outline-none transition-all"
+                oninput="window.saveFormData()" />
+            </div>
+          </div>
+
           <div id="pix-area"
             class="hidden bg-brand-50 p-5 rounded-3xl border border-brand-100 text-center animate-slide-up">
             <p id="pix-name-display" class="text-[10px] font-black text-brand-900 uppercase mb-1 tracking-widest">Titular: Gabriel Santana Morais</p>
@@ -1484,7 +1500,38 @@
       } else {
         if (pixArea) pixArea.classList.add('hidden');
       }
+
+      const cashArea = document.getElementById('cash-area');
+      if (method === 'Dinheiro') {
+        if (cashArea) cashArea.classList.remove('hidden');
+      } else {
+        if (cashArea) cashArea.classList.add('hidden');
+        const trocoValorArea = document.getElementById('troco-valor-area');
+        if (trocoValorArea) trocoValorArea.classList.add('hidden');
+        const trocoValor = document.getElementById('troco-valor');
+        if (trocoValor) trocoValor.value = '';
+        state._trocoPedido = null;
+      }
       window.validateCheckout();
+    };
+
+    window.handleTrocoChoice = (quer) => {
+      const trocoValorArea = document.getElementById('troco-valor-area');
+      const btnSim = document.getElementById('btn-troco-sim');
+      const btnNao = document.getElementById('btn-troco-nao');
+      state._trocoPedido = quer;
+      if (quer) {
+        if (trocoValorArea) trocoValorArea.classList.remove('hidden');
+        if (btnSim) btnSim.classList.add('border-brand-500', 'bg-brand-50', 'text-brand-700');
+        if (btnNao) btnNao.classList.remove('border-brand-500', 'bg-brand-50', 'text-brand-700');
+      } else {
+        if (trocoValorArea) trocoValorArea.classList.add('hidden');
+        const trocoValor = document.getElementById('troco-valor');
+        if (trocoValor) trocoValor.value = '';
+        if (btnNao) btnNao.classList.add('border-brand-500', 'bg-brand-50', 'text-brand-700');
+        if (btnSim) btnSim.classList.remove('border-brand-500', 'bg-brand-50', 'text-brand-700');
+      }
+      window.saveFormData();
     };
 
     window.copyPix = () => {
@@ -2227,6 +2274,14 @@
 
         let paymentStatusFull = method;
         if (method === 'Pix') paymentStatusFull += " (Confirmado no Site ✅)";
+        if (method === 'Dinheiro') {
+          if (state._trocoPedido === false) {
+            paymentStatusFull += " (Sem troco)";
+          } else if (state._trocoPedido === true) {
+            const trocoVal = document.getElementById('troco-valor')?.value;
+            paymentStatusFull += trocoVal ? ` (Troco para R$ ${parseFloat(trocoVal).toFixed(2).replace('.', ',')})` : " (Precisa de troco)";
+          }
+        }
 
         let subtotalVal = 0;
         state.cart.forEach(i => subtotalVal += i.price * i.qty);
